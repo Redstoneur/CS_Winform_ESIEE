@@ -92,6 +92,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(500, 329);
             this.listBox1.TabIndex = 10;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -122,6 +123,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(60, 20);
             this.textBox1.TabIndex = 2;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // label2
             // 
@@ -140,6 +142,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "ajouter";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -147,8 +150,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(85, 45);
             this.button2.TabIndex = 15;
-            this.button2.Text = "Réapprovision-nement";
+            this.button2.Text = "panier";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // listBox2
             // 
@@ -157,6 +161,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(604, 56);
             this.listBox2.TabIndex = 14;
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -164,8 +169,9 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(85, 45);
             this.button3.TabIndex = 16;
-            this.button3.Text = "Réapprovision-nement";
+            this.button3.Text = "stock";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form2
             // 

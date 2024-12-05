@@ -61,6 +61,12 @@
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
+    <Compile Include="Vue\GestionReappro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vue\GestionReappro.Designer.cs">
+      <DependentUpon>GestionReappro.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vue\GestionStock.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Vue\GestionReappro.resx">
+      <DependentUpon>GestionReappro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Vue\GestionStock.resx">
       <DependentUpon>GestionStock.cs</DependentUpon>
     </EmbeddedResource>
