@@ -77,6 +77,7 @@ namespace CS_Winform_ESIEE
         {
             if (button4.Text == "Appliquer")
                 button4.Text = "Supprimer";
+
             else if (button4.Text == "Supprimer")
                 button4.Text = "Appliquer";
                 
@@ -128,8 +129,9 @@ namespace CS_Winform_ESIEE
 
                     // Afficher les informations dans les champs texte
                     textBox1.Text = selectedArticle.Nom; // Affiche le nom
+                    textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
-                    textBox3.Text = selectedArticle.Promotion.ToString(); // affiche la remise
+                    textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
                 }
                 catch (Exception ex)
                 {
@@ -217,6 +219,19 @@ namespace CS_Winform_ESIEE
          * Bouton supprimer un article
          */
         private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /**
+         * Textbox Remise 
+         */
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
         {
 
         }
