@@ -55,7 +55,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Categories = new System.Windows.Forms.ListView();
+            this.Categories = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -306,12 +306,10 @@
             // 
             // Categories
             // 
-            this.Categories.HideSelection = false;
             this.Categories.Location = new System.Drawing.Point(25, 27);
             this.Categories.Name = "Categories";
             this.Categories.Size = new System.Drawing.Size(657, 51);
             this.Categories.TabIndex = 9;
-            this.Categories.UseCompatibleStateImageBehavior = false;
             // 
             // GestionStock
             // 
@@ -368,7 +366,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ListView Categories;
+        private System.Windows.Forms.ListBox Categories;
     }
 }
 
