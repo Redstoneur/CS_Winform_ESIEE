@@ -3,3 +3,6 @@
 
 # Visual Studio
 .vs/
+
+# Environment file
+CS_Winform_ESIEE/.env
