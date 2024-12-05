@@ -17,11 +17,37 @@ namespace CS_Winform_ESIEE
     {
         private ArticleController articleController;
         private List<Article> articles; // Stocke les articles récupérés
+
+        private CategorieController categorieController;
+        private List<Categorie> categories;
         public GestionStock()
         {
             InitializeComponent();
             articleController = new ArticleController();
+            categorieController = new CategorieController();
         }
+        /**
+ * Méthode pour charger les catégories dans la ListBox Categories
+ */
+private void ChargerCategories()
+{
+    try
+    {
+        // Récupérer toutes les catégories
+        categories = categorieController.GetAllCategories();
+
+        // Charger les noms des catégories dans la ListBox
+        Categories.Items.Clear(); // Supposons que le ListBox s'appelle "Categories"
+        foreach (var categorie in categories)
+        {
+            Categories.Items.Add(categorie.Nom); // Ajoute uniquement les noms
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Erreur lors du chargement des catégories : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+}
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -41,6 +67,9 @@ namespace CS_Winform_ESIEE
             {
                 MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            ChargerCategories();
+
+            
 
         }
 
@@ -233,6 +262,7 @@ namespace CS_Winform_ESIEE
 
         private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
         {
+            
 
         }
     }
