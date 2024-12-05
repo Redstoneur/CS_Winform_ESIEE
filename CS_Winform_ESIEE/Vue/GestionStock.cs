@@ -7,18 +7,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CS_Winform_ESIEE.Business;
+using CS_Winform_ESIEE.Modele;
+using CS_Winform_ESIEE.Vue;
 
 namespace CS_Winform_ESIEE
 {
     public partial class GestionStock : Form
     {
+        private ArticleController articleController;
+        private List<Article> articles; // Stocke les articles récupérés
         public GestionStock()
         {
             InitializeComponent();
+            articleController = new ArticleController();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                // Récupérer tous les articles
+                articles = articleController.GetAllArticles();
+
+                // Charger les noms des articles dans la ListBox
+                Articles.Items.Clear();
+                foreach (var article in articles)
+                {
+                    Articles.Items.Add(article.Nom); // Ajoute uniquement les noms
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -97,6 +119,23 @@ namespace CS_Winform_ESIEE
          */
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
+            {
+                try
+                {
+                    // Récupérer l'article correspondant
+                    Article selectedArticle = articles[Articles.SelectedIndex];
+
+                    // Afficher les informations dans les champs texte
+                    textBox1.Text = selectedArticle.Nom; // Affiche le nom
+                    textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
+                    textBox3.Text = selectedArticle.Promotion.ToString(); // affiche la remise
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la sélection de l'article : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
 
         }
 
