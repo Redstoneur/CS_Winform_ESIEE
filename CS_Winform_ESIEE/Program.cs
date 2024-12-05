@@ -24,7 +24,7 @@ namespace CS_Winform_ESIEE
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new GestionStock());
         }
 
         static void TestDatabase()

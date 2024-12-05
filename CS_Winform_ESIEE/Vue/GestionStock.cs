@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CS_Winform_ESIEE
 {
-    public partial class Form1 : Form
+    public partial class GestionStock : Form
     {
-        public Form1()
+        public GestionStock()
         {
             InitializeComponent();
         }
@@ -27,14 +27,14 @@ namespace CS_Winform_ESIEE
 
         }
 
-        /*
+        /**
          * Bouton de passage en mode réapprovisionnement
          */
         private void button1_Click(object sender, EventArgs e)
         {
         }
 
-        /*
+        /**
          * Champ de text du nom de l'article
          */
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -60,7 +60,7 @@ namespace CS_Winform_ESIEE
                 
         }
 
-        /*
+        /**
          * Label "Articles"
          */
 
@@ -92,7 +92,7 @@ namespace CS_Winform_ESIEE
         {
 
         }
-        /*
+        /**
          * Liste d'articles
          */
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace CS_Winform_ESIEE
         }
 
 
-        /*
+        /**
          * Liste de catégories
          */
         private void Categories_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace CS_Winform_ESIEE
 
         }
 
-        /*
+        /**
          * Champ de text de la remise
          */
         private void textBox3_TextChanged(object sender, EventArgs e)
@@ -156,6 +156,28 @@ namespace CS_Winform_ESIEE
          * Bouton modifier l'article 
          */
         private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /**
+         * Bouton ajouter un article 
+         */
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        /**
+         * Bouton supprimer un article
+         */
+        private void button7_Click(object sender, EventArgs e)
         {
 
         }

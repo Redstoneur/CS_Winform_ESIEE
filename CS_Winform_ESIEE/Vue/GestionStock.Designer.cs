@@ -1,6 +1,6 @@
 ﻿namespace CS_Winform_ESIEE
 {
-    partial class Form1
+    partial class GestionStock
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -254,6 +254,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "+";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
             // 
@@ -263,6 +264,7 @@
             this.button7.TabIndex = 7;
             this.button7.Text = "-";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // notifyIcon1
             // 
@@ -308,6 +310,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // Form1
             // 
