@@ -61,6 +61,7 @@
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
+    <Compile Include="Modele\Panier.cs" />
     <Compile Include="Vue\GestionReappro.cs">
       <SubType>Form</SubType>
     </Compile>
