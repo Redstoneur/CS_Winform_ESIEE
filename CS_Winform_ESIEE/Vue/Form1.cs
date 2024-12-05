@@ -43,7 +43,11 @@ namespace CS_Winform_ESIEE
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            if (button4.Text == "Appliquer")
+                button4.Text = "Supprimer";
+            else if (button4.Text == "Supprimer")
+                button4.Text = "Appliquer";
+                
         }
 
         private void label2_Click(object sender, EventArgs e)
