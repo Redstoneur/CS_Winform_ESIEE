@@ -326,6 +326,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Articles);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "GestionStock";
             this.Text = "Form1";
