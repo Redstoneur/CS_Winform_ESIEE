@@ -7,8 +7,15 @@ using MySql.Data.MySqlClient;
 
 namespace CS_Winform_ESIEE.Data
 {
+    /// <summary>
+    /// Fournit des méthodes pour créer et mettre à jour des fichiers JSON à partir d'une base de données MySQL.
+    /// </summary>
     public static class JsonEditor
     {
+        /// <summary>
+        /// Crée un fichier JSON à partir des données de la base de données MySQL.
+        /// </summary>
+        /// <param name="cheminJson">Le chemin où le fichier JSON sera créé.</param>
         public static void CreerJson(string cheminJson)
         {
             var dbConnector = new DatabaseConnector();
@@ -107,6 +114,10 @@ namespace CS_Winform_ESIEE.Data
             File.WriteAllText(cheminJson, json);
         }
 
+        /// <summary>
+        /// Met à jour la base de données MySQL avec les données d'un fichier JSON.
+        /// </summary>
+        /// <param name="cheminJson">Le chemin du fichier JSON à partir duquel lire les données.</param>
         public static void MettreAJourBaseDeDonnees(string cheminJson)
         {
             var json = File.ReadAllText(cheminJson);
