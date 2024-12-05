@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DotNetEnv;
 using MySql.Data.MySqlClient;
 
 namespace CS_Winform_ESIEE.Data
@@ -14,7 +14,15 @@ namespace CS_Winform_ESIEE.Data
 
         public DatabaseConnector()
         {
-            string connectionString = "SERVER=127.0.0.1; DATABASE=NomDeVotreBD; UID=root; PASSWORD=VotreMotDePasse;";
+            // Charger les variables d'environnement depuis le fichier .env
+            Env.Load();
+
+            string server = Env.GetString("DATABASE_HOST");
+            string database = Env.GetString("DATABASE_NAME");
+            string user = Env.GetString("DATABASE_USER");
+            string password = Env.GetString("DATABASE_PASSWORD");
+
+            string connectionString = $"SERVER={server}; DATABASE={database}; UID={user}; PASSWORD={password};";
             connection = new MySqlConnection(connectionString);
         }
 
