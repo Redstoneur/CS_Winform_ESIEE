@@ -2,7 +2,15 @@
 ##### Utilisation de la base de données  ###############################################################################
 ########################################################################################################################
 
+DROP DATABASE IF EXISTS MilkyMarket;
+CREATE DATABASE MilkyMarket;
+
 USE MilkyMarket;
+
+DROP TABLE IF EXISTS LIGNE_COMMANDE;
+DROP TABLE IF EXISTS COMMANDE;
+DROP TABLE IF EXISTS ARTICLE;
+DROP TABLE IF EXISTS CATEGORY;
 
 ########################################################################################################################
 #####  Création de la base de données  #################################################################################
@@ -24,7 +32,7 @@ CREATE TABLE ARTICLE
     Quantite     INT            NOT NULL CHECK (Quantite >= 0),
     Promotion    INT CHECK (Promotion BETWEEN 0 AND 100) DEFAULT 0,
     EstActif     BOOLEAN        NOT NULL                 DEFAULT TRUE,
-    CONSTRAINT FK_Article_Categorie FOREIGN KEY (IdCategorie) REFERENCES CATEGORY (IdCategorie) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT FK_Article_Categorie FOREIGN KEY (IdCategorie) REFERENCES CATEGORY (IdCategorie)
 );
 
 CREATE TABLE COMMANDE
@@ -44,8 +52,8 @@ CREATE TABLE LIGNE_COMMANDE
     PrixUnitaire    DECIMAL(10, 2) NOT NULL CHECK (PrixUnitaire >= 0),
     Quantite        INT            NOT NULL CHECK (Quantite >= 0),
     Promotion       INT CHECK (Promotion BETWEEN 0 AND 100) DEFAULT 0,
-    CONSTRAINT FK_LigneCommande_Commande FOREIGN KEY (IdCommande) REFERENCES COMMANDE (IdCommande) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FK_LigneCommande_Article FOREIGN KEY (IdArticle) REFERENCES ARTICLE (IdArticle) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT FK_LigneCommande_Commande FOREIGN KEY (IdCommande) REFERENCES COMMANDE (IdCommande),
+    CONSTRAINT FK_LigneCommande_Article FOREIGN KEY (IdArticle) REFERENCES ARTICLE (IdArticle)
 );
 
 ########################################################################################################################
