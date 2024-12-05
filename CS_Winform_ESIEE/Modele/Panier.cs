@@ -36,13 +36,13 @@ namespace CS_Winform_ESIEE.Modele
         }
         
         
-        public double GetTotal()
+        public decimal GetTotal()
         {
-            double total = 0;
+            decimal total = 0;
             foreach (Article article in articles)
             {
-                double prix = article.GetPrix() * article.GetQuantite();
-                total += prix - (prix * article.GetReduction()/100);
+                decimal prix = article.PrixUnitaire * article.Quantite;
+                total += prix - (prix * article.Promotion/100);
             }
             return total;
         }
