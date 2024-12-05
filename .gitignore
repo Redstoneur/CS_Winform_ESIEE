@@ -3,5 +3,6 @@
 
 # Visual Studio
 .vs/
-/CS_Winform_ESIEE/Data/DatabaseConnector.cs
-/CS_Winform_ESIEE/Data/DatabaseConnector.cs
+
+# Environment file
+CS_Winform_ESIEE/.env
