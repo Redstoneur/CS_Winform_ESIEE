@@ -83,6 +83,12 @@ private void ChargerCategories()
          */
         private void button1_Click(object sender, EventArgs e)
         {
+            var frm = new Form2();
+            frm.Location = this.Location;
+            frm.StartPosition = FormStartPosition.Manual;
+            frm.FormClosing += delegate { this.Show(); };
+            frm.Show();
+            this.Hide();
         }
 
         /**
@@ -262,7 +268,6 @@ private void ChargerCategories()
 
         private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            
 
         }
     }
