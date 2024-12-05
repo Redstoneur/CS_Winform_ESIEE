@@ -15,7 +15,9 @@ namespace CS_Winform_ESIEE.Data
         public DatabaseConnector()
         {
             // Charger les variables d'environnement depuis le fichier .env
-            Env.Load();
+            Env.Load("../../.env");
+
+            Console.WriteLine(Env.GetString("DATABASE_HOST"));
 
             string server = Env.GetString("DATABASE_HOST");
             string database = Env.GetString("DATABASE_NAME");
@@ -23,6 +25,7 @@ namespace CS_Winform_ESIEE.Data
             string password = Env.GetString("DATABASE_PASSWORD");
 
             string connectionString = $"SERVER={server}; DATABASE={database}; UID={user}; PASSWORD={password};";
+            Console.WriteLine(connectionString);
             connection = new MySqlConnection(connectionString);
         }
 

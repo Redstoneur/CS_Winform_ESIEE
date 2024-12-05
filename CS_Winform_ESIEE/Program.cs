@@ -16,7 +16,7 @@ namespace CS_Winform_ESIEE
         [STAThread]
         static void Main(string[] args)
         {
-            if (args.Length > 0 && args[0] == "dev")
+            if (args.Length == 1 && args[0] == "dev")
             {
                 TestDatabase();
                 return;
@@ -33,15 +33,15 @@ namespace CS_Winform_ESIEE
             {
                 var articleController = new ArticleController();
                 var articles = articleController.GetAllArticles();
-                Console.WriteLine("Articles in database:");
+                Console.WriteLine(@"Articles in database:");
                 foreach (var article in articles)
                 {
-                    Console.WriteLine($"Id: {article.IdArticle}, Name: {article.Nom}, Price: {article.PrixUnitaire}");
+                    Console.WriteLine($@"Id: {article.IdArticle}, Name: {article.Nom}, Price: {article.PrixUnitaire}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Database test failed: {ex.Message}");
+                Console.WriteLine($@"Database test failed: {ex.Message}");
             }
         }
     }
