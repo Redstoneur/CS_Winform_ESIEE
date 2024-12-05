@@ -75,5 +75,10 @@ namespace CS_Winform_ESIEE
         {
 
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }
