@@ -69,6 +69,12 @@
     <Compile Include="Vue\GestionReappro.Designer.cs">
       <DependentUpon>GestionReappro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vue\GestionReapproPanier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vue\GestionReapproPanier.Designer.cs">
+      <DependentUpon>GestionReapproPanier.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vue\GestionStock.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     </Compile>
     <EmbeddedResource Include="Vue\GestionReappro.resx">
       <DependentUpon>GestionReappro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vue\GestionReapproPanier.resx">
+      <DependentUpon>GestionReapproPanier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vue\GestionStock.resx">
       <DependentUpon>GestionStock.cs</DependentUpon>
