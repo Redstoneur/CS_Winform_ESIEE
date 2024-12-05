@@ -14,7 +14,7 @@ namespace CS_Winform_ESIEE.Data
 
         public DatabaseConnector()
         {
-            string connectionString = "SERVER=127.0.0.1; DATABASE=NomDeVotreBD; UID=root; PASSWORD=VotreMotDePasse;";
+            string connectionString = "SERVER=bramarstudio.com ; PORT=3306; DATABASE=MilkyMarket; UID=MilkyMarket; PASSWORD=milkymarketuw";
             connection = new MySqlConnection(connectionString);
         }
 
