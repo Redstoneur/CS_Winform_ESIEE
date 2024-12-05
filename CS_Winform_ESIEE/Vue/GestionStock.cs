@@ -267,23 +267,19 @@ private void ChargerCategories()
         // Vérifie si une catégorie est sélectionnée
         if (Categories.SelectedIndex >= 0)
         {
-            // Récupère le nom de la catégorie sélectionnée
-            string selectedCategoryName = Categories.SelectedItem.ToString();
+            // Récupère la categorie a partir de son index
+            Categorie  selectedCategoryByIndex =categories[Categories.SelectedIndex];
 
-            // Trouve l'ID de la catégorie sélectionnée
-            Categorie selectedCategory = categories.FirstOrDefault(c => c.Nom == selectedCategoryName);
-
-            if (selectedCategory != null)
+            if (selectedCategoryByIndex != null)
             {
                 // Filtrer les articles pour afficher uniquement ceux qui ont le même IdCategorie que la catégorie sélectionnée
-                List<Article> filteredArticles = articles.Where(article => article.IdCategorie == selectedCategory.IdCategorie).ToList();
+                List<Article> filteredArticles = articles.Where(article => article.IdCategorie == selectedCategoryByIndex.IdCategorie).ToList();
 
                 // Mettre à jour la ListBox des articles
                 Articles.Items.Clear();
                 foreach (var article in filteredArticles)
                 {
                     Articles.Items.Add(article.Nom); // Ajoute uniquement le nom de l'article
-                    Console.WriteLine("filtered" + filteredArticles);
                 }
             }
             else
@@ -298,8 +294,7 @@ private void ChargerCategories()
     {
         MessageBox.Show($"Erreur lors de la sélection de la catégorie : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
-            
-            
+                
      }
     }
 }
