@@ -44,7 +44,6 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.Categories = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.button5 = new System.Windows.Forms.Button();
@@ -56,6 +55,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Categories = new System.Windows.Forms.ListView();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -218,15 +218,6 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // Categories
-            // 
-            this.Categories.FormattingEnabled = true;
-            this.Categories.Location = new System.Drawing.Point(25, 29);
-            this.Categories.Name = "Categories";
-            this.Categories.Size = new System.Drawing.Size(657, 56);
-            this.Categories.TabIndex = 2;
-            this.Categories.SelectedIndexChanged += new System.EventHandler(this.Categories_SelectedIndexChanged);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(699, 33);
@@ -313,16 +304,26 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // Categories
+            // 
+            this.Categories.HideSelection = false;
+            this.Categories.Location = new System.Drawing.Point(25, 27);
+            this.Categories.Name = "Categories";
+            this.Categories.Size = new System.Drawing.Size(637, 51);
+            this.Categories.TabIndex = 9;
+            this.Categories.UseCompatibleStateImageBehavior = false;
+            this.Categories.SelectedIndexChanged += new System.EventHandler(this.Categories_SelectedIndexChanged_1);
+            // 
             // GestionStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Categories);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.Categories);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Articles);
             this.Controls.Add(this.menuStrip1);
@@ -347,7 +348,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox Categories;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
@@ -369,6 +369,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ListView Categories;
     }
 }
 

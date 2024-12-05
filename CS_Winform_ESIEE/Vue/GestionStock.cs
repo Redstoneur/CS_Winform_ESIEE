@@ -230,5 +230,10 @@ namespace CS_Winform_ESIEE
         {
 
         }
+
+        private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
