@@ -224,6 +224,7 @@
     <Compile Include="Business\ArticleController.cs" />
     <Compile Include="Business\CategorieController.cs" />
     <Compile Include="Business\CommandeController.cs" />
+    <Compile Include="Business\JsonEditorController.cs" />
     <Compile Include="Business\LigneCommandeController.cs" />
     <Compile Include="Data\DatabaseConnector.cs" />
     <Compile Include="Data\JsonEditor.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Modele\Commande.cs" />
     <Compile Include="Modele\CommandeList.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
+    <Compile Include="Modele\OperationResult.cs" />
     <Compile Include="Modele\Panier.cs" />
     <Compile Include="Vue\GestionReappro.cs">
       <SubType>Form</SubType>
