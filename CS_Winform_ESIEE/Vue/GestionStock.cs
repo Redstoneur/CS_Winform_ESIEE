@@ -20,6 +20,8 @@ namespace CS_Winform_ESIEE
 
         private CategorieController categorieController;
         private List<Categorie> categories;
+
+         private Article selectedArticle; // Article actuellement sélectionné
         public GestionStock()
         {
             InitializeComponent();
@@ -104,12 +106,34 @@ private void ChargerCategories()
          */
         private void button4_Click(object sender, EventArgs e)
         {
-            if (button4.Text == "Appliquer")
-                button4.Text = "Supprimer";
+           if (selectedArticle != null)
+            {
+                try
+                {
+                    if (button4.Text == "Appliquer")
+                    {
+                        MessageBox.Show($"Promotion de {selectedArticle.Promotion} appliquée à {selectedArticle.Nom}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        button4.Text = "Supprimer";
+                    }
+                    else if (button4.Text == "Supprimer")
+                    {
+                        selectedArticle.Promotion = 0;
+                        textBox5.Text = "0";
+                        MessageBox.Show($"Promotion supprimée pour {selectedArticle.Nom}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        button4.Text = "Appliquer";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la gestion de la promotion : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aucun article sélectionné. Veuillez sélectionner un article avant de continuer.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
-            else if (button4.Text == "Supprimer")
-                button4.Text = "Appliquer";
-                
+
         }
 
         /**
@@ -154,7 +178,8 @@ private void ChargerCategories()
                 try
                 {
                     // Récupérer l'article correspondant
-                    Article selectedArticle = articles[Articles.SelectedIndex];
+                     selectedArticle = articles[Articles.SelectedIndex];
+                    
 
                     // Afficher les informations dans les champs texte
                     textBox1.Text = selectedArticle.Nom; // Affiche le nom
@@ -257,6 +282,25 @@ private void ChargerCategories()
          */
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
+            if (selectedArticle != null)
+            {
+                try
+                {
+                    if (decimal.TryParse(textBox5.Text, out decimal promotionValue))
+                    {
+                        selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
+                    }
+                    else
+                    {
+                        MessageBox.Show("Veuillez entrer une valeur numérique valide pour la promotion.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la mise à jour de la promotion : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        
 
         }
 
