@@ -51,12 +51,11 @@ private void ChargerCategories()
     }
 }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            try
+    public void loadArticle(){
+    try
             {
                 // Récupérer tous les articles
-                articles = articleController.GetAllArticles();
+                articles = articleController.GetAllArticlesEstActive();
 
                 // Charger les noms des articles dans la ListBox
                 Articles.Items.Clear();
@@ -69,9 +68,16 @@ private void ChargerCategories()
             {
                 MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+    }
+
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            loadArticle();
             ChargerCategories();
 
-            
+        
 
         }
 
@@ -209,6 +215,7 @@ private void ChargerCategories()
                     textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
+                    DelArticleName.Text = selectedArticle.Nom.ToString();// affiche larticle a supprimer
                 }
                 catch (Exception ex)
                 {
@@ -426,6 +433,24 @@ private void ChargerCategories()
         private void AnnulerSuppr_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
+        }
+
+        private void ConfirmerSuppr_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                articleController.SupprimerArticle(selectedArticle);
+                 groupBox3.Visible = false;
+                 loadArticle();
+                 
+                 
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+            
         }
     }
 }
