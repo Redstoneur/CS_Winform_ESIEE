@@ -1,4 +1,5 @@
-﻿using CS_Winform_ESIEE.Modele;
+﻿using System;
+using CS_Winform_ESIEE.Modele;
 using CS_Winform_ESIEE.Data;
 
 using MySql.Data.MySqlClient;
@@ -75,6 +76,36 @@ namespace CS_Winform_ESIEE.Business
                     Nom = reader.GetString("Nom"),
                     EstActif = reader.GetBoolean("EstActif")
                 };
+            }
+
+            reader.Close();
+            dbConnector.FermerConnexion();
+
+            return categorie;
+        }
+        
+        public Categorie GetCategorieByName(string name)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "SELECT * FROM CATEGORY WHERE Nom = @Nom";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@Nom", name);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            Categorie categorie = null;
+            if (reader.Read())
+            {
+                categorie = new Categorie
+                {
+                    IdCategorie = reader.GetInt32("IdCategorie"),
+                    Nom = reader.GetString("Nom"),
+                    EstActif = reader.GetBoolean("EstActif")
+                };
+            }
+            else
+            {
+                throw new Exception("Categorie with the given name does not exist.");
             }
 
             reader.Close();
