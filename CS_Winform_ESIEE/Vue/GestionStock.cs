@@ -275,6 +275,7 @@ private void ChargerCategories()
          */
         private void button3_Click(object sender, EventArgs e)
         {
+            groupBox4.Visible = true;
 
         }
 
@@ -288,7 +289,7 @@ private void ChargerCategories()
          */
         private void button6_Click(object sender, EventArgs e)
         {
-
+            groupBox2.Visible = true;
         }
 
 
@@ -297,7 +298,7 @@ private void ChargerCategories()
          */
         private void button7_Click(object sender, EventArgs e)
         {
-
+            groupBox3.Visible = true;
         }
 
         /**
@@ -349,5 +350,85 @@ private void ChargerCategories()
     }
                 
      }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+           groupBox2.Visible = false;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            groupBox3.Visible = false;
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            groupBox3.Visible = false;
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Quantite_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ModifNom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ModifPrix_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            groupBox4.Visible = false;
+        }
+
+        private void Annuler_Click(object sender, EventArgs e)
+        {
+            groupBox2.Visible = false;
+        }
+
+        private void ValiderModif_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
