@@ -1,6 +1,5 @@
 ﻿using CS_Winform_ESIEE.Modele;
 using CS_Winform_ESIEE.Data;
-
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
@@ -38,7 +37,7 @@ namespace CS_Winform_ESIEE.Business
         {
             UpdateEstActif(article, false);
         }
-        
+
         public void UpdateIdCategorie(Article article, int idCategorie)
         {
             dbConnector.OuvrirConnexion();
@@ -52,7 +51,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public void UpdateNom(Article article, string nom)
         {
             dbConnector.OuvrirConnexion();
@@ -66,7 +65,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public void UpdatePrixUnitaire(Article article, decimal prixUnitaire)
         {
             dbConnector.OuvrirConnexion();
@@ -80,7 +79,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public void UpdateQuantite(Article article, int quantite)
         {
             dbConnector.OuvrirConnexion();
@@ -94,7 +93,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public void UpdatePromotion(Article article, int promotion)
         {
             dbConnector.OuvrirConnexion();
@@ -108,7 +107,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public void UpdateEstActif(Article article, bool estActif)
         {
             dbConnector.OuvrirConnexion();
@@ -122,8 +121,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
-        
+
 
         public void UpdateArticle(Article article, object value, string field)
         {
@@ -151,7 +149,7 @@ namespace CS_Winform_ESIEE.Business
                     break;
             }
         }
-        
+
         public void UpdateArticleFlexible(Article article, List<object> values, List<string> fields)
         {
             for (int i = 0; i < fields.Count; i++)
@@ -162,7 +160,8 @@ namespace CS_Winform_ESIEE.Business
 
         public void UpdateRemise(Article article, int promotion)
         {
-            UpdatePromotion(article, promotion);  // todo: delete this method and replace all calls to it with UpdatePromotion
+            UpdatePromotion(article,
+                promotion); // todo: delete this method and replace all calls to it with UpdatePromotion
         }
 
         public Article GetArticleById(int id)
@@ -200,6 +199,36 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.OuvrirConnexion();
 
             string query = "SELECT * FROM ARTICLE";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+            List<Article> articles = new List<Article>();
+            while (reader.Read())
+            {
+                Article article = new Article
+                {
+                    IdArticle = reader.GetInt32("IdArticle"),
+                    IdCategorie = reader.GetInt32("IdCategorie"),
+                    Nom = reader.GetString("Nom"),
+                    PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
+                    Quantite = reader.GetInt32("Quantite"),
+                    Promotion = reader.GetInt32("Promotion"),
+                    EstActif = reader.GetBoolean("EstActif")
+                };
+                articles.Add(article);
+            }
+
+            reader.Close();
+            dbConnector.FermerConnexion();
+
+            return articles;
+        }
+
+        public List<Article> GetAllArticlesEstActive()
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "SELECT * FROM ARTICLE WHERE EstActif = 1";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
 
             MySqlDataReader reader = cmd.ExecuteReader();
