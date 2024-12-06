@@ -70,19 +70,6 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
-        public void SupprimerCommande(Commande commande)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "DELETE FROM COMMANDE WHERE IdCommande = @IdCommande";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdCommande", commande.IdCommande);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
         public Commande GetCommandeById(int id)
         {
             dbConnector.OuvrirConnexion();
