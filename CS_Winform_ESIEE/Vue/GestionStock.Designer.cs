@@ -57,6 +57,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Categories = new System.Windows.Forms.ListBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Annuler = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
             this.Valider = new System.Windows.Forms.Button();
             this.CategorieSelect = new System.Windows.Forms.ComboBox();
@@ -71,9 +72,10 @@
             this.button9 = new System.Windows.Forms.Button();
             this.DelArticleName = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.AnnulerSuppr = new System.Windows.Forms.Button();
+            this.ConfirmerSuppr = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ModifAnnuler = new System.Windows.Forms.Button();
             this.ValiderModif = new System.Windows.Forms.Button();
             this.Quantités = new System.Windows.Forms.Label();
             this.ReduceQuantite = new System.Windows.Forms.Button();
@@ -84,8 +86,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
-            this.Annuler = new System.Windows.Forms.Button();
-            this.ModifAnnuler = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -331,7 +331,7 @@
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -340,7 +340,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // exitToolStripMenuItem
@@ -352,14 +352,14 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(58, 32);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(58, 29);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(78, 32);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(78, 29);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -395,6 +395,16 @@
             this.groupBox2.Text = "Ajouter";
             this.groupBox2.Visible = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // Annuler
+            // 
+            this.Annuler.Location = new System.Drawing.Point(408, 267);
+            this.Annuler.Name = "Annuler";
+            this.Annuler.Size = new System.Drawing.Size(100, 32);
+            this.Annuler.TabIndex = 10;
+            this.Annuler.Text = "Annuler";
+            this.Annuler.UseVisualStyleBackColor = true;
+            this.Annuler.Click += new System.EventHandler(this.Annuler_Click);
             // 
             // CloseButton
             // 
@@ -489,8 +499,8 @@
             this.groupBox3.Controls.Add(this.button9);
             this.groupBox3.Controls.Add(this.DelArticleName);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.button8);
-            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.AnnulerSuppr);
+            this.groupBox3.Controls.Add(this.ConfirmerSuppr);
             this.groupBox3.Location = new System.Drawing.Point(404, 62);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(426, 217);
@@ -531,25 +541,24 @@
             this.label12.TabIndex = 2;
             this.label12.Text = "Voulez vous vraiment supprimer l\'article :";
             // 
-            // button8
+            // AnnulerSuppr
             // 
-            this.button8.Location = new System.Drawing.Point(260, 138);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(98, 28);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Annuler";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.AnnulerSuppr.Location = new System.Drawing.Point(260, 138);
+            this.AnnulerSuppr.Name = "AnnulerSuppr";
+            this.AnnulerSuppr.Size = new System.Drawing.Size(98, 28);
+            this.AnnulerSuppr.TabIndex = 1;
+            this.AnnulerSuppr.Text = "Annuler";
+            this.AnnulerSuppr.UseVisualStyleBackColor = true;
+            this.AnnulerSuppr.Click += new System.EventHandler(this.AnnulerSuppr_Click);
             // 
-            // button2
+            // ConfirmerSuppr
             // 
-            this.button2.Location = new System.Drawing.Point(69, 142);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(98, 28);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "Confirmer";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_2);
+            this.ConfirmerSuppr.Location = new System.Drawing.Point(69, 142);
+            this.ConfirmerSuppr.Name = "ConfirmerSuppr";
+            this.ConfirmerSuppr.Size = new System.Drawing.Size(98, 28);
+            this.ConfirmerSuppr.TabIndex = 0;
+            this.ConfirmerSuppr.Text = "Confirmer";
+            this.ConfirmerSuppr.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
@@ -572,6 +581,15 @@
             this.groupBox4.Text = "Modifier";
             this.groupBox4.Visible = false;
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // ModifAnnuler
+            // 
+            this.ModifAnnuler.Location = new System.Drawing.Point(385, 276);
+            this.ModifAnnuler.Name = "ModifAnnuler";
+            this.ModifAnnuler.Size = new System.Drawing.Size(86, 29);
+            this.ModifAnnuler.TabIndex = 21;
+            this.ModifAnnuler.Text = "Annuler";
+            this.ModifAnnuler.UseVisualStyleBackColor = true;
             // 
             // ValiderModif
             // 
@@ -664,33 +682,14 @@
             this.button10.UseVisualStyleBackColor = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
-            // Annuler
-            // 
-            this.Annuler.Location = new System.Drawing.Point(408, 267);
-            this.Annuler.Name = "Annuler";
-            this.Annuler.Size = new System.Drawing.Size(100, 32);
-            this.Annuler.TabIndex = 10;
-            this.Annuler.Text = "Annuler";
-            this.Annuler.UseVisualStyleBackColor = true;
-            this.Annuler.Click += new System.EventHandler(this.Annuler_Click);
-            // 
-            // ModifAnnuler
-            // 
-            this.ModifAnnuler.Location = new System.Drawing.Point(385, 276);
-            this.ModifAnnuler.Name = "ModifAnnuler";
-            this.ModifAnnuler.Size = new System.Drawing.Size(86, 29);
-            this.ModifAnnuler.TabIndex = 21;
-            this.ModifAnnuler.Text = "Annuler";
-            this.ModifAnnuler.UseVisualStyleBackColor = true;
-            // 
             // GestionStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 692);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
@@ -761,8 +760,8 @@
         private System.Windows.Forms.Button Valider;
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button AnnulerSuppr;
+        private System.Windows.Forms.Button ConfirmerSuppr;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label DelArticleName;
         private System.Windows.Forms.Button button9;
