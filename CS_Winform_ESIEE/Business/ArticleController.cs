@@ -122,40 +122,36 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
-
-        public void UpdateArticle(Article article, object value, string field)
+        public void UpdateArticle(Article article, Dictionary<string, object> data)
         {
-            switch (field)
+            // vérifier que toutes les clés sont valides
+            foreach (string key in data.Keys)
             {
-                case "IdCategorie":
-                    UpdateIdCategorie(article, (int)value);
-                    break;
-                case "Nom":
-                    UpdateNom(article, (string)value);
-                    break;
-                case "PrixUnitaire":
-                    UpdatePrixUnitaire(article, (decimal)value);
-                    break;
-                case "Quantite":
-                    UpdateQuantite(article, (int)value);
-                    break;
-                case "Promotion":
-                    UpdatePromotion(article, (int)value);
-                    break;
-                case "EstActif":
-                    UpdateEstActif(article, (bool)value);
-                    break;
-                default:
-                    break;
+                if (key != "IdCategorie" && key != "Nom" && key != "PrixUnitaire" && key != "Quantite" &&
+                    key != "Promotion" && key != "EstActif")
+                {
+                    return;
+                }
             }
-        }
-
-        public void UpdateArticleFlexible(Article article, List<object> values, List<string> fields)
-        {
-            for (int i = 0; i < fields.Count; i++)
+            
+            string query = "UPDATE ARTICLE SET";
+            
+            
+            // mettre à jour les champs
+           foreach (KeyValuePair<string,object> d in data)
             {
-                UpdateArticle(article, values[i], fields[i]);
+                query += " ";
+                query += d.Key + " = " + d.Value + ",";
             }
+           
+            // enlever la dernière virgule
+            query = query.Remove(query.Length - 2);
+            query += $" WHERE IdArticle = {article.IdArticle}";
+           
+            dbConnector.OuvrirConnexion();
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.ExecuteNonQuery();
+            dbConnector.FermerConnexion(); 
         }
 
         public void UpdateRemise(Article article, int promotion)
