@@ -1,36 +1,36 @@
 ﻿namespace CS_Winform_ESIEE.Modele
 {
     /// <summary>
-    /// Represents the state of an order.
+    /// Représente l'état d'une commande.
     /// </summary>
     public enum EtatCommande
     {
         /// <summary>
-        /// The order has been placed.
+        /// La commande a été passée.
         /// </summary>
         Commande,
 
         /// <summary>
-        /// The order has been sent.
+        /// La commande a été envoyée.
         /// </summary>
         Envoyee,
 
         /// <summary>
-        /// The order has been delivered.
+        /// La commande a été livrée.
         /// </summary>
         Livree
     }
 
     /// <summary>
-    /// Provides extension methods for the EtatCommande enum.
+    /// Fournit des méthodes d'extension pour l'énumération EtatCommande.
     /// </summary>
     public static class EtatCommandeExtensions
     {
         /// <summary>
-        /// Converts the EtatCommande value to its string representation.
+        /// Convertit la valeur EtatCommande en sa représentation sous forme de chaîne.
         /// </summary>
-        /// <param name="etat">The EtatCommande value.</param>
-        /// <returns>The string representation of the EtatCommande value.</returns>
+        /// <param name="etat">La valeur EtatCommande.</param>
+        /// <returns>La représentation sous forme de chaîne de la valeur EtatCommande.</returns>
         public static string to_string(this EtatCommande etat)
         {
             switch (etat)
@@ -47,10 +47,10 @@
         }
 
         /// <summary>
-        /// Converts a string representation of an order state to its EtatCommande value.
+        /// Convertit une représentation sous forme de chaîne d'un état de commande en sa valeur EtatCommande.
         /// </summary>
-        /// <param name="etat">The string representation of the order state.</param>
-        /// <returns>The corresponding EtatCommande value.</returns>
+        /// <param name="etat">La représentation sous forme de chaîne de l'état de commande.</param>
+        /// <returns>La valeur EtatCommande correspondante.</returns>
         public static EtatCommande from_string(string etat)
         {
             switch (etat)
