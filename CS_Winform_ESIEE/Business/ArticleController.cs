@@ -46,28 +46,64 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-
-        public void UpdateArticle(Article article)
+        
+        public void UpdateIdCategorie(Article article, int idCategorie)
         {
             dbConnector.OuvrirConnexion();
 
-            string query =
-                "UPDATE ARTICLE SET IdCategorie = @IdCategorie, Nom = @Nom, PrixUnitaire = @PrixUnitaire, Quantite = @Quantite, Promotion = @Promotion, EstActif = @EstActif WHERE IdArticle = @IdArticle;";
+            string query = "UPDATE ARTICLE SET IdCategorie = @IdCategorie WHERE IdArticle = @IdArticle;";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
             cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@IdCategorie", article.IdCategorie);
-            cmd.Parameters.AddWithValue("@Nom", article.Nom);
-            cmd.Parameters.AddWithValue("@PrixUnitaire", article.PrixUnitaire);
-            cmd.Parameters.AddWithValue("@Quantite", article.Quantite);
-            cmd.Parameters.AddWithValue("@Promotion", article.Promotion);
-            cmd.Parameters.AddWithValue("@EstActif", article.EstActif);
+            cmd.Parameters.AddWithValue("@IdCategorie", idCategorie);
 
             cmd.ExecuteNonQuery();
 
             dbConnector.FermerConnexion();
         }
+        
+        public void UpdateNom(Article article, string nom)
+        {
+            dbConnector.OuvrirConnexion();
 
-        public void UpdateRemise(Article article, int promotion)
+            string query = "UPDATE ARTICLE SET Nom = @Nom WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@Nom", nom);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+        
+        public void UpdatePrixUnitaire(Article article, decimal prixUnitaire)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "UPDATE ARTICLE SET PrixUnitaire = @PrixUnitaire WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@PrixUnitaire", prixUnitaire);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+        
+        public void UpdateQuantite(Article article, int quantite)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "UPDATE ARTICLE SET Quantite = @Quantite WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@Quantite", quantite);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+        
+        public void UpdatePromotion(Article article, int promotion)
         {
             dbConnector.OuvrirConnexion();
 
@@ -79,6 +115,62 @@ namespace CS_Winform_ESIEE.Business
             cmd.ExecuteNonQuery();
 
             dbConnector.FermerConnexion();
+        }
+        
+        public void UpdateEstActif(Article article, bool estActif)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "UPDATE ARTICLE SET EstActif = @EstActif WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@EstActif", estActif);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+        
+        
+
+        public void UpdateArticle(Article article, object value, string field)
+        {
+            switch (field)
+            {
+                case "IdCategorie":
+                    UpdateIdCategorie(article, (int)value);
+                    break;
+                case "Nom":
+                    UpdateNom(article, (string)value);
+                    break;
+                case "PrixUnitaire":
+                    UpdatePrixUnitaire(article, (decimal)value);
+                    break;
+                case "Quantite":
+                    UpdateQuantite(article, (int)value);
+                    break;
+                case "Promotion":
+                    UpdatePromotion(article, (int)value);
+                    break;
+                case "EstActif":
+                    UpdateEstActif(article, (bool)value);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        public void UpdateArticleFlexible(Article article, List<object> values, List<string> fields)
+        {
+            for (int i = 0; i < fields.Count; i++)
+            {
+                UpdateArticle(article, values[i], fields[i]);
+            }
+        }
+
+        public void UpdateRemise(Article article, int promotion)
+        {
+            UpdatePromotion(article, promotion);  // todo: delete this method and replace all calls to it with UpdatePromotion
         }
 
         public Article GetArticleById(int id)
