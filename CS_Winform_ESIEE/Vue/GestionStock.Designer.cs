@@ -308,7 +308,7 @@
             // 
             this.Categories.Location = new System.Drawing.Point(25, 27);
             this.Categories.Name = "Categories";
-            this.Categories.Size = new System.Drawing.Size(657, 51);
+            this.Categories.Size = new System.Drawing.Size(657, 56);
             this.Categories.TabIndex = 9;
             this.Categories.Click += new System.EventHandler(this.Categories_SelectedIndexChanged_1);
             // 
