@@ -36,15 +36,7 @@ namespace CS_Winform_ESIEE.Business
 
         public void SupprimerArticle(Article article)
         {
-            dbConnector.OuvrirConnexion();
-
-            string query = "DELETE FROM ARTICLE WHERE IdArticle = @IdArticle";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
+            UpdateEstActif(article, false);
         }
         
         public void UpdateIdCategorie(Article article, int idCategorie)
