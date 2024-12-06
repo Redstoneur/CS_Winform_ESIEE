@@ -392,7 +392,7 @@
             this.groupBox2.Size = new System.Drawing.Size(683, 353);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Ajouter";
             this.groupBox2.Visible = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
@@ -496,7 +496,7 @@
             this.groupBox3.Size = new System.Drawing.Size(426, 217);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Text = "Supprimer";
             this.groupBox3.Visible = false;
             this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
@@ -569,7 +569,7 @@
             this.groupBox4.Size = new System.Drawing.Size(637, 369);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "groupBox4";
+            this.groupBox4.Text = "Modifier";
             this.groupBox4.Visible = false;
             this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
