@@ -2,11 +2,7 @@
 using CS_Winform_ESIEE.Data;
 
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_Winform_ESIEE.Business
 {
@@ -32,7 +28,35 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
+        public void SupprimerCategorie(Categorie categorie)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "DELETE FROM CATEGORY WHERE IdCategorie = @IdCategorie";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdCategorie", categorie.IdCategorie);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+
+        public void UpdateCategorie(Categorie categorie)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "UPDATE CATEGORY SET Nom = @Nom, EstActif = @EstActif WHERE IdCategorie = @IdCategorie";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdCategorie", categorie.IdCategorie);
+            cmd.Parameters.AddWithValue("@Nom", categorie.Nom);
+            cmd.Parameters.AddWithValue("@EstActif", categorie.EstActif);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+
         public Categorie GetCategorieById(int id)
         {
             dbConnector.OuvrirConnexion();

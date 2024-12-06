@@ -2,11 +2,7 @@
 using CS_Winform_ESIEE.Data;
 
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_Winform_ESIEE.Business
 {
@@ -37,8 +33,41 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
-        public void UpdateRemise(Article article,int promotion)
+
+        public void SupprimerArticle(Article article)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "DELETE FROM ARTICLE WHERE IdArticle = @IdArticle";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+
+        public void UpdateArticle(Article article)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query =
+                "UPDATE ARTICLE SET IdCategorie = @IdCategorie, Nom = @Nom, PrixUnitaire = @PrixUnitaire, Quantite = @Quantite, Promotion = @Promotion, EstActif = @EstActif WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@IdCategorie", article.IdCategorie);
+            cmd.Parameters.AddWithValue("@Nom", article.Nom);
+            cmd.Parameters.AddWithValue("@PrixUnitaire", article.PrixUnitaire);
+            cmd.Parameters.AddWithValue("@Quantite", article.Quantite);
+            cmd.Parameters.AddWithValue("@Promotion", article.Promotion);
+            cmd.Parameters.AddWithValue("@EstActif", article.EstActif);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+
+        public void UpdateRemise(Article article, int promotion)
         {
             dbConnector.OuvrirConnexion();
 
@@ -51,7 +80,7 @@ namespace CS_Winform_ESIEE.Business
 
             dbConnector.FermerConnexion();
         }
-        
+
         public Article GetArticleById(int id)
         {
             dbConnector.OuvrirConnexion();
@@ -81,7 +110,7 @@ namespace CS_Winform_ESIEE.Business
 
             return article;
         }
-        
+
         public List<Article> GetAllArticles()
         {
             dbConnector.OuvrirConnexion();

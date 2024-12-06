@@ -232,6 +232,7 @@
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />
     <Compile Include="Modele\CommandeList.cs" />
+    <Compile Include="Modele\EtatCommande.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
     <Compile Include="Modele\OperationResult.cs" />
     <Compile Include="Modele\Panier.cs" />
