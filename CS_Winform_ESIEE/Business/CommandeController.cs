@@ -18,17 +18,23 @@ namespace CS_Winform_ESIEE.Business
             dbConnector = new DatabaseConnector();
         }
 
-        public void AjouterCommande(Commande commande)
+        public long AjouterCommande()
         {
             dbConnector.OuvrirConnexion();
+            
+            EtatCommande etat = EtatCommande.Commande;
 
-            string query = "INSERT INTO COMMANDE (Date, Etat) VALUES (@IdClient, @DateCommande, @Statut)";
+            string query = "INSERT INTO COMMANDE (Etat) VALUES (@Statut)";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@Statut", commande.Etat);
+            cmd.Parameters.AddWithValue("@Statut", etat.to_string());
 
             cmd.ExecuteNonQuery();
+            
+            long id = cmd.LastInsertedId;
 
             dbConnector.FermerConnexion();
+            
+            return id;
         }
 
         public void UpdateCommande(Commande commande, EtatCommande etat)

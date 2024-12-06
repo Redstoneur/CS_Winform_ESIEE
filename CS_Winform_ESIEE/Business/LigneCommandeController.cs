@@ -19,18 +19,18 @@ namespace CS_Winform_ESIEE.Business
             dbConnector = new DatabaseConnector();
         }
 
-        public void AjouterLigneCommande(LigneCommande ligneCommande)
+        public void AjouterLigneCommande(long idCommande, Article article)
         {
             dbConnector.OuvrirConnexion();
 
             string query = "INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion) " +
                            "VALUES (@IdCommande, @IdArticle, @PrixUnitaire, @Quantite, @Promotion)";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdCommande", ligneCommande.IdCommande);
-            cmd.Parameters.AddWithValue("@IdArticle", ligneCommande.IdArticle);
-            cmd.Parameters.AddWithValue("@PrixUnitaire", ligneCommande.PrixUnitaire);
-            cmd.Parameters.AddWithValue("@Quantite", ligneCommande.Quantite);
-            cmd.Parameters.AddWithValue("@Promotion", ligneCommande.Promotion);
+            cmd.Parameters.AddWithValue("@IdCommande", idCommande);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@PrixUnitaire", article.PrixUnitaire);
+            cmd.Parameters.AddWithValue("@Quantite", article.Quantite);
+            cmd.Parameters.AddWithValue("@Promotion", article.Promotion);
 
             cmd.ExecuteNonQuery();
 

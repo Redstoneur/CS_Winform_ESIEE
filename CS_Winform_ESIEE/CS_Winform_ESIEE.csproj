@@ -226,12 +226,12 @@
     <Compile Include="Business\CommandeController.cs" />
     <Compile Include="Business\JsonEditorController.cs" />
     <Compile Include="Business\LigneCommandeController.cs" />
+    <Compile Include="Business\PanierController.cs" />
     <Compile Include="Data\DatabaseConnector.cs" />
     <Compile Include="Data\JsonEditor.cs" />
     <Compile Include="Modele\Article.cs" />
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />
-    <Compile Include="Modele\CommandeList.cs" />
     <Compile Include="Modele\EtatCommande.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
     <Compile Include="Modele\OperationResult.cs" />
