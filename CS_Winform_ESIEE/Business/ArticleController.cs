@@ -38,6 +38,20 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
         
+        public void UpdateRemise(Article article,int promotion)
+        {
+            dbConnector.OuvrirConnexion();
+
+            string query = "UPDATE ARTICLE SET Promotion = @Promotion WHERE IdArticle = @IdArticle;";
+            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
+            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
+            cmd.Parameters.AddWithValue("@Promotion", promotion);
+
+            cmd.ExecuteNonQuery();
+
+            dbConnector.FermerConnexion();
+        }
+        
         public Article GetArticleById(int id)
         {
             dbConnector.OuvrirConnexion();

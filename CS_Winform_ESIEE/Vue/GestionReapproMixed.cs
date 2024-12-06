@@ -73,7 +73,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton panier
         private void button2_Click(object sender, EventArgs e)
         {
-
+            groupBox3.Visible = true;
         }
 
         //listbox des categorie
@@ -184,7 +184,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton annuler
         private void button6_Click(object sender, EventArgs e)
         {
-
+            groupBox3.Visible = false;
         }
 
         //bouton on/off quantité/unité
@@ -216,7 +216,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton annuler
         private void button4_Click(object sender, EventArgs e)
         {
-
+            groupBox2.Visible = false;
         }
 
         //listbox liste de commandes
@@ -250,6 +250,11 @@ namespace CS_Winform_ESIEE.Vue
         private void groupBox2_Enter(object sender, EventArgs e)
         {
             
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            groupBox2.Visible = true;
         }
     }
 }

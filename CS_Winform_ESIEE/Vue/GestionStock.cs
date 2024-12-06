@@ -116,6 +116,23 @@ private void ChargerCategories()
             {
                 try
                 {
+                    try
+                    {
+                        if (decimal.TryParse(textBox5.Text, out decimal promotionValue))
+                        {
+                            selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
+                            int value = Convert.ToInt16(promotionValue);
+                            articleController.UpdateRemise(selectedArticle, value);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Veuillez entrer une valeur numérique valide pour la promotion.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors de la mise à jour de la promotion : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     if (button4.Text == "Appliquer")
                     {
                         MessageBox.Show($"Promotion de {selectedArticle.Promotion} appliquée à {selectedArticle.Nom}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -290,21 +307,7 @@ private void ChargerCategories()
         {
             if (selectedArticle != null)
             {
-                try
-                {
-                    if (decimal.TryParse(textBox5.Text, out decimal promotionValue))
-                    {
-                        selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
-                    }
-                    else
-                    {
-                        MessageBox.Show("Veuillez entrer une valeur numérique valide pour la promotion.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Erreur lors de la mise à jour de la promotion : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
         
 
