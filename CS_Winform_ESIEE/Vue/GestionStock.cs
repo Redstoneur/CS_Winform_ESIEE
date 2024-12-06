@@ -371,15 +371,7 @@ private void ChargerCategories()
            groupBox2.Visible = false;
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            groupBox3.Visible = false;
-        }
 
-        private void button2_Click_2(object sender, EventArgs e)
-        {
-
-        }
 
         private void label13_Click(object sender, EventArgs e)
         {
@@ -429,6 +421,11 @@ private void ChargerCategories()
         private void ValiderModif_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void AnnulerSuppr_Click(object sender, EventArgs e)
+        {
+            groupBox3.Visible = false;
         }
     }
 }
