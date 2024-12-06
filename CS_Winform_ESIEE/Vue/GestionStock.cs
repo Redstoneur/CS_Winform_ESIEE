@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CS_Winform_ESIEE.Business;
 using CS_Winform_ESIEE.Modele;
 using CS_Winform_ESIEE.Vue;
+using DotNetEnv;
 
 namespace CS_Winform_ESIEE
 {
@@ -42,7 +43,8 @@ private void ChargerCategories()
         Categories.Items.Clear(); // Supposons que le ListBox s'appelle "Categories"
         foreach (var categorie in categories)
         {
-            Categories.Items.Add(categorie.Nom); // Ajoute uniquement les noms
+            Categories.Items.Add(categorie.Nom);
+            CategorieSelect.Items.Add(categorie);// Ajoute uniquement les noms
         }
     }
     catch (Exception ex)
@@ -146,6 +148,7 @@ private void ChargerCategories()
                     }
                     else if (button4.Text == "Supprimer")
                     {
+                        articleController.UpdateRemise(selectedArticle, 0);
                         selectedArticle.Promotion = 0;
                         textBox5.Text = "0";
                         MessageBox.Show($"Promotion supprimée pour {selectedArticle.Nom}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -216,6 +219,10 @@ private void ChargerCategories()
                     textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
                     DelArticleName.Text = selectedArticle.Nom.ToString();// affiche larticle a supprimer
+                    if (selectedArticle.Promotion > 0)
+                        button4.Text = "Supprimer";
+                    else if (selectedArticle.Promotion <= 0)
+                        button4.Text = "Appliquer";
                 }
                 catch (Exception ex)
                 {
@@ -282,8 +289,6 @@ private void ChargerCategories()
          */
         private void button3_Click(object sender, EventArgs e)
         {
-            groupBox4.Visible = true;
-
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -427,6 +432,7 @@ private void ChargerCategories()
 
         private void ValiderModif_Click(object sender, EventArgs e)
         {
+            groupBox4.Visible = false;
 
         }
 
@@ -451,6 +457,19 @@ private void ChargerCategories()
                 throw;
             }
             
+        }
+
+
+        private void ModifAnnuler_Click(object sender, EventArgs e)
+        {
+            groupBox4.Visible = false;
+
+        }
+
+        private void Valider_Click(object sender, EventArgs e)
+        {
+            groupBox2.Visible = false;
+
         }
     }
 }
