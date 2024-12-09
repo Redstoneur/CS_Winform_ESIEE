@@ -11,6 +11,9 @@ namespace CS_Winform_ESIEE.Business
     /// </summary>
     public class CategorieController
     {
+        /// <summary>
+        /// Le connecteur de base de données.
+        /// </summary>
         private DatabaseConnector dbConnector;
 
         /// <summary>
