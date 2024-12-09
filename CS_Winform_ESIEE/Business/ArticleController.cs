@@ -14,7 +14,7 @@ namespace CS_Winform_ESIEE.Business
             dbConnector = new DatabaseConnector();
         }
 
-        public void AjouterArticle(int idCategorie, string nom, decimal prixUnitaire, int quantite, int promotion=0,
+        public void AjouterArticle(int idCategorie, string nom, decimal prixUnitaire, int quantite, int promotion = 0,
             bool estActif = true)
         {
             // verifier que la categorie existe
@@ -131,64 +131,64 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
-                public void UpdateArticle(Article article, Dictionary<string, object> data)
-{
-    // Vérification des clés valides
-    var validKeys = new HashSet<string> { "Nom", "PrixUnitaire", "Quantite", "EstActif" };
-    foreach (string key in data.Keys)
-    {
-        if (!validKeys.Contains(key))
+        public void UpdateArticle(Article article, Dictionary<string, object> data)
         {
-            throw new System.ArgumentException($"La clé '{key}' n'est pas valide.");
-        }
-    }
-
-    // Construction de la requête SQL
-    string query = "UPDATE ARTICLE SET ";
-    var setClauses = new List<string>();
-    var parameters = new Dictionary<string, object>();
-
-    foreach (var entry in data)
-    {
-        string paramName = $"@{entry.Key}";
-        setClauses.Add($"{entry.Key} = {paramName}");
-        parameters[paramName] = entry.Value;
-    }
-
-    query += string.Join(", ", setClauses);
-    query += " WHERE IdArticle = @IdArticle";
-
-    // Ajout de l'identifiant de l'article comme paramètre
-    parameters["@IdArticle"] = article.IdArticle;
-
-    try
-    {
-        // Ouverture de la connexion
-        dbConnector.OuvrirConnexion();
-
-        using (MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion))
-        {
-            // Ajout des paramètres à la commande
-            foreach (var param in parameters)
+            // Vérification des clés valides
+            var validKeys = new HashSet<string> { "Nom", "PrixUnitaire", "Quantite", "EstActif" };
+            foreach (string key in data.Keys)
             {
-                cmd.Parameters.AddWithValue(param.Key, param.Value ?? System.DBNull.Value);
+                if (!validKeys.Contains(key))
+                {
+                    throw new System.ArgumentException($"La clé '{key}' n'est pas valide.");
+                }
             }
 
-            // Exécution de la commande
-            cmd.ExecuteNonQuery();
+            // Construction de la requête SQL
+            string query = "UPDATE ARTICLE SET ";
+            var setClauses = new List<string>();
+            var parameters = new Dictionary<string, object>();
+
+            foreach (var entry in data)
+            {
+                string paramName = $"@{entry.Key}";
+                setClauses.Add($"{entry.Key} = {paramName}");
+                parameters[paramName] = entry.Value;
+            }
+
+            query += string.Join(", ", setClauses);
+            query += " WHERE IdArticle = @IdArticle";
+
+            // Ajout de l'identifiant de l'article comme paramètre
+            parameters["@IdArticle"] = article.IdArticle;
+
+            try
+            {
+                // Ouverture de la connexion
+                dbConnector.OuvrirConnexion();
+
+                using (MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion))
+                {
+                    // Ajout des paramètres à la commande
+                    foreach (var param in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(param.Key, param.Value ?? System.DBNull.Value);
+                    }
+
+                    // Exécution de la commande
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Gérer l'exception (log ou remontée)
+                throw new System.Exception($"Erreur lors de la mise à jour de l'article : {ex.Message}", ex);
+            }
+            finally
+            {
+                // Fermeture de la connexion
+                dbConnector.FermerConnexion();
+            }
         }
-    }
-    catch (System.Exception ex)
-    {
-        // Gérer l'exception (log ou remontée)
-        throw new System.Exception($"Erreur lors de la mise à jour de l'article : {ex.Message}", ex);
-    }
-    finally
-    {
-        // Fermeture de la connexion
-        dbConnector.FermerConnexion();
-    }
-}
 
         public void UpdateRemise(Article article, int promotion)
         {
