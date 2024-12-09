@@ -44,7 +44,7 @@ private void ChargerCategories()
         foreach (var categorie in categories)
         {
             Categories.Items.Add(categorie.Nom);
-            CategorieSelect.Items.Add(categorie);// Ajoute uniquement les noms
+            CategorieSelect.Items.Add(categorie.Nom);// Ajoute uniquement les noms
         }
     }
     catch (Exception ex)
@@ -469,6 +469,58 @@ private void ChargerCategories()
         private void Valider_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
+    try
+    {
+        // Récupération des données entrées par l'utilisateur
+        string nom = AddNomArticle.Text;
+        if (string.IsNullOrWhiteSpace(nom))
+        {
+            MessageBox.Show("Le champ Nom est obligatoire.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        if (!decimal.TryParse(AddPrixArticle.Text, out decimal prixUnitaire))
+        {
+            MessageBox.Show("Veuillez entrer un prix valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        if (!int.TryParse(AddQuantiteArticle.Text, out int quantite))
+        {
+            MessageBox.Show("Veuillez entrer une quantité valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+
+        // Vérification et récupération de la catégorie sélectionnée
+        if (CategorieSelect.SelectedIndex < 0)
+        {
+            MessageBox.Show("Veuillez sélectionner une catégorie.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        var selectedCategory = categories[CategorieSelect.SelectedIndex];
+        int idCategorie = selectedCategory.IdCategorie;
+
+        // Appel au contrôleur pour ajouter l'article
+        articleController.AjouterArticle(
+            idCategorie: idCategorie,
+            nom: nom,
+            prixUnitaire: prixUnitaire,
+            quantite: quantite
+        );
+
+        MessageBox.Show("L'article a été ajouté avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Rechargez les articles pour mettre à jour l'interface
+        loadArticle();
+        groupBox2.Visible = false;
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Erreur lors de l'ajout de l'article : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+          
 
         }
     }
