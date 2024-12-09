@@ -130,7 +130,7 @@ private void ChargerCategories()
                         {
                             selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
                             int value = Convert.ToInt16(promotionValue);
-                            articleController.UpdateRemise(selectedArticle, value);
+                            articleController.UpdatePromotion(selectedArticle, value);
                         }
                         else
                         {
@@ -148,7 +148,7 @@ private void ChargerCategories()
                     }
                     else if (button4.Text == "Supprimer")
                     {
-                        articleController.UpdateRemise(selectedArticle, 0);
+                        articleController.UpdatePromotion(selectedArticle, 0);
                         selectedArticle.Promotion = 0;
                         textBox5.Text = "0";
                         MessageBox.Show($"Promotion supprimée pour {selectedArticle.Nom}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);

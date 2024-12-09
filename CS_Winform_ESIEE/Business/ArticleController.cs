@@ -47,62 +47,6 @@ namespace CS_Winform_ESIEE.Business
             UpdateEstActif(article, false);
         }
 
-        public void UpdateIdCategorie(Article article, int idCategorie)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET IdCategorie = @IdCategorie WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@IdCategorie", idCategorie);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdateNom(Article article, string nom)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET Nom = @Nom WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@Nom", nom);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdatePrixUnitaire(Article article, decimal prixUnitaire)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET PrixUnitaire = @PrixUnitaire WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@PrixUnitaire", prixUnitaire);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdateQuantite(Article article, int quantite)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET Quantite = @Quantite WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@Quantite", quantite);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
         public void UpdatePromotion(Article article, int promotion)
         {
             dbConnector.OuvrirConnexion();
@@ -188,12 +132,6 @@ namespace CS_Winform_ESIEE.Business
                 // Fermeture de la connexion
                 dbConnector.FermerConnexion();
             }
-        }
-
-        public void UpdateRemise(Article article, int promotion)
-        {
-            UpdatePromotion(article,
-                promotion); // todo: delete this method and replace all calls to it with UpdatePromotion
         }
 
         public Article GetArticleById(int id)
