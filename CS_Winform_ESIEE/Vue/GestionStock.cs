@@ -289,6 +289,7 @@ private void ChargerCategories()
          */
         private void button3_Click(object sender, EventArgs e)
         {
+            groupBox4.Visible = true;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
