@@ -14,6 +14,9 @@ namespace CS_Winform_ESIEE.Business
     /// </summary>
     public class LigneCommandeController
     {
+        /// <summary>
+        /// Le connecteur de base de données.
+        /// </summary>
         private DatabaseConnector dbConnector;
 
         /// <summary>
