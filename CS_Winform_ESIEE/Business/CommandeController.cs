@@ -9,15 +9,25 @@ using System.Threading.Tasks;
 
 namespace CS_Winform_ESIEE.Business
 {
+    /// <summary>
+    /// Classe contrôleur pour gérer les commandes.
+    /// </summary>
     public class CommandeController
     {
         private DatabaseConnector dbConnector;
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="CommandeController"/>.
+        /// </summary>
         public CommandeController()
         {
             dbConnector = new DatabaseConnector();
         }
 
+        /// <summary>
+        /// Ajoute une nouvelle commande à la base de données.
+        /// </summary>
+        /// <returns>L'ID de la commande nouvellement ajoutée.</returns>
         public long AjouterCommande()
         {
             dbConnector.OuvrirConnexion();
@@ -37,6 +47,12 @@ namespace CS_Winform_ESIEE.Business
             return id;
         }
 
+        /// <summary>
+        /// Met à jour l'état d'une commande existante.
+        /// </summary>
+        /// <param name="commande">La commande à mettre à jour.</param>
+        /// <param name="etat">Le nouvel état de la commande.</param>
+        /// <exception cref="Exception">Lancée lorsqu'un état de commande invalide est fourni.</exception>
         public void UpdateCommande(Commande commande, EtatCommande etat)
         {
             dbConnector.OuvrirConnexion();
@@ -61,7 +77,7 @@ namespace CS_Winform_ESIEE.Business
             }
             else
             {
-                throw new Exception("Invalid order state.");
+                throw new Exception("État de commande invalide.");
             }
 
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
@@ -70,12 +86,14 @@ namespace CS_Winform_ESIEE.Business
             cmd.Parameters.AddWithValue("@IdCommande", commande.IdCommande);
             cmd.ExecuteNonQuery();
 
-
-            cmd.ExecuteNonQuery();
-
             dbConnector.FermerConnexion();
         }
 
+        /// <summary>
+        /// Récupère une commande par son ID.
+        /// </summary>
+        /// <param name="id">L'ID de la commande à récupérer.</param>
+        /// <returns>La commande avec l'ID spécifié, ou null si non trouvée.</returns>
         public Commande GetCommandeById(int id)
         {
             dbConnector.OuvrirConnexion();
@@ -108,6 +126,10 @@ namespace CS_Winform_ESIEE.Business
             return commande;
         }
 
+        /// <summary>
+        /// Récupère toutes les commandes de la base de données.
+        /// </summary>
+        /// <returns>Une liste de toutes les commandes.</returns>
         public List<Commande> GetAllCommandes()
         {
             dbConnector.OuvrirConnexion();
