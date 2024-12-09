@@ -44,7 +44,8 @@ d'un magasin, incluant la gestion des articles, des commandes et des promotions.
    ```bash
    dotnet restore
    ```
-4. Compilez et exécutez le projet.
+4. Complétez le fichier [.env](./CS_Winform_ESIEE/.env) avec les informations de connexion à la base de données.
+5. Compilez et exécutez le projet.
 
 ## Utilisation
 
