@@ -78,6 +78,8 @@ private void ChargerCategories()
         {
             loadArticle();
             ChargerCategories();
+            button3.Enabled = false;
+            button4.Enabled = false;
 
         
 
@@ -223,6 +225,9 @@ private void ChargerCategories()
                         button4.Text = "Supprimer";
                     else if (selectedArticle.Promotion <= 0)
                         button4.Text = "Appliquer";
+
+                    button3.Enabled = true;
+                    button4.Enabled = true;
                 }
                 catch (Exception ex)
                 {
@@ -290,6 +295,7 @@ private void ChargerCategories()
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = true;
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
