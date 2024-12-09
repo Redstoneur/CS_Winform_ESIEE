@@ -14,19 +14,28 @@ namespace CS_Winform_ESIEE.Business
             dbConnector = new DatabaseConnector();
         }
 
-        public void AjouterArticle(Article article)
+        public void AjouterArticle(int idCategorie, string nom, decimal prixUnitaire, int quantite, int promotion,
+            bool estActif = true)
         {
+            // verifier que la categorie existe
+            CategorieController categorieController = new CategorieController();
+            if (categorieController.GetCategorieById(idCategorie) == null)
+            {
+                throw new System.Exception("La catégorie n'existe pas");
+            }
+
             dbConnector.OuvrirConnexion();
 
-            string query = "INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, EstActif) " +
-                           "VALUES (@IdCategorie, @Nom, @PrixUnitaire, @Quantite, @Promotion, @EstActif)";
+            string query =
+                "INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, EstActif) VALUES (@IdCategorie, @Nom, @PrixUnitaire, @Quantite, @Promotion, @EstActif);";
+
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdCategorie", article.IdCategorie);
-            cmd.Parameters.AddWithValue("@Nom", article.Nom);
-            cmd.Parameters.AddWithValue("@PrixUnitaire", article.PrixUnitaire);
-            cmd.Parameters.AddWithValue("@Quantite", article.Quantite);
-            cmd.Parameters.AddWithValue("@Promotion", article.Promotion);
-            cmd.Parameters.AddWithValue("@EstActif", article.EstActif);
+            cmd.Parameters.AddWithValue("@IdCategorie", idCategorie);
+            cmd.Parameters.AddWithValue("@Nom", nom);
+            cmd.Parameters.AddWithValue("@PrixUnitaire", prixUnitaire);
+            cmd.Parameters.AddWithValue("@Quantite", quantite);
+            cmd.Parameters.AddWithValue("@Promotion", promotion);
+            cmd.Parameters.AddWithValue("@EstActif", estActif);
 
             cmd.ExecuteNonQuery();
 
@@ -133,25 +142,25 @@ namespace CS_Winform_ESIEE.Business
                     return;
                 }
             }
-            
+
             string query = "UPDATE ARTICLE SET";
-            
-            
+
+
             // mettre à jour les champs
-           foreach (KeyValuePair<string,object> d in data)
+            foreach (KeyValuePair<string, object> d in data)
             {
                 query += " ";
                 query += d.Key + " = " + d.Value + ",";
             }
-           
+
             // enlever la dernière virgule
             query = query.Remove(query.Length - 2);
             query += $" WHERE IdArticle = {article.IdArticle}";
-           
+
             dbConnector.OuvrirConnexion();
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
             cmd.ExecuteNonQuery();
-            dbConnector.FermerConnexion(); 
+            dbConnector.FermerConnexion();
         }
 
         public void UpdateRemise(Article article, int promotion)
