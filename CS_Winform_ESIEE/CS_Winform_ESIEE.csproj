@@ -226,38 +226,21 @@
     <Compile Include="Business\CommandeController.cs" />
     <Compile Include="Business\JsonEditorController.cs" />
     <Compile Include="Business\LigneCommandeController.cs" />
+    <Compile Include="Business\PanierController.cs" />
     <Compile Include="Data\DatabaseConnector.cs" />
     <Compile Include="Data\JsonEditor.cs" />
     <Compile Include="Modele\Article.cs" />
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />
-    <Compile Include="Modele\CommandeList.cs" />
+    <Compile Include="Modele\EtatCommande.cs" />
     <Compile Include="Modele\LigneCommande.cs" />
     <Compile Include="Modele\OperationResult.cs" />
     <Compile Include="Modele\Panier.cs" />
-    <Compile Include="Vue\GestionReappro.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Vue\GestionReappro.Designer.cs">
-      <DependentUpon>GestionReappro.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Vue\GestionReapproListeCommande.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Vue\GestionReapproListeCommande.Designer.cs">
-      <DependentUpon>GestionReapproListeCommande.cs</DependentUpon>
-    </Compile>
     <Compile Include="Vue\GestionReapproMixed.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Vue\GestionReapproMixed.Designer.cs">
       <DependentUpon>GestionReapproMixed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Vue\GestionReapproPanier.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Vue\GestionReapproPanier.Designer.cs">
-      <DependentUpon>GestionReapproPanier.cs</DependentUpon>
     </Compile>
     <Compile Include="Vue\GestionStock.cs">
       <SubType>Form</SubType>
@@ -276,17 +259,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Vue\GestionReappro.resx">
-      <DependentUpon>GestionReappro.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vue\GestionReapproListeCommande.resx">
-      <DependentUpon>GestionReapproListeCommande.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Vue\GestionReapproMixed.resx">
       <DependentUpon>GestionReapproMixed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vue\GestionReapproPanier.resx">
-      <DependentUpon>GestionReapproPanier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vue\GestionStock.resx">
       <DependentUpon>GestionStock.cs</DependentUpon>

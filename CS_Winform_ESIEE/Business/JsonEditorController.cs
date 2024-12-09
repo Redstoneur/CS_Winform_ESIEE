@@ -4,8 +4,16 @@ using CS_Winform_ESIEE.Modele;
 
 namespace CS_Winform_ESIEE.Business
 {
+    /// <summary>
+    /// Classe contrôleur pour gérer les opérations JSON.
+    /// </summary>
     public class JsonEditorController
     {
+        /// <summary>
+        /// Crée un fichier JSON au chemin spécifié.
+        /// </summary>
+        /// <param name="cheminJson">Le chemin où le fichier JSON sera créé.</param>
+        /// <returns>Un résultat d'opération indiquant le succès ou l'échec de l'opération.</returns>
         public OperationResult CreerJson(string cheminJson)
         {
             try
@@ -20,6 +28,11 @@ namespace CS_Winform_ESIEE.Business
             }
         }
 
+        /// <summary>
+        /// Met à jour la base de données en utilisant le fichier JSON au chemin spécifié.
+        /// </summary>
+        /// <param name="cheminJson">Le chemin du fichier JSON utilisé pour mettre à jour la base de données.</param>
+        /// <returns>Un résultat d'opération indiquant le succès ou l'échec de l'opération.</returns>
         public OperationResult MettreAJourBaseDeDonnees(string cheminJson)
         {
             try
