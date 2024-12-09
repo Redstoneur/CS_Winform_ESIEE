@@ -1,0 +1,45 @@
+﻿name: Build and Create .exe
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - feature/*
+  pull_request:
+    branches:
+      - main
+      - dev
+      - feature/*
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Étape 1 : Vérification du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installation de .NET Framework
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      # Étape 3 : Installation NuGet
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.1.0
+
+      # Étape 4 : Restauration des dépendances
+      - name: Restore dependencies
+        run: nuget restore CS_Winform_ESIEE.sln
+
+      # Étape 5 : Compilation du projet
+      - name: Build solution
+        run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      # Étape 6 : Archivage de l'exécutable
+      - name: Upload executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: CS_Winform_ESIEE
+          path: CS_Winform_ESIEE/bin/Release/
