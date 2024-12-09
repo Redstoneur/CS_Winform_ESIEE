@@ -134,7 +134,7 @@ namespace CS_Winform_ESIEE.Business
                 public void UpdateArticle(Article article, Dictionary<string, object> data)
 {
     // Vérification des clés valides
-    var validKeys = new HashSet<string> { "IdCategorie", "Nom", "PrixUnitaire", "Quantite", "Promotion", "EstActif" };
+    var validKeys = new HashSet<string> { "Nom", "PrixUnitaire", "Quantite", "EstActif" };
     foreach (string key in data.Keys)
     {
         if (!validKeys.Contains(key))

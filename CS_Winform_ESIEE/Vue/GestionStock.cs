@@ -434,6 +434,48 @@ private void ChargerCategories()
         private void ValiderModif_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = false;
+            groupBox4.Visible = false;
+
+    try
+    {
+        if (selectedArticle == null)
+        {
+            MessageBox.Show("Aucun article sélectionné pour la modification.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        // Récupération des données modifiées depuis l'interface utilisateur
+        var data = new Dictionary<string, object>();
+
+        if (!string.IsNullOrWhiteSpace(ModifNom.Text))
+            data["Nom"] = ModifNom.Text;
+
+        if (decimal.TryParse(ModifPrix.Text, out decimal prixUnitaire))
+            data["PrixUnitaire"] = prixUnitaire;
+
+        if (int.TryParse(ModifQuantite.Text, out int quantite))
+            data["Quantite"] = quantite;
+
+        // Vérification si des données ont été fournies pour la mise à jour
+        if (data.Count == 0)
+        {
+            MessageBox.Show("Aucune modification détectée.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
+        // Mise à jour de l'article via le contrôleur
+        articleController.UpdateArticle(selectedArticle, data);
+
+        // Confirmation de la mise à jour
+        MessageBox.Show("L'article a été mis à jour avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Rechargez les articles pour mettre à jour l'interface
+        loadArticle();
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Erreur lors de la mise à jour de l'article : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
 
         }
 
