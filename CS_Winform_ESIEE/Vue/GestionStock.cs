@@ -93,14 +93,12 @@ private void ChargerCategories()
          */
         private void button1_Click(object sender, EventArgs e)
         {
-            Business.ViewController.gestionreappromixed.Location = Business.ViewController.gestionstock.Location;
-            Business.ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
-            Business.ViewController.gestionreappromixed.FormClosing += delegate {
+            ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
+            ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
+            ViewController.gestionreappromixed.FormClosing += delegate {
                 try
                 {
-                    if (Business.ViewController.gestionstock.Enabled) {
-                        Business.ViewController.gestionstock.Show();
-                    }
+                    if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
                 }
                 catch (Exception ex)
                 {
@@ -108,11 +106,9 @@ private void ChargerCategories()
                 }
 
             };
-
-            Business.ViewController.gestionreappromixed.Show();
-            if (Business.ViewController.gestionstock.Enabled) {
-                Business.ViewController.gestionstock.Hide();
-            }
+            if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
+            if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Hide();
+            
         }
 
         /**

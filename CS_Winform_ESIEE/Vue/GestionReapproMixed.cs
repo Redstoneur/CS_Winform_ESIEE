@@ -67,15 +67,13 @@ namespace CS_Winform_ESIEE.Vue
         //bouton stock
         private void button3_Click(object sender, EventArgs e)
         {
-            Business.ViewController.gestionstock.Location = Business.ViewController.gestionreappromixed.Location;
-            Business.ViewController.gestionstock.StartPosition = FormStartPosition.Manual;
-            Business.ViewController.gestionstock.FormClosing += delegate
+            ViewController.gestionstock.Location = ViewController.gestionreappromixed.Location;
+            ViewController.gestionstock.StartPosition = FormStartPosition.Manual;
+            ViewController.gestionstock.FormClosing += delegate
             {
                 try
                 {
-                    if (Business.ViewController.gestionreappromixed.Enabled) {
-                        Business.ViewController.gestionreappromixed.Show();
-                    }
+                    if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
                 }
                 catch (Exception ex)
                 {
@@ -83,10 +81,8 @@ namespace CS_Winform_ESIEE.Vue
                 }
 
             };
-            Business.ViewController.gestionstock.Show();
-            if (Business.ViewController.gestionreappromixed.Enabled) {
-                Business.ViewController.gestionreappromixed.Hide();
-            }
+            if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
+            if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Hide();
         }
 
         //bouton panier

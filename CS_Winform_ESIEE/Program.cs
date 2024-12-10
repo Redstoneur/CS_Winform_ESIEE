@@ -25,8 +25,8 @@ namespace CS_Winform_ESIEE
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(Business.ViewController.init());
-            Business.ViewController.gestionreappromixed.Hide();
+            Application.Run(ViewController.init());
+            ViewController.gestionreappromixed.Hide();
         }
 
         static void TestDatabase()
