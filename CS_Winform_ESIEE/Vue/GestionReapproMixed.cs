@@ -156,32 +156,45 @@ namespace CS_Winform_ESIEE.Vue
         //bouton ajouter
         private void button1_Click(object sender, EventArgs e)
         {
+            if (Articles.SelectedIndex < 0)
+            {
+                MessageBox.Show("Veuillez sélectionner un article.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
             int quantite = 1;
             if (textBox1.Text != "")
                 quantite = int.Parse(textBox1.Text);
-                panier.AjouterArticle(new Article {
-                    IdArticle = articles[Articles.SelectedIndex].IdArticle,
-                    IdCategorie = articles[Articles.SelectedIndex].IdCategorie,
-                    Nom = articles[Articles.SelectedIndex].Nom,
-                    PrixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire,
-                    Quantite = quantite,
-                    Promotion = articles[Articles.SelectedIndex].Promotion,
-                    EstActif = articles[Articles.SelectedIndex].EstActif
-                });
-            ListViewItem item = new ListViewItem(articles[Articles.SelectedIndex].Nom);
-            item.SubItems.Add(articles[Articles.SelectedIndex].PrixUnitaire.ToString());
             
-            if (textBox1.Text == "")
-                item.SubItems.Add("1");
-            else
+            if (quantite <= 0)
             {
-                item.SubItems.Add(textBox1.Text);
-                quantite = int.Parse(textBox1.Text);
+                textBox1.Text = @"1";
+                MessageBox.Show("La quantité doit être supérieure à 0.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            PanierList.Items.Add(item);
-            decimal prixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire;
-            decimal total = prixUnitaire * quantite;
-            Console.WriteLine(textBox1.Text);
+            
+            Article newArticle = new Article {
+                IdArticle = articles[Articles.SelectedIndex].IdArticle,
+                IdCategorie = articles[Articles.SelectedIndex].IdCategorie,
+                Nom = articles[Articles.SelectedIndex].Nom,
+                PrixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire,
+                Quantite = quantite,
+                Promotion = articles[Articles.SelectedIndex].Promotion,
+                EstActif = articles[Articles.SelectedIndex].EstActif
+            };
+            
+            panier.AjouterArticle(newArticle);
+            
+            PanierList.Items.Clear();
+
+            foreach (Article article in panier.GetArticles())
+            {
+                ListViewItem item = new ListViewItem(article.Nom);
+                item.SubItems.Add(article.PrixUnitaire.ToString());
+                item.SubItems.Add(article.Quantite.ToString());
+                PanierList.Items.Add(item);
+            }
+            
             textBox2.Text = panier.GetTotal().ToString();
         }
 

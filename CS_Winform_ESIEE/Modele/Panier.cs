@@ -39,6 +39,15 @@ namespace CS_Winform_ESIEE.Modele
         /// <param name="article">L'article à ajouter.</param>
         public void AjouterArticle(Article article)
         {
+            // Si l'article est déjà dans le panier, on incrémente sa quantité.
+            foreach (Article a in articles)
+            {
+                if (a.IdArticle == article.IdArticle)
+                {
+                    a.Quantite += article.Quantite;
+                    return;
+                }
+            }
             articles.Add(article);
         }
 
