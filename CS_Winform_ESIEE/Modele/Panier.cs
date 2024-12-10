@@ -48,16 +48,8 @@ namespace CS_Winform_ESIEE.Modele
                     return;
                 }
             }
-            articles.Add(article);
-        }
 
-        /// <summary>
-        /// Supprime un article du panier.
-        /// </summary>
-        /// <param name="article">L'article à supprimer.</param>
-        public void SupprimerArticle(Article article)
-        {
-            articles.Remove(article);
+            articles.Add(article);
         }
 
         /// <summary>
@@ -91,6 +83,67 @@ namespace CS_Winform_ESIEE.Modele
         public void Vider()
         {
             articles.Clear();
+        }
+
+        /// <summary>
+        /// Supprime un article du panier par son identifiant.
+        /// </summary>
+        /// <param name="idArticle">L'identifiant de l'article à supprimer.</param>
+        public void SupprimerArticleById(int idArticle)
+        {
+            foreach (Article a in articles)
+            {
+                if (a.IdArticle == idArticle)
+                {
+                    articles.Remove(a);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retire un nombre spécifié d'exemplaires d'un article du panier par son identifiant.
+        /// </summary>
+        /// <param name="idArticle">L'identifiant de l'article.</param>
+        /// <param name="nbExemplaire">Le nombre d'exemplaires à retirer.</param>
+        public void RetirerNbExemplaireArticleById(int idArticle, int nbExemplaire)
+        {
+            foreach (Article a in articles)
+            {
+                if (a.IdArticle == idArticle)
+                {
+                    a.Quantite -= nbExemplaire;
+                    if (a.Quantite <= 0)
+                    {
+                        SupprimerArticleById(idArticle);
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Redéfinit le nombre d'exemplaires d'un article dans le panier par son identifiant.
+        /// </summary>
+        /// <param name="idArticle">L'identifiant de l'article.</param>
+        /// <param name="nbExemplaire">Le nouveau nombre d'exemplaires.</param>
+        public void RedefineNbExemplaireArticleById(int idArticle, int nbExemplaire)
+        {
+            if (nbExemplaire <= 0)
+            {
+                SupprimerArticleById(idArticle);
+                return;
+            }
+
+            foreach (Article a in articles)
+            {
+                if (a.IdArticle == idArticle)
+                {
+                    a.Quantite = nbExemplaire;
+                    return;
+                }
+            }
         }
     }
 }
