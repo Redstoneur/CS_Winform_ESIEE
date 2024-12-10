@@ -600,6 +600,8 @@ namespace CS_Winform_ESIEE.Vue
             this.textBox2.Size = new System.Drawing.Size(145, 26);
             this.textBox2.TabIndex = 7;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.Text = "0";
+            this.textBox2.Enabled = false;
             // 
             // label5
             // 

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace CS_Winform_ESIEE.Vue
 {
@@ -250,11 +251,9 @@ namespace CS_Winform_ESIEE.Vue
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
-            textBox2.Text = "";
-            PanierList.Items.Clear();
-            Console.WriteLine(panier);
             panierController.Commander(panier);
             panier.Vider();
+            UpdatePanier();
         }
 
         //sous-interface liste commande
@@ -439,8 +438,12 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
-
             textBox2.Text = panier.GetTotal().ToString();
+            
+            if (panier.GetArticles().Count == 0)
+                button5.Enabled = false;
+            else
+                button5.Enabled = true;
         }
 
         private void UpdateCommandesList()
