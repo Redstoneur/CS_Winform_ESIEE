@@ -31,7 +31,7 @@ jobs:
           $content = $content -replace '@user";', '${{ secrets.DATABASE_USER }}";'
           $content = $content -replace '@password";', '${{ secrets.DATABASE_PASSWORD }}";'
           Set-Content -Path $path -Value $content
-        
+      
       # Étape 3 : Installation de .NET Framework
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
@@ -46,11 +46,11 @@ jobs:
 
       # Étape 6 : Compilation du projet
       - name: Build solution
-        run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishSingleFile=true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishDir=CS_Winform_ESIEE/bin/Release/
 
       # Étape 7 : Archivage de l'exécutable
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: CS_Winform_ESIEE
-          path: CS_Winform_ESIEE/bin/Release/
+          path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
