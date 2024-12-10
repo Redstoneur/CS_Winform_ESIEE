@@ -165,6 +165,8 @@ namespace CS_Winform_ESIEE.Vue
             int quantite = 1;
             if (textBox1.Text != "")
                 quantite = int.Parse(textBox1.Text);
+            else
+                textBox1.Text = @"1";
             
             if (quantite <= 0)
             {
