@@ -358,7 +358,7 @@ namespace CS_Winform_ESIEE.Vue
             this.groupBox4.Controls.Add(this.button9);
             this.groupBox4.Controls.Add(this.button8);
             this.groupBox4.Controls.Add(this.textBox4);
-            this.groupBox4.Location = new System.Drawing.Point(280, 12);
+            this.groupBox4.Location = new System.Drawing.Point(73, 123);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(245, 137);
             this.groupBox4.TabIndex = 7;
@@ -428,6 +428,7 @@ namespace CS_Winform_ESIEE.Vue
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.PanierList);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.label4);
@@ -540,7 +541,6 @@ namespace CS_Winform_ESIEE.Vue
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip1);
