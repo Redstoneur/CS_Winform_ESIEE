@@ -20,13 +20,17 @@ namespace CS_Winform_ESIEE.Vue
         private List<Article> articles; // Stocke les articles récupérés
 
         private CategorieController categorieController;
+        private PanierController panierController;
         private List<Categorie> categories;
+        Panier panier = new Panier();
+
 
         public GestionReapproMixed()
         {
             InitializeComponent();
             articleController = new ArticleController();
             categorieController = new CategorieController();
+            panierController = new PanierController();
         }
 
         /**
@@ -152,7 +156,33 @@ namespace CS_Winform_ESIEE.Vue
         //bouton ajouter
         private void button1_Click(object sender, EventArgs e)
         {
-
+            int quantite = 1;
+            if (textBox1.Text != "")
+                quantite = int.Parse(textBox1.Text);
+                panier.AjouterArticle(new Article {
+                    IdArticle = articles[Articles.SelectedIndex].IdArticle,
+                    IdCategorie = articles[Articles.SelectedIndex].IdCategorie,
+                    Nom = articles[Articles.SelectedIndex].Nom,
+                    PrixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire,
+                    Quantite = quantite,
+                    Promotion = articles[Articles.SelectedIndex].Promotion,
+                    EstActif = articles[Articles.SelectedIndex].EstActif
+                });
+            ListViewItem item = new ListViewItem(articles[Articles.SelectedIndex].Nom);
+            item.SubItems.Add(articles[Articles.SelectedIndex].PrixUnitaire.ToString());
+            
+            if (textBox1.Text == "")
+                item.SubItems.Add("1");
+            else
+            {
+                item.SubItems.Add(textBox1.Text);
+                quantite = int.Parse(textBox1.Text);
+            }
+            PanierList.Items.Add(item);
+            decimal prixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire;
+            decimal total = prixUnitaire * quantite;
+            Console.WriteLine(textBox1.Text);
+            textBox2.Text = panier.GetTotal().ToString();
         }
 
         //textbox quantité
@@ -208,6 +238,10 @@ namespace CS_Winform_ESIEE.Vue
         //bouton valider
         private void button5_Click(object sender, EventArgs e)
         {
+            groupBox3.Visible=false;
+            panier.Vider();
+            Console.WriteLine(panier);
+            panierController.Commander(panier);
 
         }
 
@@ -256,5 +290,6 @@ namespace CS_Winform_ESIEE.Vue
         {
             groupBox2.Visible = true;
         }
+
     }
 }
