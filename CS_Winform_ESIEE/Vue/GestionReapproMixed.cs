@@ -10,11 +10,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace CS_Winform_ESIEE.Vue
 {
     public partial class GestionReapproMixed : Form
     {
+        private CommandeController CommandeController = new CommandeController();
+        private LigneCommandeController LigneCommandeController = new LigneCommandeController();
+
         private ArticleController articleController;
         private List<Article> articles; // Stocke les articles récupérés
 
@@ -30,12 +34,11 @@ namespace CS_Winform_ESIEE.Vue
             articleController = new ArticleController();
             categorieController = new CategorieController();
             panierController = new PanierController();
-
         }
 
         /**
-* Méthode pour charger les catégories dans la ListBox Categories
-*/
+        * Méthode pour charger les catégories dans la ListBox Categories
+        */
         private void ChargerCategories()
         {
             try
@@ -66,12 +69,22 @@ namespace CS_Winform_ESIEE.Vue
         //bouton stock
         private void button3_Click(object sender, EventArgs e)
         {
-            var frm = new GestionStock();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Close();
+            ViewController.gestionstock.Location = ViewController.gestionreappromixed.Location;
+            ViewController.gestionstock.StartPosition = FormStartPosition.Manual;
+            ViewController.gestionstock.FormClosing += delegate
+            {
+                try
+                {
+                    if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("secure for avoid crash");
+                }
+
+            };
+            if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
+            if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Hide();
         }
 
         //bouton panier
@@ -238,11 +251,9 @@ namespace CS_Winform_ESIEE.Vue
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
-            panier.Vider();
-            textBox2.Text = "";
-            PanierList.Items.Clear();
-            Console.WriteLine(panier);
             panierController.Commander(panier);
+            panier.Vider();
+            UpdatePanier();
         }
 
         //sous-interface liste commande
@@ -254,13 +265,53 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //listbox liste de commandes
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListCommande_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (ListCommande.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
+            {
+                string selectedItem = ListCommande.SelectedItem.ToString();
+                int commandeId = GetCommandeIdWithCommandeListItem(selectedItem);
+                
+                List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
+                
+                ArticlesCommande.Items.Clear();
+                ArticlesCommande.Columns.Clear();
+                
+                ArticlesCommande.Columns.Add("Nom", 100);
+                ArticlesCommande.Columns.Add("Prix Unitaire", 55);
+                ArticlesCommande.Columns.Add("Quantité", 60);
+                ArticlesCommande.Columns.Add("Promotion", 65);
+                ArticlesCommande.Columns.Add("Total", 65);
+                
+                foreach (LigneCommande ligneCommande in lignesCommandes)
+                {
+                    Article article = articleController.GetArticleById(ligneCommande.IdArticle);
+                    ListViewItem item = new ListViewItem(article.Nom);
+                    item.Tag = article.IdArticle;
+                    item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
+                    item.SubItems.Add(ligneCommande.Quantite.ToString());
+                    item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                    item.SubItems.Add(ligneCommande.PrixTotal.ToString());
+                    ArticlesCommande.Items.Add(item);
+                }
+                
+                TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
+                
+                Commande commande = CommandeController.GetCommandeById(commandeId);
+                
+                EtatCommande.SelectedItem = commande.Etat;
+                
+                ArticlesCommande.Enabled = true;
+                EtatCommande.Enabled = false; // todo: feature to change the state of the order
+                
+                
+            }
         }
 
         private void GestionReapproMixed_Load(object sender, EventArgs e)
         {
             UpdatePanier();
+            UpdateCommandesList();
             try
             {
                 // Récupérer tous les articles
@@ -289,10 +340,59 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button7_Click(object sender, EventArgs e)
         {
+            UpdateCommandesList();
             groupBox2.Visible = true;
         }
 
         private void PanierList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            GestionQuantite.Visible = false;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            int articleId = (int)Quantites.Tag;
+            int newQuantite = int.Parse(Quantites.Text);
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            GestionQuantite.Visible = false;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            int articleId = (int)Quantites.Tag;
+            int newQuantite = -1;
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            GestionQuantite.Visible = false;
+        }
+
+        private void BoutonExit(object sender, EventArgs e)
+        {
+            GestionQuantite.Visible = false;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
         }
 
@@ -306,11 +406,11 @@ namespace CS_Winform_ESIEE.Vue
                 int quantite = int.Parse(selectedItem.SubItems[2].Text);
 
                 // une messagebox pour demander la quantité
-                
-                groupBox4.Visible = true;
-                NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
-                textBox4.Text = quantite.ToString();
-                textBox4.Tag = articleId;
+
+                GestionQuantite.Visible = true;
+                NomArticleSuppr.Text = @"Changer la quantité de " + articleName + @" :";
+                Quantites.Text = quantite.ToString();
+                Quantites.Tag = articleId;
             }
         }
 
@@ -338,59 +438,43 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
-
             textBox2.Text = panier.GetTotal().ToString();
+            
+            if (panier.GetArticles().Count == 0)
+                button5.Enabled = false;
+            else
+                button5.Enabled = true;
         }
 
-        private void groupBox4_Enter(object sender, EventArgs e)
+        private void UpdateCommandesList()
         {
+            List<Commande> commandes = CommandeController.GetAllCommandes();
 
+            ListCommande.Items.Clear();
+
+            foreach (Commande commande in commandes)
+            {
+                ListCommande.Items.Add("#"+commande.IdCommande.ToString());
+            }
+            
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            EtatCommande.Items.Add("Commandé");
+            EtatCommande.Items.Add("Expédié");
+            EtatCommande.Items.Add("Livré");
+            EtatCommande.SelectedItem = "Commandé";
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        
+        private int GetCommandeIdWithCommandeListItem(string commandeId)
         {
-
+            return int.Parse(commandeId.Substring(1));
         }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            groupBox4.Visible = false;
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            int articleId = (int)textBox4.Tag;
-            int newQuantite = int.Parse(textBox4.Text);
-            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
-            UpdatePanier();
-            groupBox4.Visible = false;
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            int articleId = (int)textBox4.Tag;
-            int newQuantite = -1;
-            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
-            UpdatePanier();
-            groupBox4.Visible = false;
-        }
-
-        private void BoutonExit(object sender, EventArgs e)
-        {
-            groupBox4.Visible = false;
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
+        
+        private void GestionReapproMixed_FormClosing(object sender, FormClosingEventArgs e)
         {
 
         }

@@ -54,15 +54,21 @@ namespace CS_Winform_ESIEE.Vue
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.EtatCommande = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.Devise = new System.Windows.Forms.Label();
+            this.TotalCommande = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ArticlesCommande = new System.Windows.Forms.ListView();
+            this.ListCommande = new System.Windows.Forms.ListBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button11 = new System.Windows.Forms.Button();
+            this.GestionQuantite = new System.Windows.Forms.GroupBox();
+            this.supprPanier = new System.Windows.Forms.Button();
             this.NomArticleSuppr = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
+            this.AnnulerQuantite = new System.Windows.Forms.Button();
+            this.ValiderQuantite = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.Quantites = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.PanierList = new System.Windows.Forms.ListView();
             this.button6 = new System.Windows.Forms.Button();
@@ -76,7 +82,7 @@ namespace CS_Winform_ESIEE.Vue
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.GestionQuantite.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -285,6 +291,7 @@ namespace CS_Winform_ESIEE.Vue
             this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
@@ -321,7 +328,13 @@ namespace CS_Winform_ESIEE.Vue
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.groupBox2.Controls.Add(this.listBox3);
+            this.groupBox2.Controls.Add(this.EtatCommande);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.Devise);
+            this.groupBox2.Controls.Add(this.TotalCommande);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.ArticlesCommande);
+            this.groupBox2.Controls.Add(this.ListCommande);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Location = new System.Drawing.Point(50, 49);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -330,19 +343,79 @@ namespace CS_Winform_ESIEE.Vue
             this.groupBox2.Size = new System.Drawing.Size(1088, 623);
             this.groupBox2.TabIndex = 25;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Commandes";
             this.groupBox2.Visible = false;
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
-            // listBox3
+            // EtatCommande
             // 
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 20;
-            this.listBox3.Location = new System.Drawing.Point(24, 62);
-            this.listBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(1032, 524);
-            this.listBox3.TabIndex = 6;
-            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+            this.EtatCommande.FormattingEnabled = true;
+            this.EtatCommande.Location = new System.Drawing.Point(818, 548);
+            this.EtatCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.EtatCommande.Name = "EtatCommande";
+            this.EtatCommande.Size = new System.Drawing.Size(180, 28);
+            this.EtatCommande.TabIndex = 12;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(646, 552);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(172, 20);
+            this.label16.TabIndex = 11;
+            this.label16.Text = "Etat de la commande : ";
+            // 
+            // Devise
+            // 
+            this.Devise.AutoSize = true;
+            this.Devise.Location = new System.Drawing.Point(494, 552);
+            this.Devise.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Devise.Name = "Devise";
+            this.Devise.Size = new System.Drawing.Size(18, 20);
+            this.Devise.TabIndex = 10;
+            this.Devise.Text = "€";
+            // 
+            // TotalCommande
+            // 
+            this.TotalCommande.Location = new System.Drawing.Point(334, 548);
+            this.TotalCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TotalCommande.Name = "TotalCommande";
+            this.TotalCommande.Size = new System.Drawing.Size(148, 26);
+            this.TotalCommande.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(270, 552);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Total :";
+            // 
+            // ArticlesCommande
+            // 
+            this.ArticlesCommande.FullRowSelect = true;
+            this.ArticlesCommande.HideSelection = false;
+            this.ArticlesCommande.Location = new System.Drawing.Point(270, 62);
+            this.ArticlesCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ArticlesCommande.Name = "ArticlesCommande";
+            this.ArticlesCommande.Size = new System.Drawing.Size(746, 462);
+            this.ArticlesCommande.TabIndex = 7;
+            this.ArticlesCommande.UseCompatibleStateImageBehavior = false;
+            this.ArticlesCommande.View = System.Windows.Forms.View.Details;
+            // 
+            // ListCommande
+            // 
+            this.ListCommande.FormattingEnabled = true;
+            this.ListCommande.ItemHeight = 20;
+            this.ListCommande.Location = new System.Drawing.Point(24, 62);
+            this.ListCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ListCommande.Name = "ListCommande";
+            this.ListCommande.Size = new System.Drawing.Size(190, 524);
+            this.ListCommande.TabIndex = 6;
+            this.ListCommande.SelectedIndexChanged += new System.EventHandler(this.ListCommande_SelectedIndexChanged);
             // 
             // button4
             // 
@@ -356,39 +429,40 @@ namespace CS_Winform_ESIEE.Vue
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // groupBox4
+            // GestionQuantite
             // 
-            this.groupBox4.Controls.Add(this.button11);
-            this.groupBox4.Controls.Add(this.NomArticleSuppr);
-            this.groupBox4.Controls.Add(this.button10);
-            this.groupBox4.Controls.Add(this.button9);
-            this.groupBox4.Controls.Add(this.button8);
-            this.groupBox4.Controls.Add(this.textBox4);
-            this.groupBox4.Location = new System.Drawing.Point(110, 189);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox4.Size = new System.Drawing.Size(368, 211);
-            this.groupBox4.TabIndex = 7;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Visible = false;
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            this.GestionQuantite.Controls.Add(this.supprPanier);
+            this.GestionQuantite.Controls.Add(this.NomArticleSuppr);
+            this.GestionQuantite.Controls.Add(this.AnnulerQuantite);
+            this.GestionQuantite.Controls.Add(this.ValiderQuantite);
+            this.GestionQuantite.Controls.Add(this.button8);
+            this.GestionQuantite.Controls.Add(this.Quantites);
+            this.GestionQuantite.Location = new System.Drawing.Point(110, 189);
+            this.GestionQuantite.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.GestionQuantite.Name = "GestionQuantite";
+            this.GestionQuantite.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.GestionQuantite.Size = new System.Drawing.Size(368, 211);
+            this.GestionQuantite.TabIndex = 7;
+            this.GestionQuantite.TabStop = false;
+            this.GestionQuantite.Text = "Quantites";
+            this.GestionQuantite.Visible = false;
+            this.GestionQuantite.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
-            // button11
+            // supprPanier
             // 
-            this.button11.Location = new System.Drawing.Point(177, 58);
-            this.button11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(112, 35);
-            this.button11.TabIndex = 9;
-            this.button11.Text = "Supprimer";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.supprPanier.Location = new System.Drawing.Point(177, 58);
+            this.supprPanier.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.supprPanier.Name = "supprPanier";
+            this.supprPanier.Size = new System.Drawing.Size(112, 35);
+            this.supprPanier.TabIndex = 9;
+            this.supprPanier.Text = "Supprimer";
+            this.supprPanier.UseVisualStyleBackColor = true;
+            this.supprPanier.Click += new System.EventHandler(this.button11_Click);
             // 
             // NomArticleSuppr
             // 
             this.NomArticleSuppr.AutoSize = true;
-            this.NomArticleSuppr.Location = new System.Drawing.Point(34, 23);
+            this.NomArticleSuppr.Location = new System.Drawing.Point(42, 25);
             this.NomArticleSuppr.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.NomArticleSuppr.Name = "NomArticleSuppr";
             this.NomArticleSuppr.Size = new System.Drawing.Size(51, 20);
@@ -397,27 +471,27 @@ namespace CS_Winform_ESIEE.Vue
             this.NomArticleSuppr.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.NomArticleSuppr.Click += new System.EventHandler(this.label1_Click);
             // 
-            // button10
+            // AnnulerQuantite
             // 
-            this.button10.Location = new System.Drawing.Point(242, 142);
-            this.button10.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(87, 43);
-            this.button10.TabIndex = 7;
-            this.button10.Text = "Annuler";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.AnnulerQuantite.Location = new System.Drawing.Point(242, 142);
+            this.AnnulerQuantite.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.AnnulerQuantite.Name = "AnnulerQuantite";
+            this.AnnulerQuantite.Size = new System.Drawing.Size(87, 43);
+            this.AnnulerQuantite.TabIndex = 7;
+            this.AnnulerQuantite.Text = "Annuler";
+            this.AnnulerQuantite.UseVisualStyleBackColor = true;
+            this.AnnulerQuantite.Click += new System.EventHandler(this.button10_Click);
             // 
-            // button9
+            // ValiderQuantite
             // 
-            this.button9.Location = new System.Drawing.Point(38, 142);
-            this.button9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(93, 43);
-            this.button9.TabIndex = 6;
-            this.button9.Text = "Valider";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.ValiderQuantite.Location = new System.Drawing.Point(38, 142);
+            this.ValiderQuantite.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ValiderQuantite.Name = "ValiderQuantite";
+            this.ValiderQuantite.Size = new System.Drawing.Size(93, 43);
+            this.ValiderQuantite.TabIndex = 6;
+            this.ValiderQuantite.Text = "Valider";
+            this.ValiderQuantite.UseVisualStyleBackColor = true;
+            this.ValiderQuantite.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
@@ -431,19 +505,19 @@ namespace CS_Winform_ESIEE.Vue
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.BoutonExit);
             // 
-            // textBox4
+            // Quantites
             // 
-            this.textBox4.Location = new System.Drawing.Point(87, 63);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(79, 26);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.Quantites.Location = new System.Drawing.Point(87, 63);
+            this.Quantites.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Quantites.Name = "Quantites";
+            this.Quantites.Size = new System.Drawing.Size(79, 26);
+            this.Quantites.TabIndex = 1;
+            this.Quantites.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.groupBox3.Controls.Add(this.groupBox4);
+            this.groupBox3.Controls.Add(this.GestionQuantite);
             this.groupBox3.Controls.Add(this.PanierList);
             this.groupBox3.Controls.Add(this.button6);
             this.groupBox3.Controls.Add(this.label4);
@@ -459,6 +533,7 @@ namespace CS_Winform_ESIEE.Vue
             this.groupBox3.Size = new System.Drawing.Size(570, 685);
             this.groupBox3.TabIndex = 26;
             this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Panier";
             this.groupBox3.Visible = false;
             // 
             // PanierList
@@ -470,7 +545,8 @@ namespace CS_Winform_ESIEE.Vue
             this.PanierList.Size = new System.Drawing.Size(523, 489);
             this.PanierList.TabIndex = 0;
             this.PanierList.UseCompatibleStateImageBehavior = false;
-            this.PanierList.View = System.Windows.Forms.View.Details;
+            this.PanierList.View = View.Details; // Définir la vue sur Details (colonnes)
+            this.PanierList.FullRowSelect = true; // Sélectionner toute la ligne
             // 
             // button6
             // 
@@ -524,6 +600,8 @@ namespace CS_Winform_ESIEE.Vue
             this.textBox2.Size = new System.Drawing.Size(145, 26);
             this.textBox2.TabIndex = 7;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.Text = "0";
+            this.textBox2.Enabled = false;
             // 
             // label5
             // 
@@ -549,7 +627,6 @@ namespace CS_Winform_ESIEE.Vue
             // 
             // button7
             // 
-            this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(837, 151);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(284, 31);
@@ -564,8 +641,8 @@ namespace CS_Winform_ESIEE.Vue
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1200, 692);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -577,15 +654,16 @@ namespace CS_Winform_ESIEE.Vue
             this.MaximizeBox = false;
             this.Name = "GestionReapproMixed";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "GestionReapproMixed";
+            this.Text = "MilkyMarket";
             this.Load += new System.EventHandler(this.GestionReapproMixed_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.groupBox2.PerformLayout();
+            this.GestionQuantite.ResumeLayout(false);
+            this.GestionQuantite.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -609,7 +687,7 @@ namespace CS_Winform_ESIEE.Vue
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox ListCommande;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox textBox2;
@@ -631,12 +709,18 @@ namespace CS_Winform_ESIEE.Vue
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.ListView PanierList;
-        private GroupBox groupBox4;
-        private Button button10;
-        private Button button9;
+        private GroupBox GestionQuantite;
+        private Button AnnulerQuantite;
+        private Button ValiderQuantite;
         private Button button8;
-        private TextBox textBox4;
+        private TextBox Quantites;
         private Label NomArticleSuppr;
-        private Button button11;
+        private Button supprPanier;
+        private ComboBox EtatCommande;
+        private Label label16;
+        private Label Devise;
+        private TextBox TotalCommande;
+        private Label label1;
+        private ListView ArticlesCommande;
     }
 }
