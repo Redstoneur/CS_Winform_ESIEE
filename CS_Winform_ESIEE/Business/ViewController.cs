@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CS_Winform_ESIEE.Vue;
 
-namespace CS_Winform_ESIEE.Vue
+namespace CS_Winform_ESIEE.Business
 {
-    internal static class View
+    internal static class ViewController
     {
         public static GestionStock gestionstock;
         public static GestionReapproMixed gestionreappromixed;

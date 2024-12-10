@@ -25,8 +25,8 @@ namespace CS_Winform_ESIEE
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(Vue.View.init());
-            Vue.View.gestionreappromixed.Hide();
+            Application.Run(Business.ViewController.init());
+            Business.ViewController.gestionreappromixed.Hide();
         }
 
         static void TestDatabase()
