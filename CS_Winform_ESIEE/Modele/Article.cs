@@ -45,5 +45,9 @@ namespace CS_Winform_ESIEE.Modele
         /// Obtient ou définit une valeur indiquant si l'article est actif.
         /// </summary>
         public bool EstActif { get; set; }
+        
+        public decimal PrixTotal => PrixUnitaire * Quantite * (1 - Promotion / 100);
+        
+        public decimal PrixUnitairePromotion => PrixUnitaire * (1 - Promotion / 100);
     }
 }

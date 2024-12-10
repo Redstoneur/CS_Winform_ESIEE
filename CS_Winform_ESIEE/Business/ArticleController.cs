@@ -5,19 +5,38 @@ using System.Collections.Generic;
 
 namespace CS_Winform_ESIEE.Business
 {
+    /// <summary>
+    /// Classe contrôleur pour gérer les articles.
+    /// </summary>
     public class ArticleController
     {
+        /// <summary>
+        /// Le connecteur de base de données.
+        /// </summary>
         private DatabaseConnector dbConnector;
 
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="ArticleController"/>.
+        /// </summary>
         public ArticleController()
         {
             dbConnector = new DatabaseConnector();
         }
 
+        /// <summary>
+        /// Ajoute un nouvel article à la base de données.
+        /// </summary>
+        /// <param name="idCategorie">L'ID de la catégorie de l'article.</param>
+        /// <param name="nom">Le nom de l'article.</param>
+        /// <param name="prixUnitaire">Le prix unitaire de l'article.</param>
+        /// <param name="quantite">La quantité de l'article.</param>
+        /// <param name="promotion">La valeur de la promotion de l'article (par défaut 0).</param>
+        /// <param name="estActif">Indique si l'article est actif (par défaut true).</param>
+        /// <exception cref="System.Exception">Lancée lorsque la catégorie n'existe pas.</exception>
         public void AjouterArticle(int idCategorie, string nom, decimal prixUnitaire, int quantite, int promotion = 0,
             bool estActif = true)
         {
-            // verifier que la categorie existe
+            // Vérifie que la catégorie existe
             CategorieController categorieController = new CategorieController();
             if (categorieController.GetCategorieById(idCategorie) == null)
             {
@@ -42,67 +61,20 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
+        /// <summary>
+        /// Marque un article comme inactif.
+        /// </summary>
+        /// <param name="article">L'article à marquer comme inactif.</param>
         public void SupprimerArticle(Article article)
         {
             UpdateEstActif(article, false);
         }
 
-        public void UpdateIdCategorie(Article article, int idCategorie)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET IdCategorie = @IdCategorie WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@IdCategorie", idCategorie);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdateNom(Article article, string nom)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET Nom = @Nom WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@Nom", nom);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdatePrixUnitaire(Article article, decimal prixUnitaire)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET PrixUnitaire = @PrixUnitaire WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@PrixUnitaire", prixUnitaire);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
-        public void UpdateQuantite(Article article, int quantite)
-        {
-            dbConnector.OuvrirConnexion();
-
-            string query = "UPDATE ARTICLE SET Quantite = @Quantite WHERE IdArticle = @IdArticle;";
-            MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
-            cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
-            cmd.Parameters.AddWithValue("@Quantite", quantite);
-
-            cmd.ExecuteNonQuery();
-
-            dbConnector.FermerConnexion();
-        }
-
+        /// <summary>
+        /// Met à jour la valeur de la promotion d'un article.
+        /// </summary>
+        /// <param name="article">L'article à mettre à jour.</param>
+        /// <param name="promotion">La nouvelle valeur de la promotion.</param>
         public void UpdatePromotion(Article article, int promotion)
         {
             dbConnector.OuvrirConnexion();
@@ -117,6 +89,11 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
+        /// <summary>
+        /// Met à jour le statut actif d'un article.
+        /// </summary>
+        /// <param name="article">L'article à mettre à jour.</param>
+        /// <param name="estActif">Le nouveau statut actif.</param>
         public void UpdateEstActif(Article article, bool estActif)
         {
             dbConnector.OuvrirConnexion();
@@ -131,6 +108,13 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.FermerConnexion();
         }
 
+        /// <summary>
+        /// Met à jour les champs spécifiés d'un article.
+        /// </summary>
+        /// <param name="article">L'article à mettre à jour.</param>
+        /// <param name="data">Un dictionnaire contenant les champs à mettre à jour et leurs nouvelles valeurs.</param>
+        /// <exception cref="System.ArgumentException">Lancée lorsqu'une clé invalide est fournie dans le dictionnaire de données.</exception>
+        /// <exception cref="System.Exception">Lancée lorsqu'une erreur se produit lors de la mise à jour.</exception>
         public void UpdateArticle(Article article, Dictionary<string, object> data)
         {
             // Vérification des clés valides
@@ -190,12 +174,11 @@ namespace CS_Winform_ESIEE.Business
             }
         }
 
-        public void UpdateRemise(Article article, int promotion)
-        {
-            UpdatePromotion(article,
-                promotion); // todo: delete this method and replace all calls to it with UpdatePromotion
-        }
-
+        /// <summary>
+        /// Récupère un article par son ID.
+        /// </summary>
+        /// <param name="id">L'ID de l'article.</param>
+        /// <returns>L'article avec l'ID spécifié, ou null si non trouvé.</returns>
         public Article GetArticleById(int id)
         {
             dbConnector.OuvrirConnexion();
@@ -226,6 +209,10 @@ namespace CS_Winform_ESIEE.Business
             return article;
         }
 
+        /// <summary>
+        /// Récupère tous les articles de la base de données.
+        /// </summary>
+        /// <returns>Une liste de tous les articles.</returns>
         public List<Article> GetAllArticles()
         {
             dbConnector.OuvrirConnexion();
@@ -256,6 +243,10 @@ namespace CS_Winform_ESIEE.Business
             return articles;
         }
 
+        /// <summary>
+        /// Récupère tous les articles actifs de la base de données.
+        /// </summary>
+        /// <returns>Une liste de tous les articles actifs.</returns>
         public List<Article> GetAllArticlesEstActive()
         {
             dbConnector.OuvrirConnexion();

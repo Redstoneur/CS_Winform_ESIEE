@@ -3,9 +3,6 @@ using CS_Winform_ESIEE.Data;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CS_Winform_ESIEE.Business
 {
@@ -14,6 +11,9 @@ namespace CS_Winform_ESIEE.Business
     /// </summary>
     public class CommandeController
     {
+        /// <summary>
+        /// Le connecteur de base de données.
+        /// </summary>
         private DatabaseConnector dbConnector;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace CS_Winform_ESIEE.Business
         public long AjouterCommande()
         {
             dbConnector.OuvrirConnexion();
-            
+
             EtatCommande etat = EtatCommande.Commande;
 
             string query = "INSERT INTO COMMANDE (Etat) VALUES (@Statut)";
@@ -39,11 +39,11 @@ namespace CS_Winform_ESIEE.Business
             cmd.Parameters.AddWithValue("@Statut", etat.to_string());
 
             cmd.ExecuteNonQuery();
-            
+
             long id = cmd.LastInsertedId;
 
             dbConnector.FermerConnexion();
-            
+
             return id;
         }
 
