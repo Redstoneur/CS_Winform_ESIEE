@@ -40,5 +40,16 @@ namespace CS_Winform_ESIEE.Modele
         /// Obtient ou définit la promotion appliquée à l'article.
         /// </summary>
         public int Promotion { get; set; }
+
+
+        /// <summary>
+        /// Obtient le prix unitaire après application de la promotion.
+        /// </summary>
+        public decimal PrixUnitairePromotion => PrixUnitaire * (1 - Promotion / 100);
+
+        /// <summary>
+        /// Obtient le prix total pour la quantité d'articles commandés après application de la promotion.
+        /// </summary>
+        public decimal PrixTotal => PrixUnitairePromotion * Quantite;
     }
 }

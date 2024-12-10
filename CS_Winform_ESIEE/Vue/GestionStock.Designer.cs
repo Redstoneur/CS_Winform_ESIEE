@@ -212,6 +212,7 @@
             // 
             // textBox5
             // 
+            this.textBox5.Enabled = false;
             this.textBox5.Location = new System.Drawing.Point(70, 260);
             this.textBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox5.Name = "textBox5";
@@ -284,6 +285,7 @@
             // 
             // button5
             // 
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(788, 140);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
@@ -391,7 +393,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(683, 352);
+            this.groupBox2.Size = new System.Drawing.Size(682, 352);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ajouter";
@@ -497,7 +499,7 @@
             // 
             // AddNomArticle
             // 
-            this.AddNomArticle.Location = new System.Drawing.Point(112, 79);
+            this.AddNomArticle.Location = new System.Drawing.Point(112, 78);
             this.AddNomArticle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddNomArticle.Name = "AddNomArticle";
             this.AddNomArticle.Size = new System.Drawing.Size(174, 26);
@@ -524,7 +526,7 @@
             // button9
             // 
             this.button9.BackColor = System.Drawing.Color.Red;
-            this.button9.Location = new System.Drawing.Point(389, 19);
+            this.button9.Location = new System.Drawing.Point(388, 18);
             this.button9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(26, 35);
@@ -546,7 +548,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(65, 49);
+            this.label12.Location = new System.Drawing.Point(64, 49);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(293, 20);
             this.label12.TabIndex = 2;
@@ -591,7 +593,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Size = new System.Drawing.Size(637, 369);
+            this.groupBox4.Size = new System.Drawing.Size(638, 369);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Modifier";
@@ -600,7 +602,7 @@
             // 
             // ModifAnnuler
             // 
-            this.ModifAnnuler.Location = new System.Drawing.Point(385, 276);
+            this.ModifAnnuler.Location = new System.Drawing.Point(386, 275);
             this.ModifAnnuler.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifAnnuler.Name = "ModifAnnuler";
             this.ModifAnnuler.Size = new System.Drawing.Size(86, 29);
@@ -611,7 +613,7 @@
             // 
             // ValiderModif
             // 
-            this.ValiderModif.Location = new System.Drawing.Point(227, 276);
+            this.ValiderModif.Location = new System.Drawing.Point(226, 275);
             this.ValiderModif.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ValiderModif.Name = "ValiderModif";
             this.ValiderModif.Size = new System.Drawing.Size(75, 29);
@@ -631,7 +633,7 @@
             // 
             // ReduceQuantite
             // 
-            this.ReduceQuantite.Location = new System.Drawing.Point(442, 190);
+            this.ReduceQuantite.Location = new System.Drawing.Point(442, 189);
             this.ReduceQuantite.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ReduceQuantite.Name = "ReduceQuantite";
             this.ReduceQuantite.Size = new System.Drawing.Size(26, 34);
@@ -641,17 +643,17 @@
             // 
             // AddQuantite
             // 
-            this.AddQuantite.Location = new System.Drawing.Point(385, 191);
+            this.AddQuantite.Location = new System.Drawing.Point(386, 191);
             this.AddQuantite.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddQuantite.Name = "AddQuantite";
-            this.AddQuantite.Size = new System.Drawing.Size(29, 34);
+            this.AddQuantite.Size = new System.Drawing.Size(28, 34);
             this.AddQuantite.TabIndex = 17;
             this.AddQuantite.Text = "+";
             this.AddQuantite.UseVisualStyleBackColor = true;
             // 
             // ModifQuantite
             // 
-            this.ModifQuantite.Location = new System.Drawing.Point(379, 149);
+            this.ModifQuantite.Location = new System.Drawing.Point(380, 149);
             this.ModifQuantite.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifQuantite.Name = "ModifQuantite";
             this.ModifQuantite.Size = new System.Drawing.Size(100, 26);
@@ -669,7 +671,7 @@
             // 
             // ModifNom
             // 
-            this.ModifNom.Location = new System.Drawing.Point(182, 99);
+            this.ModifNom.Location = new System.Drawing.Point(182, 98);
             this.ModifNom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifNom.Name = "ModifNom";
             this.ModifNom.Size = new System.Drawing.Size(100, 26);
@@ -679,7 +681,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(119, 170);
+            this.label14.Location = new System.Drawing.Point(118, 169);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(42, 20);
             this.label14.TabIndex = 13;
@@ -688,7 +690,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(119, 102);
+            this.label13.Location = new System.Drawing.Point(118, 102);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(50, 20);
             this.label13.TabIndex = 12;
@@ -710,6 +712,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1200, 692);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip1);
@@ -725,8 +729,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
             this.Name = "GestionStock";
-            this.Text = "Form1";
+            this.Text = "MilkyMarket";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

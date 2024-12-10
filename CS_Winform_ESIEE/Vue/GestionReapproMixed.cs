@@ -1,5 +1,4 @@
 ﻿using CS_Winform_ESIEE.Business;
-using CS_Winform_ESIEE.Data;
 using CS_Winform_ESIEE.Modele;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,8 @@ namespace CS_Winform_ESIEE.Vue
 {
     public partial class GestionReapproMixed : Form
     {
+        private CommandeController CommandeController = new CommandeController();
+        private LigneCommandeController LigneCommandeController = new LigneCommandeController();
 
         private ArticleController articleController;
         private List<Article> articles; // Stocke les articles récupérés
@@ -35,8 +36,8 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /**
-* Méthode pour charger les catégories dans la ListBox Categories
-*/
+        * Méthode pour charger les catégories dans la ListBox Categories
+        */
         private void ChargerCategories()
         {
             try
@@ -53,13 +54,13 @@ namespace CS_Winform_ESIEE.Vue
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du chargement des catégories : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erreur lors du chargement des catégories : {ex.Message}", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void Form5_Load(object sender, EventArgs e)
         {
-
         }
 
         //principal
@@ -108,7 +109,8 @@ namespace CS_Winform_ESIEE.Vue
                     if (selectedCategory != null)
                     {
                         // Filtrer les articles pour afficher uniquement ceux qui ont le même IdCategorie que la catégorie sélectionnée
-                        List<Article> filteredArticles = articles.Where(article => article.IdCategorie == selectedCategory.IdCategorie).ToList();
+                        List<Article> filteredArticles = articles
+                            .Where(article => article.IdCategorie == selectedCategory.IdCategorie).ToList();
 
                         // Mettre à jour la ListBox des articles
                         Articles.Items.Clear();
@@ -121,28 +123,28 @@ namespace CS_Winform_ESIEE.Vue
                     else
                     {
                         // Si la catégorie n'est pas trouvée, afficher un message ou réinitialiser la liste des articles
-                        MessageBox.Show("Catégorie non trouvée.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Catégorie non trouvée.", "Erreur", MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors de la sélection de la catégorie : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erreur lors de la sélection de la catégorie : {ex.Message}", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         //listbox des listes des articles
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            if(label10.Visible == false)
+            if (label10.Visible == false)
                 label10.Visible = true;
-            if(label11.Visible == false)
+            if (label11.Visible == false)
                 label11.Visible = true;
-            if(label12.Visible == false)
+            if (label12.Visible == false)
                 label12.Visible = true;
-            if(label13.Visible == false)
+            if (label13.Visible == false)
                 label13.Visible = true;
             if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
             {
@@ -159,7 +161,8 @@ namespace CS_Winform_ESIEE.Vue
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Erreur lors de la sélection de l'article : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Erreur lors de la sélection de l'article : {ex.Message}", "Erreur",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -169,24 +172,27 @@ namespace CS_Winform_ESIEE.Vue
         {
             if (Articles.SelectedIndex < 0)
             {
-                MessageBox.Show("Veuillez sélectionner un article.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Veuillez sélectionner un article.", "Erreur", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
-            
+
             int quantite = 1;
             if (textBox1.Text != "")
                 quantite = int.Parse(textBox1.Text);
             else
                 textBox1.Text = @"1";
-            
+
             if (quantite <= 0)
             {
                 textBox1.Text = @"1";
-                MessageBox.Show("La quantité doit être supérieure à 0.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("La quantité doit être supérieure à 0.", "Erreur", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
-            
-            Article newArticle = new Article {
+
+            Article newArticle = new Article
+            {
                 IdArticle = articles[Articles.SelectedIndex].IdArticle,
                 IdCategorie = articles[Articles.SelectedIndex].IdCategorie,
                 Nom = articles[Articles.SelectedIndex].Nom,
@@ -195,34 +201,30 @@ namespace CS_Winform_ESIEE.Vue
                 Promotion = articles[Articles.SelectedIndex].Promotion,
                 EstActif = articles[Articles.SelectedIndex].EstActif
             };
-            
+
             panier.AjouterArticle(newArticle);
-            
+
             UpdatePanier();
         }
 
         //textbox quantité
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         //bouton menu about
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         //bouton menu edit
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         //bouton menu exit
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         //sous-interface panier
@@ -242,24 +244,17 @@ namespace CS_Winform_ESIEE.Vue
         //listbox 
         private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        //textbox prix
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            textBox2.ReadOnly = true;
-
         }
 
         //bouton valider
         private void button5_Click(object sender, EventArgs e)
         {
-            groupBox3.Visible=false;
-            panier.Vider();
+            groupBox3.Visible = false;
+            textBox2.Text = "";
+            PanierList.Items.Clear();
             Console.WriteLine(panier);
             panierController.Commander(panier);
-
+            panier.Vider();
         }
 
         //sous-interface liste commande
@@ -271,13 +266,53 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //listbox liste de commandes
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListCommande_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (ListCommande.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
+            {
+                string selectedItem = ListCommande.SelectedItem.ToString();
+                int commandeId = GetCommandeIdWithCommandeListItem(selectedItem);
+                
+                List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
+                
+                ArticlesCommande.Items.Clear();
+                ArticlesCommande.Columns.Clear();
+                
+                ArticlesCommande.Columns.Add("Nom", 100);
+                ArticlesCommande.Columns.Add("Prix Unitaire", 55);
+                ArticlesCommande.Columns.Add("Quantité", 60);
+                ArticlesCommande.Columns.Add("Promotion", 65);
+                ArticlesCommande.Columns.Add("Total", 65);
+                
+                foreach (LigneCommande ligneCommande in lignesCommandes)
+                {
+                    Article article = articleController.GetArticleById(ligneCommande.IdArticle);
+                    ListViewItem item = new ListViewItem(article.Nom);
+                    item.Tag = article.IdArticle;
+                    item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
+                    item.SubItems.Add(ligneCommande.Quantite.ToString());
+                    item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                    item.SubItems.Add(ligneCommande.PrixTotal.ToString());
+                    ArticlesCommande.Items.Add(item);
+                }
+                
+                TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
+                
+                Commande commande = CommandeController.GetCommandeById(commandeId);
+                
+                EtatCommande.SelectedItem = commande.Etat;
+                
+                ArticlesCommande.Enabled = true;
+                EtatCommande.Enabled = false; // todo: feature to change the state of the order
+                
+                
+            }
         }
 
         private void GestionReapproMixed_Load(object sender, EventArgs e)
         {
+            UpdatePanier();
+            UpdateCommandesList();
             try
             {
                 // Récupérer tous les articles
@@ -292,41 +327,109 @@ namespace CS_Winform_ESIEE.Vue
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            ChargerCategories();
 
+            ChargerCategories();
+            PanierList.MouseDoubleClick += new MouseEventHandler(PanierList_MouseDoubleClick);
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
         {
-            
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
+            UpdateCommandesList();
             groupBox2.Visible = true;
         }
 
         private void PanierList_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
 
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            GestionQuantite.Visible = false;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            int articleId = (int)Quantites.Tag;
+            int newQuantite = int.Parse(Quantites.Text);
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            GestionQuantite.Visible = false;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            int articleId = (int)Quantites.Tag;
+            int newQuantite = -1;
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            GestionQuantite.Visible = false;
+        }
+
+        private void BoutonExit(object sender, EventArgs e)
+        {
+            GestionQuantite.Visible = false;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (PanierList.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = PanierList.SelectedItems[0];
+                int articleId = (int)selectedItem.Tag;
+                string articleName = selectedItem.Text;
+                int quantite = int.Parse(selectedItem.SubItems[2].Text);
+
+                // une messagebox pour demander la quantité
+
+                GestionQuantite.Visible = true;
+                NomArticleSuppr.Text = @"Changer la quantité de " + articleName + @" :";
+                Quantites.Text = quantite.ToString();
+                Quantites.Tag = articleId;
+            }
         }
 
         private void UpdatePanier()
         {
             PanierList.Items.Clear();
             PanierList.Columns.Clear();
-            
+
             PanierList.Columns.Add("Nom", 100);
             PanierList.Columns.Add("Prix", 55);
             PanierList.Columns.Add("Quantité", 60);
             if (!checkBox1.Checked)
                 PanierList.Columns.Add("Promotion", 65);
-            
+
             foreach (Article article in panier.GetArticles())
             {
                 ListViewItem item = new ListViewItem(article.Nom);
+                item.Tag = article.IdArticle;
                 if (checkBox1.Checked)
                     item.SubItems.Add(article.PrixUnitairePromotion.ToString());
                 else
@@ -336,10 +439,38 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
-            
+
             textBox2.Text = panier.GetTotal().ToString();
         }
 
+        private void UpdateCommandesList()
+        {
+            List<Commande> commandes = CommandeController.GetAllCommandes();
+
+            ListCommande.Items.Clear();
+
+            foreach (Commande commande in commandes)
+            {
+                ListCommande.Items.Add("#"+commande.IdCommande.ToString());
+            }
+            
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            EtatCommande.Items.Add("Commandé");
+            EtatCommande.Items.Add("Expédié");
+            EtatCommande.Items.Add("Livré");
+            EtatCommande.SelectedItem = "Commandé";
+        }
+        
+        private int GetCommandeIdWithCommandeListItem(string commandeId)
+        {
+            return int.Parse(commandeId.Substring(1));
+        }
+        
         private void GestionReapproMixed_FormClosing(object sender, FormClosingEventArgs e)
         {
 
