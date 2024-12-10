@@ -93,13 +93,13 @@ private void ChargerCategories()
          */
         private void button1_Click(object sender, EventArgs e)
         {
-            view.grm.Location = view.gs.Location;
-            view.grm.StartPosition = FormStartPosition.Manual;
-            view.grm.FormClosing += delegate {
+            Vue.View.gestionreappromixed.Location = Vue.View.gestionstock.Location;
+            Vue.View.gestionreappromixed.StartPosition = FormStartPosition.Manual;
+            Vue.View.gestionreappromixed.FormClosing += delegate {
                 try
                 {
-                    if (view.gs.Enabled) {
-                        view.gs.Show();
+                    if (Vue.View.gestionstock.Enabled) {
+                        Vue.View.gestionstock.Show();
                     }
                 }
                 catch (Exception ex)
@@ -109,9 +109,9 @@ private void ChargerCategories()
 
             };
 
-            view.grm.Show();
-            if (view.gs.Enabled) {
-                view.gs.Hide();
+            Vue.View.gestionreappromixed.Show();
+            if (Vue.View.gestionstock.Enabled) {
+                Vue.View.gestionstock.Hide();
             }
         }
 

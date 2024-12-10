@@ -229,7 +229,7 @@
     <Compile Include="Business\PanierController.cs" />
     <Compile Include="Data\DatabaseConnector.cs" />
     <Compile Include="Data\JsonEditor.cs" />
-    <Compile Include="Data\view.cs" />
+    <Compile Include="Vue\View.cs" />
     <Compile Include="Modele\Article.cs" />
     <Compile Include="Modele\Categorie.cs" />
     <Compile Include="Modele\Commande.cs" />

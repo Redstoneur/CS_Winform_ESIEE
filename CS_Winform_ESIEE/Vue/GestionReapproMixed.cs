@@ -67,14 +67,14 @@ namespace CS_Winform_ESIEE.Vue
         //bouton stock
         private void button3_Click(object sender, EventArgs e)
         {
-            view.gs.Location = view.grm.Location;
-            view.gs.StartPosition = FormStartPosition.Manual;
-            view.gs.FormClosing += delegate
+            Vue.View.gestionstock.Location = Vue.View.gestionreappromixed.Location;
+            Vue.View.gestionstock.StartPosition = FormStartPosition.Manual;
+            Vue.View.gestionstock.FormClosing += delegate
             {
                 try
                 {
-                    if (view.grm.Enabled) {
-                        view.grm.Show();
+                    if (Vue.View.gestionreappromixed.Enabled) {
+                        Vue.View.gestionreappromixed.Show();
                     }
                 }
                 catch (Exception ex)
@@ -83,9 +83,9 @@ namespace CS_Winform_ESIEE.Vue
                 }
 
             };
-            view.gs.Show();
-            if (view.grm.Enabled) {
-                view.grm.Hide();
+            Vue.View.gestionstock.Show();
+            if (Vue.View.gestionreappromixed.Enabled) {
+                Vue.View.gestionreappromixed.Hide();
             }
         }
 
