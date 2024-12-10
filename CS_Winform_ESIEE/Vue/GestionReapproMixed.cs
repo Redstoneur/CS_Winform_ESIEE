@@ -187,29 +187,7 @@ namespace CS_Winform_ESIEE.Vue
             
             panier.AjouterArticle(newArticle);
             
-            PanierList.Items.Clear();
-            PanierList.Columns.Clear();
-            
-            PanierList.Columns.Add("Nom", 100);
-            PanierList.Columns.Add("Prix", 50);
-            PanierList.Columns.Add("Quantité", 75);
-            if (!checkBox1.Checked)
-                PanierList.Columns.Add("Promotion", 75);
-
-            foreach (Article article in panier.GetArticles())
-            {
-                ListViewItem item = new ListViewItem(article.Nom);
-                if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
-                else
-                    item.SubItems.Add(article.PrixUnitaire.ToString());
-                item.SubItems.Add(article.Quantite.ToString());
-                if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + "%");
-                PanierList.Items.Add(item);
-            }
-            
-            textBox2.Text = panier.GetTotal().ToString();
+            UpdatePanier();
         }
 
         //textbox quantité
@@ -247,29 +225,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton on/off quantité/unité
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            PanierList.Items.Clear();
-            PanierList.Columns.Clear();
-            
-            PanierList.Columns.Add("Nom", 100);
-            PanierList.Columns.Add("Prix", 50);
-            PanierList.Columns.Add("Quantité", 75);
-            if (!checkBox1.Checked)
-                PanierList.Columns.Add("Promotion", 75);
-            
-            foreach (Article article in panier.GetArticles())
-            {
-                ListViewItem item = new ListViewItem(article.Nom);
-                if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
-                else
-                    item.SubItems.Add(article.PrixUnitaire.ToString());
-                item.SubItems.Add(article.Quantite.ToString());
-                if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + "%");
-                PanierList.Items.Add(item);
-            }
-            
-            textBox2.Text = panier.GetTotal().ToString();
+            UpdatePanier();
         }
 
         //listbox 
@@ -344,6 +300,33 @@ namespace CS_Winform_ESIEE.Vue
         private void PanierList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void UpdatePanier()
+        {
+            PanierList.Items.Clear();
+            PanierList.Columns.Clear();
+            
+            PanierList.Columns.Add("Nom", 100);
+            PanierList.Columns.Add("Prix", 55);
+            PanierList.Columns.Add("Quantité", 60);
+            if (!checkBox1.Checked)
+                PanierList.Columns.Add("Promotion", 65);
+            
+            foreach (Article article in panier.GetArticles())
+            {
+                ListViewItem item = new ListViewItem(article.Nom);
+                if (checkBox1.Checked)
+                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                else
+                    item.SubItems.Add(article.PrixUnitaire.ToString());
+                item.SubItems.Add(article.Quantite.ToString());
+                if (!checkBox1.Checked)
+                    item.SubItems.Add(article.Promotion.ToString() + "%");
+                PanierList.Items.Add(item);
+            }
+            
+            textBox2.Text = panier.GetTotal().ToString();
         }
     }
 }
