@@ -296,52 +296,6 @@ namespace CS_Winform_ESIEE.Vue
         {
         }
 
-        private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (PanierList.SelectedItems.Count > 0)
-            {
-                ListViewItem selectedItem = PanierList.SelectedItems[0];
-                int articleId = (int)selectedItem.Tag;
-                string articleName = selectedItem.Text;
-                int quantite = int.Parse(selectedItem.SubItems[2].Text);
-
-                // une messagebox pour demander la quantité
-                
-                GestionQuantite.Visible = true;
-                NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
-                Quantites.Text = quantite.ToString();
-                Quantites.Tag = articleId;
-            }
-        }
-
-        private void UpdatePanier()
-        {
-            PanierList.Items.Clear();
-            PanierList.Columns.Clear();
-
-            PanierList.Columns.Add("Nom", 100);
-            PanierList.Columns.Add("Prix", 55);
-            PanierList.Columns.Add("Quantité", 60);
-            if (!checkBox1.Checked)
-                PanierList.Columns.Add("Promotion", 65);
-
-            foreach (Article article in panier.GetArticles())
-            {
-                ListViewItem item = new ListViewItem(article.Nom);
-                item.Tag = article.IdArticle;
-                if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
-                else
-                    item.SubItems.Add(article.PrixUnitaire.ToString());
-                item.SubItems.Add(article.Quantite.ToString());
-                if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + "%");
-                PanierList.Items.Add(item);
-            }
-
-            textBox2.Text = panier.GetTotal().ToString();
-        }
-
         private void groupBox4_Enter(object sender, EventArgs e)
         {
 
@@ -393,6 +347,52 @@ namespace CS_Winform_ESIEE.Vue
         private void label5_Click(object sender, EventArgs e)
         {
 
+        }
+        
+        private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (PanierList.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = PanierList.SelectedItems[0];
+                int articleId = (int)selectedItem.Tag;
+                string articleName = selectedItem.Text;
+                int quantite = int.Parse(selectedItem.SubItems[2].Text);
+
+                // une messagebox pour demander la quantité
+                
+                GestionQuantite.Visible = true;
+                NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
+                Quantites.Text = quantite.ToString();
+                Quantites.Tag = articleId;
+            }
+        }
+
+        private void UpdatePanier()
+        {
+            PanierList.Items.Clear();
+            PanierList.Columns.Clear();
+
+            PanierList.Columns.Add("Nom", 100);
+            PanierList.Columns.Add("Prix", 55);
+            PanierList.Columns.Add("Quantité", 60);
+            if (!checkBox1.Checked)
+                PanierList.Columns.Add("Promotion", 65);
+
+            foreach (Article article in panier.GetArticles())
+            {
+                ListViewItem item = new ListViewItem(article.Nom);
+                item.Tag = article.IdArticle;
+                if (checkBox1.Checked)
+                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                else
+                    item.SubItems.Add(article.PrixUnitaire.ToString());
+                item.SubItems.Add(article.Quantite.ToString());
+                if (!checkBox1.Checked)
+                    item.SubItems.Add(article.Promotion.ToString() + "%");
+                PanierList.Items.Add(item);
+            }
+
+            textBox2.Text = panier.GetTotal().ToString();
         }
     }
 }
