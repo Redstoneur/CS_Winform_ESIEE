@@ -396,6 +396,7 @@ namespace CS_Winform_ESIEE.Vue
             // 
             // ArticlesCommande
             // 
+            this.ArticlesCommande.FullRowSelect = true;
             this.ArticlesCommande.HideSelection = false;
             this.ArticlesCommande.Location = new System.Drawing.Point(270, 62);
             this.ArticlesCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -403,6 +404,7 @@ namespace CS_Winform_ESIEE.Vue
             this.ArticlesCommande.Size = new System.Drawing.Size(746, 462);
             this.ArticlesCommande.TabIndex = 7;
             this.ArticlesCommande.UseCompatibleStateImageBehavior = false;
+            this.ArticlesCommande.View = System.Windows.Forms.View.Details;
             // 
             // ListCommande
             // 
@@ -413,7 +415,7 @@ namespace CS_Winform_ESIEE.Vue
             this.ListCommande.Name = "ListCommande";
             this.ListCommande.Size = new System.Drawing.Size(190, 524);
             this.ListCommande.TabIndex = 6;
-            this.ListCommande.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+            this.ListCommande.SelectedIndexChanged += new System.EventHandler(this.ListCommande_SelectedIndexChanged);
             // 
             // button4
             // 

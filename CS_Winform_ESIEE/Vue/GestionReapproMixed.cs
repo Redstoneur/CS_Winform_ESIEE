@@ -15,6 +15,9 @@ namespace CS_Winform_ESIEE.Vue
 {
     public partial class GestionReapproMixed : Form
     {
+        private CommandeController CommandeController = new CommandeController();
+        private LigneCommandeController LigneCommandeController = new LigneCommandeController();
+
         private ArticleController articleController;
         private List<Article> articles; // Stocke les articles récupérés
 
@@ -30,12 +33,11 @@ namespace CS_Winform_ESIEE.Vue
             articleController = new ArticleController();
             categorieController = new CategorieController();
             panierController = new PanierController();
-
         }
 
         /**
-* Méthode pour charger les catégories dans la ListBox Categories
-*/
+        * Méthode pour charger les catégories dans la ListBox Categories
+        */
         private void ChargerCategories()
         {
             try
@@ -238,11 +240,11 @@ namespace CS_Winform_ESIEE.Vue
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
-            panier.Vider();
             textBox2.Text = "";
             PanierList.Items.Clear();
             Console.WriteLine(panier);
             panierController.Commander(panier);
+            panier.Vider();
         }
 
         //sous-interface liste commande
@@ -254,13 +256,53 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //listbox liste de commandes
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListCommande_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (ListCommande.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
+            {
+                string selectedItem = ListCommande.SelectedItem.ToString();
+                int commandeId = GetCommandeIdWithCommandeListItem(selectedItem);
+                
+                List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
+                
+                ArticlesCommande.Items.Clear();
+                ArticlesCommande.Columns.Clear();
+                
+                ArticlesCommande.Columns.Add("Nom", 100);
+                ArticlesCommande.Columns.Add("Prix Unitaire", 55);
+                ArticlesCommande.Columns.Add("Quantité", 60);
+                ArticlesCommande.Columns.Add("Promotion", 65);
+                ArticlesCommande.Columns.Add("Total", 65);
+                
+                foreach (LigneCommande ligneCommande in lignesCommandes)
+                {
+                    Article article = articleController.GetArticleById(ligneCommande.IdArticle);
+                    ListViewItem item = new ListViewItem(article.Nom);
+                    item.Tag = article.IdArticle;
+                    item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
+                    item.SubItems.Add(ligneCommande.Quantite.ToString());
+                    item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                    item.SubItems.Add(ligneCommande.PrixTotal.ToString());
+                    ArticlesCommande.Items.Add(item);
+                }
+                
+                TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
+                
+                Commande commande = CommandeController.GetCommandeById(commandeId);
+                
+                EtatCommande.SelectedItem = commande.Etat;
+                
+                ArticlesCommande.Enabled = true;
+                EtatCommande.Enabled = false; // todo: feature to change the state of the order
+                
+                
+            }
         }
 
         private void GestionReapproMixed_Load(object sender, EventArgs e)
         {
             UpdatePanier();
+            UpdateCommandesList();
             try
             {
                 // Récupérer tous les articles
@@ -289,6 +331,7 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button7_Click(object sender, EventArgs e)
         {
+            UpdateCommandesList();
             groupBox2.Visible = true;
         }
 
@@ -298,12 +341,10 @@ namespace CS_Winform_ESIEE.Vue
 
         private void groupBox4_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -322,7 +363,6 @@ namespace CS_Winform_ESIEE.Vue
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -341,14 +381,12 @@ namespace CS_Winform_ESIEE.Vue
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label5_Click(object sender, EventArgs e)
         {
-
         }
-        
+
         private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (PanierList.SelectedItems.Count > 0)
@@ -359,9 +397,9 @@ namespace CS_Winform_ESIEE.Vue
                 int quantite = int.Parse(selectedItem.SubItems[2].Text);
 
                 // une messagebox pour demander la quantité
-                
+
                 GestionQuantite.Visible = true;
-                NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
+                NomArticleSuppr.Text = @"Changer la quantité de " + articleName + @" :";
                 Quantites.Text = quantite.ToString();
                 Quantites.Tag = articleId;
             }
@@ -393,6 +431,34 @@ namespace CS_Winform_ESIEE.Vue
             }
 
             textBox2.Text = panier.GetTotal().ToString();
+        }
+
+        private void UpdateCommandesList()
+        {
+            List<Commande> commandes = CommandeController.GetAllCommandes();
+
+            ListCommande.Items.Clear();
+
+            foreach (Commande commande in commandes)
+            {
+                ListCommande.Items.Add("#"+commande.IdCommande.ToString());
+            }
+            
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommande.Enabled = false;
+            EtatCommande.Items.Add("Commandé");
+            EtatCommande.Items.Add("Expédié");
+            EtatCommande.Items.Add("Livré");
+            EtatCommande.SelectedItem = "Commandé";
+        }
+        
+        private int GetCommandeIdWithCommandeListItem(string commandeId)
+        {
+            return int.Parse(commandeId.Substring(1));
         }
     }
 }
