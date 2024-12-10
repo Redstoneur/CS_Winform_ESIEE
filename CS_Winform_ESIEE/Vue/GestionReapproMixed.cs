@@ -188,12 +188,24 @@ namespace CS_Winform_ESIEE.Vue
             panier.AjouterArticle(newArticle);
             
             PanierList.Items.Clear();
+            PanierList.Columns.Clear();
+            
+            PanierList.Columns.Add("Nom", 100);
+            PanierList.Columns.Add("Prix", 50);
+            PanierList.Columns.Add("Quantité", 75);
+            if (!checkBox1.Checked)
+                PanierList.Columns.Add("Promotion", 75);
 
             foreach (Article article in panier.GetArticles())
             {
                 ListViewItem item = new ListViewItem(article.Nom);
-                item.SubItems.Add(article.PrixUnitaire.ToString());
+                if (checkBox1.Checked)
+                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                else
+                    item.SubItems.Add(article.PrixUnitaire.ToString());
                 item.SubItems.Add(article.Quantite.ToString());
+                if (!checkBox1.Checked)
+                    item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
             
@@ -235,7 +247,29 @@ namespace CS_Winform_ESIEE.Vue
         //bouton on/off quantité/unité
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
+            PanierList.Items.Clear();
+            PanierList.Columns.Clear();
+            
+            PanierList.Columns.Add("Nom", 100);
+            PanierList.Columns.Add("Prix", 50);
+            PanierList.Columns.Add("Quantité", 75);
+            if (!checkBox1.Checked)
+                PanierList.Columns.Add("Promotion", 75);
+            
+            foreach (Article article in panier.GetArticles())
+            {
+                ListViewItem item = new ListViewItem(article.Nom);
+                if (checkBox1.Checked)
+                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                else
+                    item.SubItems.Add(article.PrixUnitaire.ToString());
+                item.SubItems.Add(article.Quantite.ToString());
+                if (!checkBox1.Checked)
+                    item.SubItems.Add(article.Promotion.ToString() + "%");
+                PanierList.Items.Add(item);
+            }
+            
+            textBox2.Text = panier.GetTotal().ToString();
         }
 
         //listbox 
@@ -307,5 +341,9 @@ namespace CS_Winform_ESIEE.Vue
             groupBox2.Visible = true;
         }
 
+        private void PanierList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

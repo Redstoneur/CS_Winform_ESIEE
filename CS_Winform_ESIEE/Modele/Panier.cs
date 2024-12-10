@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CS_Winform_ESIEE.Modele
 {
@@ -63,14 +64,7 @@ namespace CS_Winform_ESIEE.Modele
         /// <returns>Le prix total de tous les articles.</returns>
         public decimal GetTotal()
         {
-            decimal total = 0;
-            foreach (Article article in articles)
-            {
-                decimal prix = article.PrixUnitaire * article.Quantite;
-                total += prix - (prix * article.Promotion / 100);
-            }
-
-            return total;
+            return articles.Sum(article => article.PrixTotal);
         }
 
         /// <summary>

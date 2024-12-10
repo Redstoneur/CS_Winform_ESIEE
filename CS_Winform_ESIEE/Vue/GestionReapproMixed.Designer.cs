@@ -378,10 +378,6 @@ namespace CS_Winform_ESIEE.Vue
             this.PanierList.Size = new System.Drawing.Size(372, 489);
             this.PanierList.TabIndex = 0;
             this.PanierList.UseCompatibleStateImageBehavior = false;
-            this.PanierList.Columns.Add("Article",100);
-            this.PanierList.Columns.Add("Prix",50);
-            this.PanierList.Columns.Add("Quantites",100);
-            this.PanierList.Columns.Add("Quantites",100);
             this.PanierList.View = View.Details; // Définir la vue sur Details (colonnes)
             this.PanierList.FullRowSelect = true; // Sélectionner toute la ligne
             // 
