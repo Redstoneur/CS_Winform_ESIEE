@@ -302,18 +302,15 @@ namespace CS_Winform_ESIEE.Vue
             {
                 ListViewItem selectedItem = PanierList.SelectedItems[0];
                 int articleId = (int)selectedItem.Tag;
+                string articleName = selectedItem.Text;
                 int quantite = int.Parse(selectedItem.SubItems[2].Text);
 
                 // une messagebox pour demander la quantité
-                string input = quantite.ToString(); // todo: Faire une boîte de dialogue pour demander la quantité
-                if (input != "")
-                {
-                    int newQuantite = int.Parse(input);
-
-                    panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
-
-                    UpdatePanier();
-                }
+                
+                groupBox4.Visible = true;
+                NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
+                textBox4.Text = quantite.ToString();
+                textBox4.Tag = articleId;
             }
         }
 
@@ -362,7 +359,11 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button9_Click(object sender, EventArgs e)
         {
-
+            int articleId = (int)textBox4.Tag;
+            int newQuantite = int.Parse(textBox4.Text);
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            groupBox4.Visible = false;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -372,7 +373,11 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button11_Click(object sender, EventArgs e)
         {
-
+            int articleId = (int)textBox4.Tag;
+            int newQuantite = -1;
+            panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
+            UpdatePanier();
+            groupBox4.Visible = false;
         }
 
         private void BoutonExit(object sender, EventArgs e)
