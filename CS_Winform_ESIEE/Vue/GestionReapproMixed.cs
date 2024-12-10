@@ -30,6 +30,7 @@ namespace CS_Winform_ESIEE.Vue
             articleController = new ArticleController();
             categorieController = new CategorieController();
             panierController = new PanierController();
+
         }
 
         /**
@@ -233,17 +234,13 @@ namespace CS_Winform_ESIEE.Vue
         {
         }
 
-        //textbox prix
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            textBox2.ReadOnly = true;
-        }
-
         //bouton valider
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
             panier.Vider();
+            textBox2.Text = "";
+            PanierList.Items.Clear();
             Console.WriteLine(panier);
             panierController.Commander(panier);
         }
@@ -263,6 +260,7 @@ namespace CS_Winform_ESIEE.Vue
 
         private void GestionReapproMixed_Load(object sender, EventArgs e)
         {
+            UpdatePanier();
             try
             {
                 // Récupérer tous les articles
@@ -345,6 +343,51 @@ namespace CS_Winform_ESIEE.Vue
             }
 
             textBox2.Text = panier.GetTotal().ToString();
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            groupBox4.Visible = false;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BoutonExit(object sender, EventArgs e)
+        {
+            groupBox4.Visible = false;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -210,6 +210,7 @@ private void ChargerCategories()
         {
             if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
             {
+                textBox5.Enabled = true;
                 try
                 {
                     // Récupérer l'article correspondant
@@ -336,11 +337,10 @@ private void ChargerCategories()
 
         }
 
-
-    private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
-{
-    try
-    {
+        private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try
+        {
         // Vérifie si une catégorie est sélectionnée
         if (Categories.SelectedIndex >= 0)
         {
