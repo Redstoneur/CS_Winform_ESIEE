@@ -1,4 +1,5 @@
 ﻿using CS_Winform_ESIEE.Business;
+using CS_Winform_ESIEE.Data;
 using CS_Winform_ESIEE.Modele;
 using System;
 using System.Collections.Generic;
@@ -66,12 +67,26 @@ namespace CS_Winform_ESIEE.Vue
         //bouton stock
         private void button3_Click(object sender, EventArgs e)
         {
-            var frm = new GestionStock();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Close();
+            view.gs.Location = view.grm.Location;
+            view.gs.StartPosition = FormStartPosition.Manual;
+            view.gs.FormClosing += delegate
+            {
+                try
+                {
+                    if (view.grm.Enabled) {
+                        view.grm.Show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("secure for avoid crash");
+                }
+
+            };
+            view.gs.Show();
+            if (view.grm.Enabled) {
+                view.grm.Hide();
+            }
         }
 
         //bouton panier
@@ -327,6 +342,11 @@ namespace CS_Winform_ESIEE.Vue
             }
             
             textBox2.Text = panier.GetTotal().ToString();
+        }
+
+        private void GestionReapproMixed_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }

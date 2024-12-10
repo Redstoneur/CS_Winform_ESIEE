@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CS_Winform_ESIEE.Business;
+using CS_Winform_ESIEE.Data;
 using CS_Winform_ESIEE.Modele;
+using CS_Winform_ESIEE.Vue;
 
 namespace CS_Winform_ESIEE
 {
@@ -21,10 +23,10 @@ namespace CS_Winform_ESIEE
                 TestDatabase();
                 return;
             }
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GestionStock());
+            Application.Run(view.init());
+            view.grm.Hide();
         }
 
         static void TestDatabase()
