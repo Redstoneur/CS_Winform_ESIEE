@@ -446,6 +446,7 @@ namespace CS_Winform_ESIEE.Vue
             // 
             // PanierList
             // 
+            this.PanierList.FullRowSelect = true;
             this.PanierList.HideSelection = false;
             this.PanierList.Location = new System.Drawing.Point(19, 72);
             this.PanierList.Margin = new System.Windows.Forms.Padding(2);
