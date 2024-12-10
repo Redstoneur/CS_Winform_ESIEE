@@ -81,6 +81,7 @@ private void ChargerCategories()
             button3.Enabled = false;
             button4.Enabled = false;
 
+
         
 
         }
@@ -295,9 +296,11 @@ private void ChargerCategories()
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = true;
-            
+            ModifNom.Text=selectedArticle.Nom;
+            ModifPrix.Text =selectedArticle.PrixUnitaire.ToString();
+            ModifQuantite.Text=selectedArticle.Quantite.ToString();
+        
         }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -333,27 +336,43 @@ private void ChargerCategories()
 
         }
 
-        private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            try
-        {
+
+    private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
+{
+    try
+    {
         // Vérifie si une catégorie est sélectionnée
         if (Categories.SelectedIndex >= 0)
         {
-            // Récupère la categorie a partir de son index
-            Categorie  selectedCategoryByIndex =categories[Categories.SelectedIndex];
+            // Récupère la catégorie à partir de son index
+            Categorie selectedCategoryByIndex = categories[Categories.SelectedIndex];
 
             if (selectedCategoryByIndex != null)
             {
                 // Filtrer les articles pour afficher uniquement ceux qui ont le même IdCategorie que la catégorie sélectionnée
-                List<Article> filteredArticles = articles.Where(article => article.IdCategorie == selectedCategoryByIndex.IdCategorie).ToList();
+                var filteredArticles = articleController.GetAllArticlesEstActive()
+                                     .Where(article => article.IdCategorie == selectedCategoryByIndex.IdCategorie)
+                                     .ToList();
 
-                // Mettre à jour la ListBox des articles
+                // Mettre à jour la liste sous-jacente et la ListBox des articles
+                articles = filteredArticles; // Mettez à jour la liste sous-jacente
                 Articles.Items.Clear();
-                foreach (var article in filteredArticles)
+                foreach (var article in articles)
                 {
                     Articles.Items.Add(article.Nom); // Ajoute uniquement le nom de l'article
                 }
+
+                // Effacer la sélection actuelle dans la ListBox
+                Articles.ClearSelected();
+                // Réinitialiser les champs d'affichage des détails d'article
+                selectedArticle = null;
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox5.Text = "";
+                DelArticleName.Text = "";
+                button3.Enabled = false;
+                button4.Enabled = false;
             }
             else
             {
@@ -361,14 +380,13 @@ private void ChargerCategories()
                 MessageBox.Show("Catégorie non trouvée.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        
     }
     catch (Exception ex)
     {
         MessageBox.Show($"Erreur lors de la sélection de la catégorie : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
-                
-     }
+}
+
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
@@ -440,7 +458,6 @@ private void ChargerCategories()
         private void ValiderModif_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = false;
-            groupBox4.Visible = false;
 
     try
     {
@@ -455,6 +472,7 @@ private void ChargerCategories()
 
         if (!string.IsNullOrWhiteSpace(ModifNom.Text))
             data["Nom"] = ModifNom.Text;
+            
 
         if (decimal.TryParse(ModifPrix.Text, out decimal prixUnitaire))
             data["PrixUnitaire"] = prixUnitaire;
