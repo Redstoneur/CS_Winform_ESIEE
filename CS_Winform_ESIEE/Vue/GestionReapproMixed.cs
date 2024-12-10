@@ -307,10 +307,10 @@ namespace CS_Winform_ESIEE.Vue
 
                 // une messagebox pour demander la quantité
                 
-                groupBox4.Visible = true;
+                GestionQuantite.Visible = true;
                 NomArticleSuppr.Text= @"Changer la quantité de " + articleName + @" :";
-                textBox4.Text = quantite.ToString();
-                textBox4.Tag = articleId;
+                Quantites.Text = quantite.ToString();
+                Quantites.Tag = articleId;
             }
         }
 
@@ -354,16 +354,16 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button10_Click(object sender, EventArgs e)
         {
-            groupBox4.Visible = false;
+            GestionQuantite.Visible = false;
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            int articleId = (int)textBox4.Tag;
-            int newQuantite = int.Parse(textBox4.Text);
+            int articleId = (int)Quantites.Tag;
+            int newQuantite = int.Parse(Quantites.Text);
             panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
             UpdatePanier();
-            groupBox4.Visible = false;
+            GestionQuantite.Visible = false;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -373,16 +373,16 @@ namespace CS_Winform_ESIEE.Vue
 
         private void button11_Click(object sender, EventArgs e)
         {
-            int articleId = (int)textBox4.Tag;
+            int articleId = (int)Quantites.Tag;
             int newQuantite = -1;
             panier.RedefineNbExemplaireArticleById(articleId, newQuantite);
             UpdatePanier();
-            groupBox4.Visible = false;
+            GestionQuantite.Visible = false;
         }
 
         private void BoutonExit(object sender, EventArgs e)
         {
-            groupBox4.Visible = false;
+            GestionQuantite.Visible = false;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
