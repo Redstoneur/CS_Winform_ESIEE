@@ -245,6 +245,7 @@ namespace CS_Winform_ESIEE.Vue
         //textbox prix
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+            textBox2.ReadOnly = true;
 
         }
 
