@@ -545,7 +545,8 @@ namespace CS_Winform_ESIEE.Vue
             this.PanierList.Size = new System.Drawing.Size(523, 489);
             this.PanierList.TabIndex = 0;
             this.PanierList.UseCompatibleStateImageBehavior = false;
-            this.PanierList.View = System.Windows.Forms.View.Details;
+            this.PanierList.View = View.Details; // Définir la vue sur Details (colonnes)
+            this.PanierList.FullRowSelect = true; // Sélectionner toute la ligne
             // 
             // button6
             // 
@@ -599,6 +600,8 @@ namespace CS_Winform_ESIEE.Vue
             this.textBox2.Size = new System.Drawing.Size(145, 26);
             this.textBox2.TabIndex = 7;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.Text = "0";
+            this.textBox2.Enabled = false;
             // 
             // label5
             // 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CS_Winform_ESIEE.Business;
+using CS_Winform_ESIEE.Data;
 using CS_Winform_ESIEE.Modele;
 using CS_Winform_ESIEE.Vue;
 using DotNetEnv;
@@ -80,10 +81,6 @@ private void ChargerCategories()
             ChargerCategories();
             button3.Enabled = false;
             button4.Enabled = false;
-
-
-        
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -96,12 +93,22 @@ private void ChargerCategories()
          */
         private void button1_Click(object sender, EventArgs e)
         {
-            var frm = new GestionReapproMixed();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Hide();
+            ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
+            ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
+            ViewController.gestionreappromixed.FormClosing += delegate {
+                try
+                {
+                    if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("secure for avoid crash");
+                }
+
+            };
+            if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
+            if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Hide();
+            
         }
 
         /**

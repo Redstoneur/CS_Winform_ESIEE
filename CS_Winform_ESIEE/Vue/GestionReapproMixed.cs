@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace CS_Winform_ESIEE.Vue
 {
@@ -68,12 +69,22 @@ namespace CS_Winform_ESIEE.Vue
         //bouton stock
         private void button3_Click(object sender, EventArgs e)
         {
-            var frm = new GestionStock();
-            frm.Location = this.Location;
-            frm.StartPosition = FormStartPosition.Manual;
-            frm.FormClosing += delegate { this.Show(); };
-            frm.Show();
-            this.Close();
+            ViewController.gestionstock.Location = ViewController.gestionreappromixed.Location;
+            ViewController.gestionstock.StartPosition = FormStartPosition.Manual;
+            ViewController.gestionstock.FormClosing += delegate
+            {
+                try
+                {
+                    if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("secure for avoid crash");
+                }
+
+            };
+            if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
+            if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Hide();
         }
 
         //bouton panier
@@ -240,11 +251,9 @@ namespace CS_Winform_ESIEE.Vue
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
-            textBox2.Text = "";
-            PanierList.Items.Clear();
-            Console.WriteLine(panier);
             panierController.Commander(panier);
             panier.Vider();
+            UpdatePanier();
         }
 
         //sous-interface liste commande
@@ -429,8 +438,12 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
-
             textBox2.Text = panier.GetTotal().ToString();
+            
+            if (panier.GetArticles().Count == 0)
+                button5.Enabled = false;
+            else
+                button5.Enabled = true;
         }
 
         private void UpdateCommandesList()
@@ -459,6 +472,11 @@ namespace CS_Winform_ESIEE.Vue
         private int GetCommandeIdWithCommandeListItem(string commandeId)
         {
             return int.Parse(commandeId.Substring(1));
+        }
+        
+        private void GestionReapproMixed_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
     }
 }
