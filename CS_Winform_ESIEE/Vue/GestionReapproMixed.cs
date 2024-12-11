@@ -514,7 +514,42 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // todo: import from json
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = @"Importer les données depuis un fichier JSON";
+            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                
+                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                if (!fileName.EndsWith(".json"))
+                {
+                    MessageBox.Show(
+                        @"Le fichier spécifié n'est pas un fichier JSON. Veuillez choisir un fichier JSON.",
+                        @"Erreur",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                
+                // Importer les données depuis le fichier JSON
+                OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
+                
+                // Afficher le résultat de l'opération
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Mettre à jour les listes des articles et des catégories
+                    ChargerCategories();
+                    UpdatePanier();
+                    UpdateCommandesList();
+                    // todo: update articles list
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, @"Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

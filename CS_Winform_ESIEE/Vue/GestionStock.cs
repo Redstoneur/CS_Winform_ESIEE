@@ -588,13 +588,12 @@ namespace CS_Winform_ESIEE
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = @"Exporter les données vers un fichier JSON";
-            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
-            openFileDialog.CheckFileExists = false;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = @"Exporter les données vers un fichier JSON";
+            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog.FileName;
+                string fileName = saveFileDialog.FileName;
 
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
@@ -623,7 +622,40 @@ namespace CS_Winform_ESIEE
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // todo: import from JSON
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = @"Importer les données depuis un fichier JSON";
+            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+                
+                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                if (!fileName.EndsWith(".json"))
+                {
+                    MessageBox.Show(
+                        @"Le fichier spécifié n'est pas un fichier JSON. Veuillez choisir un fichier JSON.",
+                        @"Erreur",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                
+                // Importer les données depuis le fichier JSON
+                OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
+                
+                // Afficher le résultat de l'opération
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Rechargez les articles pour mettre à jour l'interface
+                    ChargerCategories();
+                    loadArticle();
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, @"Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
