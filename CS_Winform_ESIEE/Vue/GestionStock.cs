@@ -311,7 +311,7 @@ private void ChargerCategories()
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /**
@@ -596,6 +596,21 @@ private void ChargerCategories()
     }
           
 
+        }
+
+        private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // todo: export to JSON
+        }
+
+        private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // todo: import from JSON
+        }
+
+        private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -216,6 +216,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton menu about
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // todo: about
         }
 
         //bouton menu edit
@@ -226,6 +227,7 @@ namespace CS_Winform_ESIEE.Vue
         //bouton menu exit
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //sous-interface panier
@@ -473,10 +475,15 @@ namespace CS_Winform_ESIEE.Vue
         {
             return int.Parse(commandeId.Substring(1));
         }
-        
-        private void GestionReapproMixed_FormClosing(object sender, FormClosingEventArgs e)
-        {
 
+        private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // todo: export to json
+        }
+
+        private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // todo: import from json
         }
     }
 }
