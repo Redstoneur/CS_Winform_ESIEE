@@ -16,6 +16,8 @@ namespace CS_Winform_ESIEE.Vue
 {
     public partial class GestionReapproMixed : Form
     {
+        private JsonEditorController jsonEditorController = new JsonEditorController();
+
         private CommandeController CommandeController = new CommandeController();
         private LigneCommandeController LigneCommandeController = new LigneCommandeController();
 
@@ -81,7 +83,6 @@ namespace CS_Winform_ESIEE.Vue
                 {
                     Console.WriteLine("secure for avoid crash");
                 }
-
             };
             if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
             if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Hide();
@@ -227,7 +228,8 @@ namespace CS_Winform_ESIEE.Vue
         //bouton menu exit
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         //sous-interface panier
@@ -273,18 +275,18 @@ namespace CS_Winform_ESIEE.Vue
             {
                 string selectedItem = ListCommande.SelectedItem.ToString();
                 int commandeId = GetCommandeIdWithCommandeListItem(selectedItem);
-                
+
                 List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
-                
+
                 ArticlesCommande.Items.Clear();
                 ArticlesCommande.Columns.Clear();
-                
+
                 ArticlesCommande.Columns.Add("Nom", 100);
                 ArticlesCommande.Columns.Add("Prix Unitaire", 55);
                 ArticlesCommande.Columns.Add("Quantité", 60);
                 ArticlesCommande.Columns.Add("Promotion", 65);
                 ArticlesCommande.Columns.Add("Total", 65);
-                
+
                 foreach (LigneCommande ligneCommande in lignesCommandes)
                 {
                     Article article = articleController.GetArticleById(ligneCommande.IdArticle);
@@ -296,17 +298,15 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(ligneCommande.PrixTotal.ToString());
                     ArticlesCommande.Items.Add(item);
                 }
-                
+
                 TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
-                
+
                 Commande commande = CommandeController.GetCommandeById(commandeId);
-                
+
                 EtatCommande.SelectedItem = commande.Etat;
-                
+
                 ArticlesCommande.Enabled = true;
                 EtatCommande.Enabled = false; // todo: feature to change the state of the order
-                
-                
             }
         }
 
@@ -440,8 +440,9 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.Promotion.ToString() + "%");
                 PanierList.Items.Add(item);
             }
+
             textBox2.Text = panier.GetTotal().ToString();
-            
+
             if (panier.GetArticles().Count == 0)
                 button5.Enabled = false;
             else
@@ -456,9 +457,9 @@ namespace CS_Winform_ESIEE.Vue
 
             foreach (Commande commande in commandes)
             {
-                ListCommande.Items.Add("#"+commande.IdCommande.ToString());
+                ListCommande.Items.Add("#" + commande.IdCommande.ToString());
             }
-            
+
             ArticlesCommande.Enabled = false;
             TotalCommande.Enabled = false;
             EtatCommande.Enabled = false;
@@ -470,7 +471,7 @@ namespace CS_Winform_ESIEE.Vue
             EtatCommande.Items.Add("Livré");
             EtatCommande.SelectedItem = "Commandé";
         }
-        
+
         private int GetCommandeIdWithCommandeListItem(string commandeId)
         {
             return int.Parse(commandeId.Substring(1));
@@ -478,7 +479,37 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // todo: export to json
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = @"Exporter les données vers un fichier JSON";
+            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            openFileDialog.CheckFileExists = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+
+                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                if (!fileName.EndsWith(".json"))
+                {
+                    MessageBox.Show(
+                        @"Le fichier spécifié n'est pas un fichier JSON. Veuillez choisir un fichier JSON.",
+                        @"Erreur",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Importer les données depuis le fichier JSON
+                OperationResult result = jsonEditorController.CreerJson(fileName);
+
+                // Afficher le résultat de l'opération
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, @"Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)

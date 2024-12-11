@@ -17,6 +17,8 @@ namespace CS_Winform_ESIEE
 {
     public partial class GestionStock : Form
     {
+        private JsonEditorController jsonEditorController = new JsonEditorController();
+
         private ArticleController articleController;
         private List<Article> articles; // Stocke les articles récupérés
 
@@ -586,7 +588,37 @@ namespace CS_Winform_ESIEE
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // todo: export to JSON
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = @"Exporter les données vers un fichier JSON";
+            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            openFileDialog.CheckFileExists = false;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = openFileDialog.FileName;
+
+                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                if (!fileName.EndsWith(".json"))
+                {
+                    MessageBox.Show(
+                        @"Le fichier spécifié n'est pas un fichier JSON. Veuillez choisir un fichier JSON.",
+                        @"Erreur",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Importer les données depuis le fichier JSON
+                OperationResult result = jsonEditorController.CreerJson(fileName);
+
+                // Afficher le résultat de l'opération
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, @"Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
