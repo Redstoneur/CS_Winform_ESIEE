@@ -161,7 +161,6 @@ namespace CS_Winform_ESIEE.Vue
                     label12.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     label13.Text = selectedArticle.Promotion.ToString(); // affiche la remise
                     label15.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
-
                 }
                 catch (Exception ex)
                 {
@@ -415,7 +414,8 @@ namespace CS_Winform_ESIEE.Vue
                     item.SubItems.Add(article.PrixUnitaire.ToString());
                 item.SubItems.Add(article.Quantite.ToString());
                 if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
+                    item.SubItems.Add(article.Promotion.ToString() +
+                                      TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
                 PanierList.Items.Add(item);
             }
 
@@ -502,13 +502,12 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = @"Exporter les données vers un fichier JSON";
-            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
-            openFileDialog.CheckFileExists = false;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = @"Exporter les données vers un fichier JSON";
+            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog.FileName;
+                string fileName = saveFileDialog.FileName;
 
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
@@ -519,7 +518,7 @@ namespace CS_Winform_ESIEE.Vue
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.CreerJson(fileName);
 
@@ -537,12 +536,12 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = @"Importer les données depuis un fichier JSON";
-            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = @"Importer les données depuis un fichier JSON";
+            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = saveFileDialog.FileName;
+                string fileName = openFileDialog.FileName;
 
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
@@ -639,12 +638,10 @@ namespace CS_Winform_ESIEE.Vue
 
         private void ArticlesCommande_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label15_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

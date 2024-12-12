@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Forms;
 using CS_Winform_ESIEE.Business;
 using CS_Winform_ESIEE.Modele;
 using MySql.Data.MySqlClient;
@@ -55,6 +56,7 @@ namespace CS_Winform_ESIEE.Data
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
                     Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion"),
                     EstActif = reader.GetBoolean("EstActif")
                 });
             }
@@ -94,7 +96,8 @@ namespace CS_Winform_ESIEE.Data
                     IdArticle = reader.GetInt32("IdArticle"),
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
-                    Promotion = reader.GetInt32("Promotion")
+                    Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion")
                 });
             }
 
@@ -195,6 +198,7 @@ namespace CS_Winform_ESIEE.Data
                     !article.TryGetProperty("PrixUnitaire", out JsonElement prixUnitaire) ||
                     !article.TryGetProperty("Quantite", out JsonElement quantite) ||
                     !article.TryGetProperty("Promotion", out JsonElement promotion) ||
+                    !article.TryGetProperty("TypePromotion", out JsonElement typePromotion) ||
                     !article.TryGetProperty("EstActif", out JsonElement estActif))
                 {
                     throw new Exception("Les données de l'article sont invalides.");
@@ -207,6 +211,7 @@ namespace CS_Winform_ESIEE.Data
                     prixUnitaire.ValueKind != JsonValueKind.Number ||
                     quantite.ValueKind != JsonValueKind.Number ||
                     promotion.ValueKind != JsonValueKind.Number ||
+                    typePromotion.ValueKind != JsonValueKind.String ||
                     estActif.ValueKind != JsonValueKind.True && estActif.ValueKind != JsonValueKind.False)
                 {
                     throw new Exception("Les types des données de l'article sont invalides.");
@@ -220,13 +225,13 @@ namespace CS_Winform_ESIEE.Data
                 if (reader.Read())
                 {
                     queryUpdate +=
-                        $"UPDATE ARTICLE SET IdCategorie = {idCategorie.GetInt32()}, Nom = '{nom.GetString()}', PrixUnitaire = {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, Quantite = {quantite.GetInt32()}, Promotion = {promotion.GetInt32()}, EstActif = {estActif.GetBoolean()} WHERE IdArticle = {idArticle.GetInt32()};\n";
-                    ;
+                        $"UPDATE ARTICLE SET IdCategorie = {idCategorie.GetInt32()}, Nom = '{nom.GetString()}', PrixUnitaire = {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, Quantite = {quantite.GetInt32()}, Promotion = {promotion.GetInt32()}, TypePromotion = '{typePromotion.GetString()}', EstActif = {estActif.GetBoolean()} WHERE IdArticle = {idArticle.GetInt32()};\n"
+                        ;
                 }
                 else
                 {
                     queryUpdate +=
-                        $"INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, EstActif) VALUES ({idCategorie.GetInt32()}, '{nom.GetString()}', {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, {quantite.GetInt32()}, {promotion.GetInt32()}, {estActif.GetBoolean()});\n";
+                        $"INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, TypePromotion, EstActif) VALUES ({idCategorie.GetInt32()}, '{nom.GetString()}', {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, {quantite.GetInt32()}, {promotion.GetInt32()}, '{typePromotion.GetString()}', {estActif.GetBoolean()});\n";
                 }
 
                 reader.Close();
@@ -258,7 +263,8 @@ namespace CS_Winform_ESIEE.Data
                 }
 
                 // si etat est bien 'Commandé' ou 'Expédié' ou 'Livré'
-                if (etat.GetString() != "Commandé" && etat.GetString() != "Expédié" && etat.GetString() != "Livré")
+                if (etat.GetString() != "Commandé" && etat.GetString() != "Expédié" &&
+                    etat.GetString() != "Livré" && etat.GetString() != "Annulé")
                 {
                     throw new Exception("L'état de la commande est invalide.");
                 }

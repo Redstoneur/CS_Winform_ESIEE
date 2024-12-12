@@ -131,7 +131,7 @@ namespace CS_Winform_ESIEE
         /**
          * Bouton d'application/suppression de la remise
          */
-        private void button4_Click(object sender, EventArgs e) 
+        private void button4_Click(object sender, EventArgs e)
         {
             if (selectedArticle != null)
             {
@@ -143,7 +143,8 @@ namespace CS_Winform_ESIEE
                         {
                             selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
                             int value = Convert.ToInt16(promotionValue);
-                            articleController.UpdatePromotion(selectedArticle, value, TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem));
+                            articleController.UpdatePromotion(selectedArticle, value,
+                                TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem));
                         }
                         else
                         {
@@ -245,7 +246,8 @@ namespace CS_Winform_ESIEE
                     TypePromotionBox.Items.Clear();
                     TypePromotionBox.Items.Add(TypePromo.Pourcentage.to_string());
                     TypePromotionBox.Items.Add(TypePromo.Montant.to_string());
-                    TypePromotionBox.SelectedItem = TypePromoExtensions.from_string(selectedArticle.TypePromotion).to_string();
+                    TypePromotionBox.SelectedItem =
+                        TypePromoExtensions.from_string(selectedArticle.TypePromotion).to_string();
                     label1.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
                 }
                 catch (Exception ex)
@@ -635,7 +637,7 @@ namespace CS_Winform_ESIEE
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = openFileDialog.FileName;
-                
+
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
                 {
@@ -645,15 +647,15 @@ namespace CS_Winform_ESIEE
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
-                
+
                 // Afficher le résultat de l'opération
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                     // Rechargez les articles pour mettre à jour l'interface
                     ChargerCategories();
                     loadArticle();
@@ -673,7 +675,6 @@ namespace CS_Winform_ESIEE
         private void TypePromotionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             label1.Text = TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem).get_symbol();
-
         }
     }
 }
