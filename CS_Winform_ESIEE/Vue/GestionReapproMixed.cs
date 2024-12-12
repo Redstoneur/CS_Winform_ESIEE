@@ -277,37 +277,7 @@ namespace CS_Winform_ESIEE.Vue
                 string selectedItem = ListCommande.SelectedItem.ToString();
                 int commandeId = GetCommandeIdWithCommandeListItem(selectedItem);
 
-                List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
-
-                ArticlesCommande.Items.Clear();
-                ArticlesCommande.Columns.Clear();
-
-                ArticlesCommande.Columns.Add("Nom", 100);
-                ArticlesCommande.Columns.Add("Prix Unitaire", 55);
-                ArticlesCommande.Columns.Add("Quantité", 60);
-                ArticlesCommande.Columns.Add("Promotion", 65);
-                ArticlesCommande.Columns.Add("Total", 65);
-
-                foreach (LigneCommande ligneCommande in lignesCommandes)
-                {
-                    Article article = articleController.GetArticleById(ligneCommande.IdArticle);
-                    ListViewItem item = new ListViewItem(article.Nom);
-                    item.Tag = article.IdArticle;
-                    item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
-                    item.SubItems.Add(ligneCommande.Quantite.ToString());
-                    item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
-                    item.SubItems.Add(ligneCommande.PrixTotal.ToString());
-                    ArticlesCommande.Items.Add(item);
-                }
-
-                TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
-
-                Commande commande = CommandeController.GetCommandeById(commandeId);
-
-                EtatCommande.SelectedItem = commande.Etat;
-
-                ArticlesCommande.Enabled = true;
-                EtatCommande.Enabled = false; // todo: feature to change the state of the order
+                UpdateCommandePrint(commandeId);
             }
         }
 
@@ -463,14 +433,57 @@ namespace CS_Winform_ESIEE.Vue
 
             ArticlesCommande.Enabled = false;
             TotalCommande.Enabled = false;
-            EtatCommande.Enabled = false;
-            ArticlesCommande.Enabled = false;
-            TotalCommande.Enabled = false;
-            EtatCommande.Enabled = false;
-            EtatCommande.Items.Add("Commandé");
-            EtatCommande.Items.Add("Expédié");
-            EtatCommande.Items.Add("Livré");
-            EtatCommande.SelectedItem = "Commandé";
+            EtatCommandeSelect.Enabled = false;
+            validerEtat.Enabled = false;
+        }
+
+        private void UpdateCommandePrint(int commandeId)
+        {
+            List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
+
+            ArticlesCommande.Items.Clear();
+            ArticlesCommande.Columns.Clear();
+
+            ArticlesCommande.Columns.Add("Nom", 100);
+            ArticlesCommande.Columns.Add("Prix Unitaire", 55);
+            ArticlesCommande.Columns.Add("Quantité", 60);
+            ArticlesCommande.Columns.Add("Promotion", 65);
+            ArticlesCommande.Columns.Add("Total", 65);
+
+            foreach (LigneCommande ligneCommande in lignesCommandes)
+            {
+                Article article = articleController.GetArticleById(ligneCommande.IdArticle);
+                ListViewItem item = new ListViewItem(article.Nom);
+                item.Tag = article.IdArticle;
+                item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
+                item.SubItems.Add(ligneCommande.Quantite.ToString());
+                item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                item.SubItems.Add(ligneCommande.PrixTotal.ToString());
+                ArticlesCommande.Items.Add(item);
+            }
+
+            TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
+
+            Commande commande = CommandeController.GetCommandeById(commandeId);
+
+            EtatCommandeSelect.Items.Clear();
+            EtatCommandeSelect.Items.Add(EtatCommande.Commande.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Envoyee.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Livree.to_string());
+            EtatCommandeSelect.SelectedItem = EtatCommandeExtensions.from_string(commande.Etat).to_string();
+            EtatCommandeSelect.Tag = commande.IdCommande;
+
+            ArticlesCommande.Enabled = true;
+            validerEtat.Enabled = false;
+
+            if (commande.Etat ==  EtatCommande.Livree.to_string())
+            {
+                EtatCommandeSelect.Enabled = false;
+            }
+            else
+            {
+                EtatCommandeSelect.Enabled = true;
+            }
         }
 
         private int GetCommandeIdWithCommandeListItem(string commandeId)
@@ -549,6 +562,51 @@ namespace CS_Winform_ESIEE.Vue
                 else
                 {
                     MessageBox.Show(result.Message, @"Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void validerEtat_Click(object sender, EventArgs e)
+        {
+            if (EtatCommandeSelect.Tag != null)
+            {
+                int commandeId = (int)EtatCommandeSelect.Tag;
+                EtatCommande nouvelEtat = EtatCommandeExtensions.from_string(EtatCommandeSelect.SelectedItem.ToString());
+                
+                // Mettre à jour l'état de la commande dans la base de données
+                CommandeController.UpdateCommande(CommandeController.GetCommandeById(commandeId), nouvelEtat);
+
+                // Actualiser l'affichage
+                UpdateCommandesList();
+                UpdateCommandePrint(commandeId);
+
+                validerEtat.Enabled = false;
+
+                if (nouvelEtat == EtatCommande.Livree)
+                {
+                    EtatCommandeSelect.Enabled = false;
+                }
+                else
+                {
+                    EtatCommandeSelect.Enabled = true;
+                }
+            }
+        }
+
+        private void EtatCommandeSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EtatCommandeSelect.Tag != null)
+            {
+                int commandeId = (int)EtatCommandeSelect.Tag;
+                Commande commande = CommandeController.GetCommandeById(commandeId);
+
+                if (commande != null && EtatCommandeSelect.SelectedItem.ToString() != commande.Etat)
+                {
+                    validerEtat.Enabled = true;
+                }
+                else
+                {
+                    validerEtat.Enabled = false;
                 }
             }
         }

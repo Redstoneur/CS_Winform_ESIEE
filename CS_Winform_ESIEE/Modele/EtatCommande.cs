@@ -36,11 +36,11 @@
             switch (etat)
             {
                 case EtatCommande.Commande:
-                    return "Commande";
+                    return "Commandé";
                 case EtatCommande.Envoyee:
-                    return "Envoyée";
+                    return "Expédié";
                 case EtatCommande.Livree:
-                    return "Livrée";
+                    return "Livré";
                 default:
                     return null;
             }
@@ -55,11 +55,11 @@
         {
             switch (etat)
             {
-                case "Commande":
+                case "Commandé":
                     return EtatCommande.Commande;
-                case "Envoyée":
+                case "Expédié":
                     return EtatCommande.Envoyee;
-                case "Livrée":
+                case "Livré":
                     return EtatCommande.Livree;
                 default:
                     return EtatCommande.Commande;

@@ -51,9 +51,13 @@ namespace CS_Winform_ESIEE.Vue
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exporterEnJsonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jSONToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.EtatCommande = new System.Windows.Forms.ComboBox();
+            this.EtatCommandeSelect = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.Devise = new System.Windows.Forms.Label();
             this.TotalCommande = new System.Windows.Forms.TextBox();
@@ -78,10 +82,7 @@ namespace CS_Winform_ESIEE.Vue
             this.label5 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.exporterEnJsonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.jSONToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.validerEtat = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -310,9 +311,39 @@ namespace CS_Winform_ESIEE.Vue
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(282, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // exporterEnJsonToolStripMenuItem
+            // 
+            this.exporterEnJsonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jSONToolStripMenuItem});
+            this.exporterEnJsonToolStripMenuItem.Name = "exporterEnJsonToolStripMenuItem";
+            this.exporterEnJsonToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
+            this.exporterEnJsonToolStripMenuItem.Text = "Exporter";
+            // 
+            // jSONToolStripMenuItem
+            // 
+            this.jSONToolStripMenuItem.Name = "jSONToolStripMenuItem";
+            this.jSONToolStripMenuItem.Size = new System.Drawing.Size(157, 34);
+            this.jSONToolStripMenuItem.Text = "JSON";
+            this.jSONToolStripMenuItem.Click += new System.EventHandler(this.jSONToolStripMenuItem_Click);
+            // 
+            // importerToolStripMenuItem
+            // 
+            this.importerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jSONToolStripMenuItem1});
+            this.importerToolStripMenuItem.Name = "importerToolStripMenuItem";
+            this.importerToolStripMenuItem.Size = new System.Drawing.Size(184, 34);
+            this.importerToolStripMenuItem.Text = "Importer";
+            // 
+            // jSONToolStripMenuItem1
+            // 
+            this.jSONToolStripMenuItem1.Name = "jSONToolStripMenuItem1";
+            this.jSONToolStripMenuItem1.Size = new System.Drawing.Size(157, 34);
+            this.jSONToolStripMenuItem1.Text = "JSON";
+            this.jSONToolStripMenuItem1.Click += new System.EventHandler(this.jSONToolStripMenuItem1_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -324,7 +355,8 @@ namespace CS_Winform_ESIEE.Vue
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.groupBox2.Controls.Add(this.EtatCommande);
+            this.groupBox2.Controls.Add(this.validerEtat);
+            this.groupBox2.Controls.Add(this.EtatCommandeSelect);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.Devise);
             this.groupBox2.Controls.Add(this.TotalCommande);
@@ -345,17 +377,18 @@ namespace CS_Winform_ESIEE.Vue
             // 
             // EtatCommande
             // 
-            this.EtatCommande.FormattingEnabled = true;
-            this.EtatCommande.Location = new System.Drawing.Point(818, 548);
-            this.EtatCommande.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.EtatCommande.Name = "EtatCommande";
-            this.EtatCommande.Size = new System.Drawing.Size(180, 28);
-            this.EtatCommande.TabIndex = 12;
+            this.EtatCommandeSelect.FormattingEnabled = true;
+            this.EtatCommandeSelect.Location = new System.Drawing.Point(813, 548);
+            this.EtatCommandeSelect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.EtatCommandeSelect.Name = "EtatCommandeSelect";
+            this.EtatCommandeSelect.Size = new System.Drawing.Size(180, 28);
+            this.EtatCommandeSelect.TabIndex = 12;
+            this.EtatCommandeSelect.SelectedIndexChanged += new System.EventHandler(this.EtatCommandeSelect_SelectedIndexChanged);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(646, 552);
+            this.label16.Location = new System.Drawing.Point(641, 552);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(172, 20);
@@ -630,35 +663,15 @@ namespace CS_Winform_ESIEE.Vue
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // exporterEnJsonToolStripMenuItem
+            // validerEtat
             // 
-            this.exporterEnJsonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.jSONToolStripMenuItem});
-            this.exporterEnJsonToolStripMenuItem.Name = "exporterEnJsonToolStripMenuItem";
-            this.exporterEnJsonToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.exporterEnJsonToolStripMenuItem.Text = "Exporter";
-            // 
-            // importerToolStripMenuItem
-            // 
-            this.importerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.jSONToolStripMenuItem1});
-            this.importerToolStripMenuItem.Name = "importerToolStripMenuItem";
-            this.importerToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.importerToolStripMenuItem.Text = "Importer";
-            // 
-            // jSONToolStripMenuItem
-            // 
-            this.jSONToolStripMenuItem.Name = "jSONToolStripMenuItem";
-            this.jSONToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.jSONToolStripMenuItem.Text = "JSON";
-            this.jSONToolStripMenuItem.Click += new System.EventHandler(this.jSONToolStripMenuItem_Click);
-            // 
-            // jSONToolStripMenuItem1
-            // 
-            this.jSONToolStripMenuItem1.Name = "jSONToolStripMenuItem1";
-            this.jSONToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
-            this.jSONToolStripMenuItem1.Text = "JSON";
-            this.jSONToolStripMenuItem1.Click += new System.EventHandler(this.jSONToolStripMenuItem1_Click);
+            this.validerEtat.Location = new System.Drawing.Point(994, 548);
+            this.validerEtat.Name = "validerEtat";
+            this.validerEtat.Size = new System.Drawing.Size(75, 29);
+            this.validerEtat.TabIndex = 13;
+            this.validerEtat.Text = "Valider";
+            this.validerEtat.UseVisualStyleBackColor = true;
+            this.validerEtat.Click += new System.EventHandler(this.validerEtat_Click);
             // 
             // GestionReapproMixed
             // 
@@ -740,7 +753,7 @@ namespace CS_Winform_ESIEE.Vue
         private TextBox Quantites;
         private Label NomArticleSuppr;
         private Button supprPanier;
-        private ComboBox EtatCommande;
+        private ComboBox EtatCommandeSelect;
         private Label label16;
         private Label Devise;
         private TextBox TotalCommande;
@@ -750,5 +763,6 @@ namespace CS_Winform_ESIEE.Vue
         private ToolStripMenuItem jSONToolStripMenuItem;
         private ToolStripMenuItem importerToolStripMenuItem;
         private ToolStripMenuItem jSONToolStripMenuItem1;
+        private Button validerEtat;
     }
 }
