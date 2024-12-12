@@ -87,6 +87,7 @@ namespace CS_Winform_ESIEE
             ChargerCategories();
             button3.Enabled = false;
             button4.Enabled = false;
+            TypePromotionBox.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -130,7 +131,7 @@ namespace CS_Winform_ESIEE
         /**
          * Bouton d'application/suppression de la remise
          */
-        private void button4_Click(object sender, EventArgs e) // todo: refactor this method
+        private void button4_Click(object sender, EventArgs e) 
         {
             if (selectedArticle != null)
             {
@@ -142,7 +143,7 @@ namespace CS_Winform_ESIEE
                         {
                             selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
                             int value = Convert.ToInt16(promotionValue);
-                            articleController.UpdatePromotion(selectedArticle, value);
+                            articleController.UpdatePromotion(selectedArticle, value, TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem));
                         }
                         else
                         {
@@ -216,7 +217,7 @@ namespace CS_Winform_ESIEE
         /**
          * Liste d'articles
          */
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) // todo: refactor this method
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
             {
@@ -226,13 +227,13 @@ namespace CS_Winform_ESIEE
                     // Récupérer l'article correspondant
                     selectedArticle = articles[Articles.SelectedIndex];
 
-
                     // Afficher les informations dans les champs texte
                     textBox1.Text = selectedArticle.Nom; // Affiche le nom
                     textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
                     DelArticleName.Text = selectedArticle.Nom.ToString(); // affiche larticle a supprimer
+
                     if (selectedArticle.Promotion > 0)
                         button4.Text = "Supprimer";
                     else if (selectedArticle.Promotion <= 0)
@@ -240,6 +241,12 @@ namespace CS_Winform_ESIEE
 
                     button3.Enabled = true;
                     button4.Enabled = true;
+                    TypePromotionBox.Enabled = true;
+                    TypePromotionBox.Items.Clear();
+                    TypePromotionBox.Items.Add(TypePromo.Pourcentage.to_string());
+                    TypePromotionBox.Items.Add(TypePromo.Montant.to_string());
+                    TypePromotionBox.SelectedItem = TypePromoExtensions.from_string(selectedArticle.TypePromotion).to_string();
+                    label1.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
                 }
                 catch (Exception ex)
                 {
@@ -661,6 +668,12 @@ namespace CS_Winform_ESIEE
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TypePromotionBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            label1.Text = TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem).get_symbol();
+
         }
     }
 }

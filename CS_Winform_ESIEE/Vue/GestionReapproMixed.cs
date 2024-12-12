@@ -138,7 +138,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //listbox des listes des articles
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) // todo: refactor this method
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (label10.Visible == false)
                 label10.Visible = true;
@@ -160,6 +160,8 @@ namespace CS_Winform_ESIEE.Vue
                     label11.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     label12.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     label13.Text = selectedArticle.Promotion.ToString(); // affiche la remise
+                    label15.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
+
                 }
                 catch (Exception ex)
                 {
@@ -170,7 +172,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //bouton ajouter
-        private void button1_Click(object sender, EventArgs e) // todo: refactor this method
+        private void button1_Click(object sender, EventArgs e)
         {
             if (Articles.SelectedIndex < 0)
             {
@@ -201,7 +203,8 @@ namespace CS_Winform_ESIEE.Vue
                 PrixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire,
                 Quantite = quantite,
                 Promotion = articles[Articles.SelectedIndex].Promotion,
-                EstActif = articles[Articles.SelectedIndex].EstActif
+                EstActif = articles[Articles.SelectedIndex].EstActif,
+                TypePromotion = articles[Articles.SelectedIndex].TypePromotion
             };
 
             panier.AjouterArticle(newArticle);
@@ -245,6 +248,8 @@ namespace CS_Winform_ESIEE.Vue
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             UpdatePanier();
+            label4.Visible = !checkBox1.Checked;
+            label3.Visible = checkBox1.Checked;
         }
 
         //listbox 
@@ -285,6 +290,7 @@ namespace CS_Winform_ESIEE.Vue
         {
             UpdatePanier();
             UpdateCommandesList();
+            ChargerCategories();
             try
             {
                 // Récupérer tous les articles
@@ -303,8 +309,9 @@ namespace CS_Winform_ESIEE.Vue
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            ChargerCategories();
             PanierList.MouseDoubleClick += new MouseEventHandler(PanierList_MouseDoubleClick);
+            label4.Visible = !checkBox1.Checked;
+            label3.Visible = checkBox1.Checked;
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -403,12 +410,12 @@ namespace CS_Winform_ESIEE.Vue
                 ListViewItem item = new ListViewItem(article.Nom);
                 item.Tag = article.IdArticle;
                 if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                    item.SubItems.Add(article.PrixTotal.ToString());
                 else
                     item.SubItems.Add(article.PrixUnitaire.ToString());
                 item.SubItems.Add(article.Quantite.ToString());
                 if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + "%");
+                    item.SubItems.Add(article.Promotion.ToString() + TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
                 PanierList.Items.Add(item);
             }
 
@@ -559,7 +566,23 @@ namespace CS_Winform_ESIEE.Vue
                     ChargerCategories();
                     UpdatePanier();
                     UpdateCommandesList();
-                    // todo: update articles list
+                    try
+                    {
+                        // Récupérer tous les articles
+                        articles = articleController.GetAllArticles();
+
+                        // Charger les noms des articles dans la ListBox
+                        Articles.Items.Clear();
+                        foreach (var article in articles)
+                        {
+                            Articles.Items.Add(article.Nom); // Ajoute uniquement les noms
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
@@ -612,6 +635,16 @@ namespace CS_Winform_ESIEE.Vue
                     validerEtat.Enabled = false;
                 }
             }
+        }
+
+        private void ArticlesCommande_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
