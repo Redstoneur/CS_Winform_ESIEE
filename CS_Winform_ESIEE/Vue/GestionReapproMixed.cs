@@ -470,13 +470,14 @@ namespace CS_Winform_ESIEE.Vue
             EtatCommandeSelect.Items.Add(EtatCommande.Commande.to_string());
             EtatCommandeSelect.Items.Add(EtatCommande.Envoyee.to_string());
             EtatCommandeSelect.Items.Add(EtatCommande.Livree.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Annulee.to_string());
             EtatCommandeSelect.SelectedItem = EtatCommandeExtensions.from_string(commande.Etat).to_string();
             EtatCommandeSelect.Tag = commande.IdCommande;
 
             ArticlesCommande.Enabled = true;
             validerEtat.Enabled = false;
 
-            if (commande.Etat ==  EtatCommande.Livree.to_string())
+            if (commande.Etat ==  EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
             {
                 EtatCommandeSelect.Enabled = false;
             }
@@ -582,7 +583,7 @@ namespace CS_Winform_ESIEE.Vue
 
                 validerEtat.Enabled = false;
 
-                if (nouvelEtat == EtatCommande.Livree)
+                if (nouvelEtat == EtatCommande.Livree || nouvelEtat == EtatCommande.Annulee)
                 {
                     EtatCommandeSelect.Enabled = false;
                 }

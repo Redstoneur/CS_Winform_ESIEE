@@ -18,7 +18,12 @@
         /// <summary>
         /// La commande a été livrée.
         /// </summary>
-        Livree
+        Livree,
+        
+        /// <summary>
+        /// La commande a été annulée.
+        /// </summary>
+        Annulee
     }
 
     /// <summary>
@@ -41,6 +46,8 @@
                     return "Expédié";
                 case EtatCommande.Livree:
                     return "Livré";
+                case EtatCommande.Annulee:
+                    return "Annulé";
                 default:
                     return null;
             }
@@ -61,8 +68,10 @@
                     return EtatCommande.Envoyee;
                 case "Livré":
                     return EtatCommande.Livree;
+                case "Annulé":
+                    return EtatCommande.Annulee;
                 default:
-                    return EtatCommande.Commande;
+                    return EtatCommande.Annulee;
             }
         }
     }

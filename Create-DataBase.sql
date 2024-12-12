@@ -38,10 +38,10 @@ CREATE TABLE ARTICLE
 CREATE TABLE COMMANDE
 (
     IdCommande    INT AUTO_INCREMENT PRIMARY KEY,
-    Etat          ENUM ('Commandé', 'Expédié', 'Livré') NOT NULL,
-    Date          DATETIME                              NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    DateEnvoi     DATETIME                                       DEFAULT NULL,
-    DateLivraison DATETIME                                       DEFAULT NULL
+    Etat          ENUM ('Commandé', 'Expédié', 'Livré', 'Annulé') NOT NULL,
+    Date          DATETIME                                        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    DateEnvoi     DATETIME                                                 DEFAULT NULL,
+    DateLivraison DATETIME                                                 DEFAULT NULL
 );
 
 CREATE TABLE LIGNE_COMMANDE
@@ -93,10 +93,11 @@ VALUES ('Ordinateur', 500, 10, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 
        ('Salade', 7, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Poire', 8, 100, 10, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation'));
 
-INSERT INTO COMMANDE (Etat, Date)
-VALUES ('Commandé', '2021-01-01 12:00:00'),
-       ('Expédié', '2021-01-02 12:00:00'),
-       ('Livré', '2021-01-03 12:00:00');
+INSERT INTO COMMANDE (Etat, Date, DateEnvoi, DateLivraison)
+VALUES ('Commandé', '2021-01-01 12:00:00', null, null),
+       ('Expédié', '2021-01-02 12:00:00', '2021-01-02 12:00:00', null),
+       ('Livré', '2021-01-03 12:00:00', '2021-01-03 12:00:00', '2021-01-03 12:00:00'),
+       ('Annulé', '2021-01-04 12:00:00', '2021-01-04 12:00:00', '2021-01-04 12:00:00');
 
 INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion)
 VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
@@ -120,7 +121,17 @@ VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
        (3, 15, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 15),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 15), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 15)),
        (3, 16, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 16),
-        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 16), 30);
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 16), 30),
+       (4, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 6), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 6)),
+       (4, 8, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 8),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 8), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 8)),
+       (4, 19, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 19),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 19), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 19)),
+       (4, 1, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 1),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 1), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 1)),
+       (4, 4, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 4),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 4), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 4));
 
 ########################################################################################################################
 #####  Fin du fichier  #################################################################################################
