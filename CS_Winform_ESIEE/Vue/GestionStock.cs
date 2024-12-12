@@ -102,6 +102,7 @@ namespace CS_Winform_ESIEE
             ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
             ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
             ViewController.gestionreappromixed.FormClosing += delegate
+
             {
                 try
                 {

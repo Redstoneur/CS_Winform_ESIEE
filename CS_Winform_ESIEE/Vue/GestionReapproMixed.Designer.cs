@@ -30,6 +30,7 @@ namespace CS_Winform_ESIEE.Vue
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionReapproMixed));
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.Categories = new System.Windows.Forms.ListBox();
@@ -375,7 +376,7 @@ namespace CS_Winform_ESIEE.Vue
             // validerEtat
             // 
             this.validerEtat.Location = new System.Drawing.Point(663, 356);
-            this.validerEtat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.validerEtat.Margin = new System.Windows.Forms.Padding(2);
             this.validerEtat.Name = "validerEtat";
             this.validerEtat.Size = new System.Drawing.Size(50, 19);
             this.validerEtat.TabIndex = 13;
@@ -560,7 +561,7 @@ namespace CS_Winform_ESIEE.Vue
             this.PanierList.FullRowSelect = true;
             this.PanierList.HideSelection = false;
             this.PanierList.Location = new System.Drawing.Point(19, 72);
-            this.PanierList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PanierList.Margin = new System.Windows.Forms.Padding(2);
             this.PanierList.Name = "PanierList";
             this.PanierList.Size = new System.Drawing.Size(350, 319);
             this.PanierList.TabIndex = 0;
@@ -640,7 +641,7 @@ namespace CS_Winform_ESIEE.Vue
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(558, 98);
-            this.button7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(189, 20);
             this.button7.TabIndex = 26;
@@ -663,6 +664,7 @@ namespace CS_Winform_ESIEE.Vue
             this.Controls.Add(this.Articles);
             this.Controls.Add(this.Categories);
             this.Controls.Add(this.button7);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "GestionReapproMixed";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

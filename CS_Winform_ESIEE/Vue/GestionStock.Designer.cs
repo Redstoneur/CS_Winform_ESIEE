@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GestionStock));
             this.Articles = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -109,7 +110,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.AliceBlue;
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.TypePromotionBox);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
@@ -750,6 +751,7 @@
             this.Controls.Add(this.Articles);
             this.Controls.Add(this.button5);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "GestionStock";
