@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Forms;
+using CS_Winform_ESIEE.Business;
 using CS_Winform_ESIEE.Modele;
 using MySql.Data.MySqlClient;
 
@@ -54,6 +56,7 @@ namespace CS_Winform_ESIEE.Data
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
                     Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion"),
                     EstActif = reader.GetBoolean("EstActif")
                 });
             }
@@ -93,7 +96,8 @@ namespace CS_Winform_ESIEE.Data
                     IdArticle = reader.GetInt32("IdArticle"),
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
-                    Promotion = reader.GetInt32("Promotion")
+                    Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion")
                 });
             }
 
@@ -121,68 +125,174 @@ namespace CS_Winform_ESIEE.Data
         public static void MettreAJourBaseDeDonnees(string cheminJson)
         {
             var json = File.ReadAllText(cheminJson);
-            var data = JsonSerializer.Deserialize<dynamic>(json);
+            var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+
+            // vérifier si le fichier JSON est valide
+            if (data == null || !data.ContainsKey("Categories") || !data.ContainsKey("Articles") ||
+                !data.ContainsKey("Commandes") || !data.ContainsKey("LignesCommandes"))
+            {
+                throw new Exception("Le fichier JSON est invalide.");
+            }
+
+            // vérifier si les données sont valides
+            if (((JsonElement)data["Categories"]).ValueKind != JsonValueKind.Array ||
+                ((JsonElement)data["Articles"]).ValueKind != JsonValueKind.Array ||
+                ((JsonElement)data["Commandes"]).ValueKind != JsonValueKind.Array ||
+                ((JsonElement)data["LignesCommandes"]).ValueKind != JsonValueKind.Array)
+            {
+                throw new Exception("Les données du fichier JSON sont invalides.");
+            }
 
             var dbConnector = new DatabaseConnector();
             dbConnector.OuvrirConnexion();
 
-            // Mettre à jour les catégories
-            foreach (var categorie in data.Categories)
+            string queryUpdate = "";
+
+            // créé les requêtes pour les catégories
+            foreach (var categorie in ((JsonElement)data["Categories"]).EnumerateArray())
             {
-                var cmd = new MySqlCommand(
-                    "REPLACE INTO CATEGORY (IdCategorie, Nom, EstActif) VALUES (@IdCategorie, @Nom, @EstActif)",
-                    dbConnector.Connexion);
-                cmd.Parameters.AddWithValue("@IdCategorie", (int)categorie.IdCategorie);
-                cmd.Parameters.AddWithValue("@Nom", (string)categorie.Nom);
-                cmd.Parameters.AddWithValue("@EstActif", (bool)categorie.EstActif);
-                cmd.ExecuteNonQuery();
+                // vérifier si la catégorie à des données valides
+                if (categorie.ValueKind != JsonValueKind.Object ||
+                    !categorie.TryGetProperty("IdCategorie", out JsonElement idCategorie) ||
+                    !categorie.TryGetProperty("Nom", out JsonElement nom) ||
+                    !categorie.TryGetProperty("EstActif", out JsonElement estActif))
+                {
+                    throw new Exception("Les données de la catégorie sont invalides.");
+                }
+
+                // vérifier les type des données
+                if (idCategorie.ValueKind != JsonValueKind.Number ||
+                    nom.ValueKind != JsonValueKind.String ||
+                    estActif.ValueKind != JsonValueKind.True && estActif.ValueKind != JsonValueKind.False)
+                {
+                    throw new Exception("Les types des données de la catégorie sont invalides.");
+                }
+
+                // vérifier si la catégorie existe déjà
+                string query = "SELECT * FROM CATEGORY WHERE IdCategorie = @IdCategorie";
+                var cmd = new MySqlCommand(query, dbConnector.Connexion);
+                cmd.Parameters.AddWithValue("@IdCategorie", idCategorie.GetInt32());
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    queryUpdate +=
+                        $"UPDATE CATEGORY SET Nom = '{nom.GetString()}', EstActif = {estActif.GetBoolean()} WHERE IdCategorie = {idCategorie.GetInt32()};\n";
+                }
+                else
+                {
+                    queryUpdate +=
+                        $"INSERT INTO CATEGORY (Nom, EstActif) VALUES ('{nom.GetString()}', {estActif.GetBoolean()});\n";
+                }
+
+                reader.Close();
             }
 
-            // Mettre à jour les articles
-            foreach (var article in data.Articles)
+            // créé les requêtes pour les articles
+            foreach (var article in ((JsonElement)data["Articles"]).EnumerateArray())
             {
-                var cmd = new MySqlCommand(
-                    "REPLACE INTO ARTICLE (IdArticle, IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, EstActif) VALUES (@IdArticle, @IdCategorie, @Nom, @PrixUnitaire, @Quantite, @Promotion, @EstActif)",
-                    dbConnector.Connexion);
-                cmd.Parameters.AddWithValue("@IdArticle", (int)article.IdArticle);
-                cmd.Parameters.AddWithValue("@IdCategorie", (int)article.IdCategorie);
-                cmd.Parameters.AddWithValue("@Nom", (string)article.Nom);
-                cmd.Parameters.AddWithValue("@PrixUnitaire", (decimal)article.PrixUnitaire);
-                cmd.Parameters.AddWithValue("@Quantite", (int)article.Quantite);
-                cmd.Parameters.AddWithValue("@Promotion", (int)article.Promotion);
-                cmd.Parameters.AddWithValue("@EstActif", (bool)article.EstActif);
-                cmd.ExecuteNonQuery();
+                // vérifier si l'article à des données valides
+                if (article.ValueKind != JsonValueKind.Object ||
+                    !article.TryGetProperty("IdArticle", out JsonElement idArticle) ||
+                    !article.TryGetProperty("IdCategorie", out JsonElement idCategorie) ||
+                    !article.TryGetProperty("Nom", out JsonElement nom) ||
+                    !article.TryGetProperty("PrixUnitaire", out JsonElement prixUnitaire) ||
+                    !article.TryGetProperty("Quantite", out JsonElement quantite) ||
+                    !article.TryGetProperty("Promotion", out JsonElement promotion) ||
+                    !article.TryGetProperty("TypePromotion", out JsonElement typePromotion) ||
+                    !article.TryGetProperty("EstActif", out JsonElement estActif))
+                {
+                    throw new Exception("Les données de l'article sont invalides.");
+                }
+
+                // vérifier les type des données
+                if (idArticle.ValueKind != JsonValueKind.Number ||
+                    idCategorie.ValueKind != JsonValueKind.Number ||
+                    nom.ValueKind != JsonValueKind.String ||
+                    prixUnitaire.ValueKind != JsonValueKind.Number ||
+                    quantite.ValueKind != JsonValueKind.Number ||
+                    promotion.ValueKind != JsonValueKind.Number ||
+                    typePromotion.ValueKind != JsonValueKind.String ||
+                    estActif.ValueKind != JsonValueKind.True && estActif.ValueKind != JsonValueKind.False)
+                {
+                    throw new Exception("Les types des données de l'article sont invalides.");
+                }
+
+                // vérifier si l'article existe déjà
+                string query = "SELECT * FROM ARTICLE WHERE IdArticle = @IdArticle";
+                var cmd = new MySqlCommand(query, dbConnector.Connexion);
+                cmd.Parameters.AddWithValue("@IdArticle", idArticle.GetInt32());
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    queryUpdate +=
+                        $"UPDATE ARTICLE SET IdCategorie = {idCategorie.GetInt32()}, Nom = '{nom.GetString()}', PrixUnitaire = {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, Quantite = {quantite.GetInt32()}, Promotion = {promotion.GetInt32()}, TypePromotion = '{typePromotion.GetString()}', EstActif = {estActif.GetBoolean()} WHERE IdArticle = {idArticle.GetInt32()};\n"
+                        ;
+                }
+                else
+                {
+                    queryUpdate +=
+                        $"INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, TypePromotion, EstActif) VALUES ({idCategorie.GetInt32()}, '{nom.GetString()}', {prixUnitaire.GetDecimal().ToString().Replace(',', '.')}, {quantite.GetInt32()}, {promotion.GetInt32()}, '{typePromotion.GetString()}', {estActif.GetBoolean()});\n";
+                }
+
+                reader.Close();
             }
 
-            // Mettre à jour les commandes
-            foreach (var commande in data.Commandes)
+            // créé les requêtes pour les commandes
+            foreach (var commande in ((JsonElement)data["Commandes"]).EnumerateArray())
             {
-                var cmd = new MySqlCommand(
-                    "REPLACE INTO COMMANDE (IdCommande, Etat, Date, DateEnvoi, DateLivraison) VALUES (@IdCommande, @Etat, @Date, @DateEnvoi, @DateLivraison)",
-                    dbConnector.Connexion);
-                cmd.Parameters.AddWithValue("@IdCommande", (int)commande.IdCommande);
-                cmd.Parameters.AddWithValue("@Etat", (string)commande.Etat);
-                cmd.Parameters.AddWithValue("@Date", (DateTime)commande.Date);
-                cmd.Parameters.AddWithValue("@DateEnvoi", (object)(DateTime?)commande.DateEnvoi ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@DateLivraison",
-                    (object)(DateTime?)commande.DateLivraison ?? DBNull.Value);
-                cmd.ExecuteNonQuery();
+                // vérifier si la commande à des données valides
+                if (commande.ValueKind != JsonValueKind.Object ||
+                    !commande.TryGetProperty("IdCommande", out JsonElement idCommande) ||
+                    !commande.TryGetProperty("Etat", out JsonElement etat) ||
+                    !commande.TryGetProperty("Date", out JsonElement date) ||
+                    !commande.TryGetProperty("DateEnvoi", out JsonElement dateEnvoi) ||
+                    !commande.TryGetProperty("DateLivraison", out JsonElement dateLivraison))
+                {
+                    throw new Exception("Les données de la commande sont invalides.");
+                }
+
+                // vérifier les type des données
+                if (idCommande.ValueKind != JsonValueKind.Number ||
+                    etat.ValueKind != JsonValueKind.String ||
+                    date.ValueKind != JsonValueKind.String ||
+                    (dateEnvoi.ValueKind != JsonValueKind.String && dateEnvoi.ValueKind != JsonValueKind.Null) ||
+                    (dateLivraison.ValueKind != JsonValueKind.String && dateLivraison.ValueKind != JsonValueKind.Null)
+                   )
+                {
+                    throw new Exception("Les types des données de la commande sont invalides.");
+                }
+
+                // si etat est bien 'Commandé' ou 'Expédié' ou 'Livré'
+                if (etat.GetString() != "Commandé" && etat.GetString() != "Expédié" &&
+                    etat.GetString() != "Livré" && etat.GetString() != "Annulé")
+                {
+                    throw new Exception("L'état de la commande est invalide.");
+                }
+
+                // vérifier si la commande existe déjà
+                string query = "SELECT * FROM COMMANDE WHERE IdCommande = @IdCommande";
+                var cmd = new MySqlCommand(query, dbConnector.Connexion);
+                cmd.Parameters.AddWithValue("@IdCommande", idCommande.GetInt32());
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    queryUpdate +=
+                        $"UPDATE COMMANDE SET Etat = '{etat.GetString()}', Date = '{date.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}', DateEnvoi = {(dateEnvoi.ValueKind == JsonValueKind.Null ? "null" : $"'{dateEnvoi.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}'")}, DateLivraison = {(dateLivraison.ValueKind == JsonValueKind.Null ? "null" : $"'{dateLivraison.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}'")} WHERE IdCommande = {idCommande.GetInt32()};\n";
+                }
+                else
+                {
+                    queryUpdate +=
+                        $"INSERT INTO COMMANDE (Etat, Date, DateEnvoi, DateLivraison) VALUES ('{etat.GetString()}', '{date.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}', {(dateEnvoi.ValueKind == JsonValueKind.Null ? "null" : $"'{dateEnvoi.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}'")}, {(dateLivraison.ValueKind == JsonValueKind.Null ? "null" : $"'{dateLivraison.GetDateTime().ToString("yyyy-MM-dd HH:mm:ss")}'")});\n";
+                }
+
+                reader.Close();
             }
 
-            // Mettre à jour les lignes de commande
-            foreach (var ligneCommande in data.LignesCommandes)
-            {
-                var cmd = new MySqlCommand(
-                    "REPLACE INTO LIGNE_COMMANDE (IdLigneCommande, IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion) VALUES (@IdLigneCommande, @IdCommande, @IdArticle, @PrixUnitaire, @Quantite, @Promotion)",
-                    dbConnector.Connexion);
-                cmd.Parameters.AddWithValue("@IdLigneCommande", (int)ligneCommande.IdLigneCommande);
-                cmd.Parameters.AddWithValue("@IdCommande", (int)ligneCommande.IdCommande);
-                cmd.Parameters.AddWithValue("@IdArticle", (int)ligneCommande.IdArticle);
-                cmd.Parameters.AddWithValue("@PrixUnitaire", (decimal)ligneCommande.PrixUnitaire);
-                cmd.Parameters.AddWithValue("@Quantite", (int)ligneCommande.Quantite);
-                cmd.Parameters.AddWithValue("@Promotion", (int)ligneCommande.Promotion);
-                cmd.ExecuteNonQuery();
-            }
+            // créé la requête pour les lignes de commande
+            // TODO: à compléter
+
+            MySqlCommand command = new MySqlCommand(queryUpdate, dbConnector.Connexion);
+            command.ExecuteNonQuery();
 
             dbConnector.FermerConnexion();
         }

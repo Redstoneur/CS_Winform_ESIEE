@@ -18,7 +18,12 @@
         /// <summary>
         /// La commande a été livrée.
         /// </summary>
-        Livree
+        Livree,
+        
+        /// <summary>
+        /// La commande a été annulée.
+        /// </summary>
+        Annulee
     }
 
     /// <summary>
@@ -36,11 +41,13 @@
             switch (etat)
             {
                 case EtatCommande.Commande:
-                    return "Commande";
+                    return "Commandé";
                 case EtatCommande.Envoyee:
-                    return "Envoyée";
+                    return "Expédié";
                 case EtatCommande.Livree:
-                    return "Livrée";
+                    return "Livré";
+                case EtatCommande.Annulee:
+                    return "Annulé";
                 default:
                     return null;
             }
@@ -55,14 +62,16 @@
         {
             switch (etat)
             {
-                case "Commande":
+                case "Commandé":
                     return EtatCommande.Commande;
-                case "Envoyée":
+                case "Expédié":
                     return EtatCommande.Envoyee;
-                case "Livrée":
+                case "Livré":
                     return EtatCommande.Livree;
+                case "Annulé":
+                    return EtatCommande.Annulee;
                 default:
-                    return EtatCommande.Commande;
+                    return EtatCommande.Annulee;
             }
         }
     }

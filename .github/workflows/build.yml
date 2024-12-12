@@ -20,7 +20,7 @@ jobs:
       # Étape 1 : Vérification du code
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       # Étape 2 : Changer les variables par défaut (@server, @database, @user, @password) de la base dans le fichier DatabaseConnection.cs par les secrets
       - name: Change default variables
         run: |
@@ -31,7 +31,7 @@ jobs:
           $content = $content -replace '@user";', '${{ secrets.DATABASE_USER }}";'
           $content = $content -replace '@password";', '${{ secrets.DATABASE_PASSWORD }}";'
           Set-Content -Path $path -Value $content
-      
+
       # Étape 3 : Installation de .NET Framework
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1
@@ -50,7 +50,7 @@ jobs:
 
       # Étape 7 : Archivage de l'exécutable
       - name: Upload executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CS_Winform_ESIEE
           path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
