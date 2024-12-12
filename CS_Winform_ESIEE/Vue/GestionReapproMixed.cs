@@ -217,7 +217,8 @@ namespace CS_Winform_ESIEE.Vue
         //bouton menu about
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // todo: about
+            MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         //bouton menu edit
@@ -520,7 +521,7 @@ namespace CS_Winform_ESIEE.Vue
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = saveFileDialog.FileName;
-                
+
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
                 {
@@ -530,15 +531,15 @@ namespace CS_Winform_ESIEE.Vue
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
-                
+
                 // Afficher le résultat de l'opération
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                     // Mettre à jour les listes des articles et des catégories
                     ChargerCategories();
                     UpdatePanier();
