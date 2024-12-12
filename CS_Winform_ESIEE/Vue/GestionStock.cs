@@ -87,6 +87,7 @@ namespace CS_Winform_ESIEE
             ChargerCategories();
             button3.Enabled = false;
             button4.Enabled = false;
+            TypePromotionBox.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -101,6 +102,7 @@ namespace CS_Winform_ESIEE
             ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
             ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
             ViewController.gestionreappromixed.FormClosing += delegate
+
             {
                 try
                 {
@@ -142,7 +144,8 @@ namespace CS_Winform_ESIEE
                         {
                             selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
                             int value = Convert.ToInt16(promotionValue);
-                            articleController.UpdatePromotion(selectedArticle, value);
+                            articleController.UpdatePromotion(selectedArticle, value,
+                                TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem));
                         }
                         else
                         {
@@ -226,13 +229,13 @@ namespace CS_Winform_ESIEE
                     // Récupérer l'article correspondant
                     selectedArticle = articles[Articles.SelectedIndex];
 
-
                     // Afficher les informations dans les champs texte
                     textBox1.Text = selectedArticle.Nom; // Affiche le nom
                     textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
                     DelArticleName.Text = selectedArticle.Nom.ToString(); // affiche larticle a supprimer
+
                     if (selectedArticle.Promotion > 0)
                         button4.Text = "Supprimer";
                     else if (selectedArticle.Promotion <= 0)
@@ -240,6 +243,13 @@ namespace CS_Winform_ESIEE
 
                     button3.Enabled = true;
                     button4.Enabled = true;
+                    TypePromotionBox.Enabled = true;
+                    TypePromotionBox.Items.Clear();
+                    TypePromotionBox.Items.Add(TypePromo.Pourcentage.to_string());
+                    TypePromotionBox.Items.Add(TypePromo.Montant.to_string());
+                    TypePromotionBox.SelectedItem =
+                        TypePromoExtensions.from_string(selectedArticle.TypePromotion).to_string();
+                    label1.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
                 }
                 catch (Exception ex)
                 {
@@ -628,7 +638,7 @@ namespace CS_Winform_ESIEE
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string fileName = openFileDialog.FileName;
-                
+
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
                 {
@@ -638,15 +648,15 @@ namespace CS_Winform_ESIEE
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
-                
+
                 // Afficher le résultat de l'opération
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
+
                     // Rechargez les articles pour mettre à jour l'interface
                     ChargerCategories();
                     loadArticle();
@@ -661,6 +671,11 @@ namespace CS_Winform_ESIEE
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void TypePromotionBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            label1.Text = TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem).get_symbol();
         }
     }
 }

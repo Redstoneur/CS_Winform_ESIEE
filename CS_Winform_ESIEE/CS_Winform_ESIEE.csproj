@@ -237,6 +237,7 @@
     <Compile Include="Modele\LigneCommande.cs" />
     <Compile Include="Modele\OperationResult.cs" />
     <Compile Include="Modele\Panier.cs" />
+    <Compile Include="Modele\TypePromo.cs" />
     <Compile Include="Vue\GestionReapproMixed.cs">
       <SubType>Form</SubType>
     </Compile>

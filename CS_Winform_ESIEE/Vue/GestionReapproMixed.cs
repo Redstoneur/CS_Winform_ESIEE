@@ -160,6 +160,7 @@ namespace CS_Winform_ESIEE.Vue
                     label11.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
                     label12.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
                     label13.Text = selectedArticle.Promotion.ToString(); // affiche la remise
+                    label15.Text = TypePromoExtensions.from_string(selectedArticle.TypePromotion).get_symbol();
                 }
                 catch (Exception ex)
                 {
@@ -201,7 +202,8 @@ namespace CS_Winform_ESIEE.Vue
                 PrixUnitaire = articles[Articles.SelectedIndex].PrixUnitaire,
                 Quantite = quantite,
                 Promotion = articles[Articles.SelectedIndex].Promotion,
-                EstActif = articles[Articles.SelectedIndex].EstActif
+                EstActif = articles[Articles.SelectedIndex].EstActif,
+                TypePromotion = articles[Articles.SelectedIndex].TypePromotion
             };
 
             panier.AjouterArticle(newArticle);
@@ -245,6 +247,8 @@ namespace CS_Winform_ESIEE.Vue
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             UpdatePanier();
+            label4.Visible = !checkBox1.Checked;
+            label3.Visible = checkBox1.Checked;
         }
 
         //listbox 
@@ -285,6 +289,7 @@ namespace CS_Winform_ESIEE.Vue
         {
             UpdatePanier();
             UpdateCommandesList();
+            ChargerCategories();
             try
             {
                 // Récupérer tous les articles
@@ -303,8 +308,9 @@ namespace CS_Winform_ESIEE.Vue
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            ChargerCategories();
             PanierList.MouseDoubleClick += new MouseEventHandler(PanierList_MouseDoubleClick);
+            label4.Visible = !checkBox1.Checked;
+            label3.Visible = checkBox1.Checked;
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -403,12 +409,13 @@ namespace CS_Winform_ESIEE.Vue
                 ListViewItem item = new ListViewItem(article.Nom);
                 item.Tag = article.IdArticle;
                 if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixUnitairePromotion.ToString());
+                    item.SubItems.Add(article.PrixTotal.ToString());
                 else
                     item.SubItems.Add(article.PrixUnitaire.ToString());
                 item.SubItems.Add(article.Quantite.ToString());
                 if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() + "%");
+                    item.SubItems.Add(article.Promotion.ToString() +
+                                      TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
                 PanierList.Items.Add(item);
             }
 
@@ -457,7 +464,8 @@ namespace CS_Winform_ESIEE.Vue
                 item.Tag = article.IdArticle;
                 item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
                 item.SubItems.Add(ligneCommande.Quantite.ToString());
-                item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                item.SubItems.Add(ligneCommande.Promotion.ToString() +
+                                  TypePromoExtensions.from_string(ligneCommande.TypePromotion).get_symbol());
                 item.SubItems.Add(ligneCommande.PrixTotal.ToString());
                 ArticlesCommande.Items.Add(item);
             }
@@ -477,7 +485,7 @@ namespace CS_Winform_ESIEE.Vue
             ArticlesCommande.Enabled = true;
             validerEtat.Enabled = false;
 
-            if (commande.Etat ==  EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
+            if (commande.Etat == EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
             {
                 EtatCommandeSelect.Enabled = false;
             }
@@ -494,13 +502,12 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = @"Exporter les données vers un fichier JSON";
-            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
-            openFileDialog.CheckFileExists = false;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = @"Exporter les données vers un fichier JSON";
+            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialog.FileName;
+                string fileName = saveFileDialog.FileName;
 
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
@@ -511,7 +518,7 @@ namespace CS_Winform_ESIEE.Vue
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
+                
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.CreerJson(fileName);
 
@@ -529,12 +536,12 @@ namespace CS_Winform_ESIEE.Vue
 
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = @"Importer les données depuis un fichier JSON";
-            saveFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = @"Importer les données depuis un fichier JSON";
+            openFileDialog.Filter = @"Fichiers JSON (*.json)|*.json";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = saveFileDialog.FileName;
+                string fileName = openFileDialog.FileName;
 
                 // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
                 if (!fileName.EndsWith(".json"))
@@ -558,7 +565,23 @@ namespace CS_Winform_ESIEE.Vue
                     ChargerCategories();
                     UpdatePanier();
                     UpdateCommandesList();
-                    // todo: update articles list
+                    try
+                    {
+                        // Récupérer tous les articles
+                        articles = articleController.GetAllArticles();
+
+                        // Charger les noms des articles dans la ListBox
+                        Articles.Items.Clear();
+                        foreach (var article in articles)
+                        {
+                            Articles.Items.Add(article.Nom); // Ajoute uniquement les noms
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erreur lors du chargement des articles : {ex.Message}", "Erreur",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
@@ -572,8 +595,9 @@ namespace CS_Winform_ESIEE.Vue
             if (EtatCommandeSelect.Tag != null)
             {
                 int commandeId = (int)EtatCommandeSelect.Tag;
-                EtatCommande nouvelEtat = EtatCommandeExtensions.from_string(EtatCommandeSelect.SelectedItem.ToString());
-                
+                EtatCommande nouvelEtat =
+                    EtatCommandeExtensions.from_string(EtatCommandeSelect.SelectedItem.ToString());
+
                 // Mettre à jour l'état de la commande dans la base de données
                 CommandeController.UpdateCommande(CommandeController.GetCommandeById(commandeId), nouvelEtat);
 
@@ -610,6 +634,14 @@ namespace CS_Winform_ESIEE.Vue
                     validerEtat.Enabled = false;
                 }
             }
+        }
+
+        private void ArticlesCommande_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
         }
     }
 }
