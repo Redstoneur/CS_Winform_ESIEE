@@ -75,10 +75,10 @@ VALUES ('Informatique'),
 INSERT INTO ARTICLE (Nom, PrixUnitaire, Quantite, Promotion, IdCategorie)
 VALUES ('Ordinateur', 500, 10, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Informatique')),
        ('Télévision', 300, 5, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
-       ('Lave-vaisselle', 400, 3, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Lave-vaisselle', 400, 3, 10, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
        ('Lave-linge', 400, 3, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
        ('Tondeuse', 150, 7, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Jardinage')),
-       ('Perceuse', 100, 8, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Bricolage')),
+       ('Perceuse', 100, 8, 30, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Bricolage')),
        ('Vélo', 200, 6, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Sport')),
        ('PS4', 400, 4, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Jeux Vidéo')),
        ('Guitare', 300, 5, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Musique')),
@@ -86,12 +86,12 @@ VALUES ('Ordinateur', 500, 10, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 
        ('T-shirt', 10, 50, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Vêtements')),
        ('Pomme', 1, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Banane', 2, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
-       ('Pomme de terre', 3, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
+       ('Pomme de terre', 3, 100, 50, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Tomate', 4, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Carotte', 5, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Concombre', 6, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Salade', 7, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
-       ('Poire', 8, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation'));
+       ('Poire', 8, 100, 10, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation'));
 
 INSERT INTO COMMANDE (Etat, Date)
 VALUES ('Commandé', '2021-01-01 12:00:00'),
@@ -102,7 +102,7 @@ INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promo
 VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 6), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 6)),
        (1, 7, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 7),
-        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 7), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 7)),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 7), 70),
        (1, 8, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 8),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 8), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 8)),
        (2, 9, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 9),
@@ -116,11 +116,11 @@ VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
        (3, 13, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 13),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 13), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 13)),
        (3, 14, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 14),
-        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 14), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 14)),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 14), 45),
        (3, 15, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 15),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 15), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 15)),
        (3, 16, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 16),
-        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 16), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 16));
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 16), 30);
 
 ########################################################################################################################
 #####  Fin du fichier  #################################################################################################
