@@ -138,7 +138,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //listbox des listes des articles
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) // todo: refactor this method
         {
             if (label10.Visible == false)
                 label10.Visible = true;
@@ -170,7 +170,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         //bouton ajouter
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // todo: refactor this method
         {
             if (Articles.SelectedIndex < 0)
             {
@@ -457,7 +457,8 @@ namespace CS_Winform_ESIEE.Vue
                 item.Tag = article.IdArticle;
                 item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
                 item.SubItems.Add(ligneCommande.Quantite.ToString());
-                item.SubItems.Add(ligneCommande.Promotion.ToString() + "%");
+                item.SubItems.Add(ligneCommande.Promotion.ToString() +
+                                  TypePromoExtensions.from_string(ligneCommande.TypePromotion).get_symbol());
                 item.SubItems.Add(ligneCommande.PrixTotal.ToString());
                 ArticlesCommande.Items.Add(item);
             }
@@ -477,7 +478,7 @@ namespace CS_Winform_ESIEE.Vue
             ArticlesCommande.Enabled = true;
             validerEtat.Enabled = false;
 
-            if (commande.Etat ==  EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
+            if (commande.Etat == EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
             {
                 EtatCommandeSelect.Enabled = false;
             }
@@ -572,8 +573,9 @@ namespace CS_Winform_ESIEE.Vue
             if (EtatCommandeSelect.Tag != null)
             {
                 int commandeId = (int)EtatCommandeSelect.Tag;
-                EtatCommande nouvelEtat = EtatCommandeExtensions.from_string(EtatCommandeSelect.SelectedItem.ToString());
-                
+                EtatCommande nouvelEtat =
+                    EtatCommandeExtensions.from_string(EtatCommandeSelect.SelectedItem.ToString());
+
                 // Mettre à jour l'état de la commande dans la base de données
                 CommandeController.UpdateCommande(CommandeController.GetCommandeById(commandeId), nouvelEtat);
 

@@ -130,7 +130,7 @@ namespace CS_Winform_ESIEE
         /**
          * Bouton d'application/suppression de la remise
          */
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e) // todo: refactor this method
         {
             if (selectedArticle != null)
             {
@@ -216,7 +216,7 @@ namespace CS_Winform_ESIEE
         /**
          * Liste d'articles
          */
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) // todo: refactor this method
         {
             if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
             {

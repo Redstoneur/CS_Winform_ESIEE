@@ -34,7 +34,7 @@ namespace CS_Winform_ESIEE.Business
         /// <param name="estActif">Indique si l'article est actif (par défaut true).</param>
         /// <exception cref="System.Exception">Lancée lorsque la catégorie n'existe pas.</exception>
         public void AjouterArticle(int idCategorie, string nom, decimal prixUnitaire, int quantite, int promotion = 0,
-            bool estActif = true)
+            TypePromo typePromotion = TypePromo.Pourcentage, bool estActif = true)
         {
             // Vérifie que la catégorie existe
             CategorieController categorieController = new CategorieController();
@@ -46,7 +46,7 @@ namespace CS_Winform_ESIEE.Business
             dbConnector.OuvrirConnexion();
 
             string query =
-                "INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, EstActif) VALUES (@IdCategorie, @Nom, @PrixUnitaire, @Quantite, @Promotion, @EstActif);";
+                "INSERT INTO ARTICLE (IdCategorie, Nom, PrixUnitaire, Quantite, Promotion, TypePromotion, EstActif) VALUES (@IdCategorie, @Nom, @PrixUnitaire, @Quantite, @Promotion, @TypePromotion, @EstActif)";
 
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
             cmd.Parameters.AddWithValue("@IdCategorie", idCategorie);
@@ -54,6 +54,7 @@ namespace CS_Winform_ESIEE.Business
             cmd.Parameters.AddWithValue("@PrixUnitaire", prixUnitaire);
             cmd.Parameters.AddWithValue("@Quantite", quantite);
             cmd.Parameters.AddWithValue("@Promotion", promotion);
+            cmd.Parameters.AddWithValue("@TypePromotion", typePromotion.to_string());
             cmd.Parameters.AddWithValue("@EstActif", estActif);
 
             cmd.ExecuteNonQuery();
@@ -75,14 +76,15 @@ namespace CS_Winform_ESIEE.Business
         /// </summary>
         /// <param name="article">L'article à mettre à jour.</param>
         /// <param name="promotion">La nouvelle valeur de la promotion.</param>
-        public void UpdatePromotion(Article article, int promotion)
+        public void UpdatePromotion(Article article, int promotion, TypePromo typePromotion = TypePromo.Pourcentage)
         {
             dbConnector.OuvrirConnexion();
 
-            string query = "UPDATE ARTICLE SET Promotion = @Promotion WHERE IdArticle = @IdArticle;";
+            string query = "UPDATE ARTICLE SET Promotion = @Promotion, TypePromotion = @TypePromotion WHERE IdArticle = @IdArticle;";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
             cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
             cmd.Parameters.AddWithValue("@Promotion", promotion);
+            cmd.Parameters.AddWithValue("@TypePromotion", typePromotion.to_string());
 
             cmd.ExecuteNonQuery();
 
@@ -118,7 +120,7 @@ namespace CS_Winform_ESIEE.Business
         public void UpdateArticle(Article article, Dictionary<string, object> data)
         {
             // Vérification des clés valides
-            var validKeys = new HashSet<string> { "Nom", "PrixUnitaire", "Quantite", "EstActif" };
+            var validKeys = new HashSet<string> { "Nom", "PrixUnitaire", "Quantite", "Promotion", "TypePromotion", "EstActif" };
             foreach (string key in data.Keys)
             {
                 if (!validKeys.Contains(key))
@@ -199,6 +201,7 @@ namespace CS_Winform_ESIEE.Business
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
                     Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion"),
                     EstActif = reader.GetBoolean("EstActif")
                 };
             }
@@ -232,6 +235,7 @@ namespace CS_Winform_ESIEE.Business
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
                     Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion"),
                     EstActif = reader.GetBoolean("EstActif")
                 };
                 articles.Add(article);
@@ -266,6 +270,7 @@ namespace CS_Winform_ESIEE.Business
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
                     Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion"),
                     EstActif = reader.GetBoolean("EstActif")
                 };
                 articles.Add(article);

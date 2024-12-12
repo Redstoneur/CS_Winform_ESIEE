@@ -36,14 +36,15 @@ namespace CS_Winform_ESIEE.Business
         {
             dbConnector.OuvrirConnexion();
 
-            string query = "INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion) " +
-                           "VALUES (@IdCommande, @IdArticle, @PrixUnitaire, @Quantite, @Promotion)";
+            string query = "INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion, TypePromotion) " +
+                           "VALUES (@IdCommande, @IdArticle, @PrixUnitaire, @Quantite, @Promotion, @TypePromotion)";
             MySqlCommand cmd = new MySqlCommand(query, dbConnector.Connexion);
             cmd.Parameters.AddWithValue("@IdCommande", idCommande);
             cmd.Parameters.AddWithValue("@IdArticle", article.IdArticle);
             cmd.Parameters.AddWithValue("@PrixUnitaire", article.PrixUnitaire);
             cmd.Parameters.AddWithValue("@Quantite", article.Quantite);
             cmd.Parameters.AddWithValue("@Promotion", article.Promotion);
+            cmd.Parameters.AddWithValue("@TypePromotion", article.TypePromotion);
 
             cmd.ExecuteNonQuery();
 
@@ -74,7 +75,8 @@ namespace CS_Winform_ESIEE.Business
                     IdArticle = reader.GetInt32("IdArticle"),
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
-                    Promotion = reader.GetInt32("Promotion")
+                    Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion")
                 };
             }
 
@@ -106,7 +108,8 @@ namespace CS_Winform_ESIEE.Business
                     IdArticle = reader.GetInt32("IdArticle"),
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
-                    Promotion = reader.GetInt32("Promotion")
+                    Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion")
                 });
             }
 
@@ -140,7 +143,8 @@ namespace CS_Winform_ESIEE.Business
                     IdArticle = reader.GetInt32("IdArticle"),
                     PrixUnitaire = reader.GetDecimal("PrixUnitaire"),
                     Quantite = reader.GetInt32("Quantite"),
-                    Promotion = reader.GetInt32("Promotion")
+                    Promotion = reader.GetInt32("Promotion"),
+                    TypePromotion = reader.GetString("TypePromotion")
                 });
             }
 

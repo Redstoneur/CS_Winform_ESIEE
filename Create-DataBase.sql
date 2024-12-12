@@ -25,13 +25,14 @@ CREATE TABLE CATEGORY
 
 CREATE TABLE ARTICLE
 (
-    IdArticle    INT AUTO_INCREMENT PRIMARY KEY,
-    IdCategorie  INT            NOT NULL,
-    Nom          VARCHAR(255)   NOT NULL,
-    PrixUnitaire DECIMAL(10, 2) NOT NULL CHECK (PrixUnitaire >= 0),
-    Quantite     INT            NOT NULL CHECK (Quantite >= 0),
-    Promotion    INT CHECK (Promotion BETWEEN 0 AND 100) DEFAULT 0,
-    EstActif     BOOLEAN        NOT NULL                 DEFAULT TRUE,
+    IdArticle     INT AUTO_INCREMENT PRIMARY KEY,
+    IdCategorie   INT            NOT NULL,
+    Nom           VARCHAR(255)   NOT NULL,
+    PrixUnitaire  DECIMAL(10, 2) NOT NULL CHECK (PrixUnitaire >= 0),
+    Quantite      INT            NOT NULL CHECK (Quantite >= 0),
+    Promotion     INT CHECK (Promotion BETWEEN 0 AND 100) DEFAULT 0,
+    TypePromotion ENUM ('Pourcentage', 'Montant')         DEFAULT 'Pourcentage',
+    EstActif      BOOLEAN        NOT NULL                 DEFAULT TRUE,
     CONSTRAINT FK_Article_Categorie FOREIGN KEY (IdCategorie) REFERENCES CATEGORY (IdCategorie)
 );
 
@@ -52,6 +53,7 @@ CREATE TABLE LIGNE_COMMANDE
     PrixUnitaire    DECIMAL(10, 2) NOT NULL CHECK (PrixUnitaire >= 0),
     Quantite        INT            NOT NULL CHECK (Quantite >= 0),
     Promotion       INT CHECK (Promotion BETWEEN 0 AND 100) DEFAULT 0,
+    TypePromotion   ENUM ('Pourcentage', 'Montant')         DEFAULT 'Pourcentage',
     CONSTRAINT FK_LigneCommande_Commande FOREIGN KEY (IdCommande) REFERENCES COMMANDE (IdCommande),
     CONSTRAINT FK_LigneCommande_Article FOREIGN KEY (IdArticle) REFERENCES ARTICLE (IdArticle)
 );
@@ -93,11 +95,22 @@ VALUES ('Ordinateur', 500, 10, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 
        ('Salade', 7, 100, 0, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation')),
        ('Poire', 8, 100, 10, (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Alimentation'));
 
+INSERT INTO ARTICLE (Nom, PrixUnitaire, Quantite, Promotion, TypePromotion, IdCategorie)
+VALUES ('Aspirateur', 100, 5, 2, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Micro-ondes', 100, 5, 0, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Cafetière', 100, 5, 5, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Fer à repasser', 100, 5, 0, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Grille-pain', 100, 5, 0, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Sèche-cheveux', 100, 5, 10, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager')),
+       ('Ventilateur', 100, 5, 0, 'Montant', (SELECT IdCategorie FROM CATEGORY WHERE Nom = 'Electroménager'));
+
 INSERT INTO COMMANDE (Etat, Date, DateEnvoi, DateLivraison)
 VALUES ('Commandé', '2021-01-01 12:00:00', null, null),
        ('Expédié', '2021-01-02 12:00:00', '2021-01-02 12:00:00', null),
        ('Livré', '2021-01-03 12:00:00', '2021-01-03 12:00:00', '2021-01-03 12:00:00'),
-       ('Annulé', '2021-01-04 12:00:00', '2021-01-04 12:00:00', '2021-01-04 12:00:00');
+       ('Annulé', '2021-01-04 12:00:00', '2021-01-04 12:00:00', '2021-01-04 12:00:00'),
+       ('Commandé', '2021-01-05 12:00:00', null, null);
+;
 
 INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion)
 VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
@@ -132,6 +145,29 @@ VALUES (1, 6, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 6),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 1), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 1)),
        (4, 4, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 4),
         (SELECT Quantite FROM ARTICLE WHERE IdArticle = 4), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 4));
+
+INSERT INTO LIGNE_COMMANDE (IdCommande, IdArticle, PrixUnitaire, Quantite, Promotion, TypePromotion)
+VALUES (5, 17, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 17),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 17), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 17),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 17)),
+       (5, 18, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 18),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 18), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 18),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 18)),
+       (5, 19, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 19),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 19), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 19),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 19)),
+       (5, 20, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 20),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 20), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 20),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 20)),
+       (5, 21, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 21),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 21), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 21),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 21)),
+       (5, 22, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 22),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 22), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 22),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 22)),
+       (5, 23, (SELECT PrixUnitaire FROM ARTICLE WHERE IdArticle = 23),
+        (SELECT Quantite FROM ARTICLE WHERE IdArticle = 23), (SELECT Promotion FROM ARTICLE WHERE IdArticle = 23),
+        (SELECT TypePromotion FROM ARTICLE WHERE IdArticle = 23));
 
 ########################################################################################################################
 #####  Fin du fichier  #################################################################################################

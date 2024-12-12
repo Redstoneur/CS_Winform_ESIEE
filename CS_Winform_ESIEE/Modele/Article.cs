@@ -42,6 +42,11 @@ namespace CS_Winform_ESIEE.Modele
         public int Promotion { get; set; }
 
         /// <summary>
+        /// Obtient ou définit le type de promotion de l'article.
+        /// </summary>
+        public string TypePromotion { get; set; }
+
+        /// <summary>
         /// Obtient ou définit une valeur indiquant si l'article est actif.
         /// </summary>
         public bool EstActif { get; set; }
@@ -49,7 +54,24 @@ namespace CS_Winform_ESIEE.Modele
         /// <summary>
         /// Obtient le prix unitaire de l'article après application de la promotion.
         /// </summary>
-        public decimal PrixUnitairePromotion => PrixUnitaire * (1 - (decimal)Promotion / 100);
+        public decimal PrixUnitairePromotion
+        {
+            get
+            {
+                if (TypePromotion == TypePromo.Pourcentage.to_string())
+                {
+                    return PrixUnitaire * (1 - (decimal)Promotion / 100);
+                }
+                else if (TypePromotion == TypePromo.Montant.to_string())
+                {
+                    return PrixUnitaire - Promotion;
+                }
+                else
+                {
+                    return PrixUnitaire;
+                }
+            }
+        }
 
         /// <summary>
         /// Obtient le prix total de l'article en fonction de la quantité et du prix unitaire promotionnel.
