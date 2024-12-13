@@ -19,14 +19,49 @@ namespace CS_Winform_ESIEE.Vue
     /// </summary>
     public partial class GestionReapproMixed : Form
     {
+        /// <summary>
+        /// Contrôleur pour les opérations JSON.
+        /// </summary>
         private JsonEditorController jsonEditorController = new JsonEditorController();
+
+        /// <summary>
+        /// Contrôleur pour la gestion des commandes.
+        /// </summary>
         private CommandeController CommandeController = new CommandeController();
+
+        /// <summary>
+        /// Contrôleur pour la gestion des lignes de commande.
+        /// </summary>
         private LigneCommandeController LigneCommandeController = new LigneCommandeController();
+
+        /// <summary>
+        /// Contrôleur pour la gestion des articles.
+        /// </summary>
         private ArticleController articleController;
-        private List<Article> articles; // Stores the retrieved articles
+
+        /// <summary>
+        /// Contrôleur pour la gestion des catégories.
+        /// </summary>
         private CategorieController categorieController;
+
+        /// <summary>
+        /// Contrôleur pour la gestion du panier.
+        /// </summary>
         private PanierController panierController;
+
+        /// <summary>
+        /// Liste des articles.
+        /// </summary>
+        private List<Article> articles;
+
+        /// <summary>
+        /// Liste des catégories.
+        /// </summary>
         private List<Categorie> categories;
+
+        /// <summary>
+        /// Instance du panier.
+        /// </summary>
         private Panier panier = new Panier();
 
         /// <summary>
@@ -47,14 +82,14 @@ namespace CS_Winform_ESIEE.Vue
         {
             try
             {
-                // Retrieve all categories
+                // Récupérer toutes les catégories
                 categories = categorieController.GetAllCategories();
 
-                // Load category names into the ListBox
+                // Charger les noms des catégories dans la ListBox
                 Categories.Items.Clear();
                 foreach (var categorie in categories)
                 {
-                    Categories.Items.Add(categorie.Nom); // Adds only the names
+                    Categories.Items.Add(categorie.Nom); // Ajoute uniquement les noms
                 }
             }
             catch (Exception ex)
@@ -176,9 +211,11 @@ namespace CS_Winform_ESIEE.Vue
             return int.Parse(commandeId.Substring(1));
         }
 
-        //principal
-
-        //bouton stock
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de gestion des stocks.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button3_Click(object sender, EventArgs e)
         {
             ViewController.gestionstock.Location = ViewController.gestionreappromixed.Location;
@@ -191,20 +228,28 @@ namespace CS_Winform_ESIEE.Vue
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("secure for avoid crash");
+                    Console.WriteLine("sécurisé pour éviter le crash");
                 }
             };
             if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Show();
             if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Hide();
         }
 
-        //bouton panier
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de gestion des commandes.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button2_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
         }
 
-        //listbox des categorie
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -247,7 +292,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
-        //listbox des listes des articles
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (label10.Visible == false)
@@ -280,7 +329,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
-        //bouton ajouter
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (Articles.SelectedIndex < 0)
@@ -321,27 +374,43 @@ namespace CS_Winform_ESIEE.Vue
             UpdatePanier();
         }
 
-        //bouton menu about
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        //bouton menu exit
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        //bouton annuler
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button6_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
         }
 
-        //bouton on/off quantité/unité
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             UpdatePanier();
@@ -349,7 +418,11 @@ namespace CS_Winform_ESIEE.Vue
             label3.Visible = checkBox1.Checked;
         }
 
-        //bouton valider
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button5_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
@@ -358,13 +431,21 @@ namespace CS_Winform_ESIEE.Vue
             UpdatePanier();
         }
 
-        //bouton annuler
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button4_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
         }
 
-        //listbox liste de commandes
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void ListCommande_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ListCommande.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
@@ -376,6 +457,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le chargement du formulaire.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void GestionReapproMixed_Load(object sender, EventArgs e)
         {
             UpdatePanier();
@@ -404,17 +490,32 @@ namespace CS_Winform_ESIEE.Vue
             label3.Visible = checkBox1.Checked;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button7_Click(object sender, EventArgs e)
         {
             UpdateCommandesList();
             groupBox2.Visible = true;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button10_Click(object sender, EventArgs e)
         {
             GestionQuantite.Visible = false;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button9_Click(object sender, EventArgs e)
         {
             int articleId = (int)Quantites.Tag;
@@ -424,6 +525,11 @@ namespace CS_Winform_ESIEE.Vue
             GestionQuantite.Visible = false;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void button11_Click(object sender, EventArgs e)
         {
             int articleId = (int)Quantites.Tag;
@@ -433,11 +539,21 @@ namespace CS_Winform_ESIEE.Vue
             GestionQuantite.Visible = false;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void BoutonExit(object sender, EventArgs e)
         {
             GestionQuantite.Visible = false;
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le double-clic sur un élément de la liste des articles du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un MouseEventArgs qui contient les données de l'événement.</param>
         private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (PanierList.SelectedItems.Count > 0)
@@ -456,6 +572,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -490,6 +611,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un FormClosingEventArgs qui contient les données de l'événement.</param>
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -546,6 +672,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le bouton de suppression d'un article du panier.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un FormClosingEventArgs qui contient les données de l'événement.</param>
         private void validerEtat_Click(object sender, EventArgs e)
         {
             if (EtatCommandeSelect.Tag != null)
@@ -574,6 +705,11 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Gestionnaire d'événements pour le changement de l'élément sélectionné dans la liste des états de commande.
+        /// </summary>
+        /// <param name="sender">La source de l'événement.</param>
+        /// <param name="e">Un EventArgs qui contient les données de l'événement.</param>
         private void EtatCommandeSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (EtatCommandeSelect.Tag != null)
