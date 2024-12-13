@@ -1,5 +1,32 @@
 # CS_Winform_ESIEE
 
+---
+
+![License](https://img.shields.io/github/license/Redstoneur/CS_Winform_ESIEE)
+![Top Language](https://img.shields.io/github/languages/top/Redstoneur/CS_Winform_ESIEE)
+![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.7.2-blue)
+![C#](https://img.shields.io/badge/C%23-10.0-brightgreen)
+![NuGet](https://img.shields.io/badge/NuGet-6.2.1-blue)
+![Size](https://img.shields.io/github/repo-size/Redstoneur/CS_Winform_ESIEE)
+![Contributors](https://img.shields.io/github/contributors/Redstoneur/CS_Winform_ESIEE)
+![Last Commit](https://img.shields.io/github/last-commit/Redstoneur/CS_Winform_ESIEE)
+![Issues](https://img.shields.io/github/issues/Redstoneur/CS_Winform_ESIEE)
+![Pull Requests](https://img.shields.io/github/issues-pr/Redstoneur/CS_Winform_ESIEE)
+
+---
+
+![Forks](https://img.shields.io/github/forks/Redstoneur/CS_Winform_ESIEE)
+![Stars](https://img.shields.io/github/stars/Redstoneur/CS_Winform_ESIEE)
+![Watchers](https://img.shields.io/github/watchers/Redstoneur/CS_Winform_ESIEE)
+
+---
+
+![Latest Release](https://img.shields.io/github/v/release/Redstoneur/CS_Winform_ESIEE)
+![Release Date](https://img.shields.io/github/release-date/Redstoneur/CS_Winform_ESIEE)
+![Build Status](https://img.shields.io/github/actions/workflow/status/Redstoneur/CS_Winform_ESIEE/build.yml)
+
+---
+
 ## Sommaire
 
 <!-- TOC -->
@@ -15,6 +42,7 @@
   * [Fonctionnalités](#fonctionnalités)
   * [Schéma de la base de données](#schéma-de-la-base-de-données)
   * [Licence](#licence)
+  * [Télécharger l'exécutable](#télécharger-lexécutable)
 <!-- TOC -->
 
 ## Introduction
@@ -120,3 +148,8 @@ Voir le fichier [Create-DataBase.sql](Create-DataBase.sql) pour le script de cr�
 ## Licence
 
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## Télécharger l'exécutable
+
+Vous pouvez télécharger la dernière version de l'exécutable
+ici : [📥 Télécharger CS_Winform_ESIEE.exe](https://github.com/Redstoneur/CS_Winform_ESIEE/releases/latest)
