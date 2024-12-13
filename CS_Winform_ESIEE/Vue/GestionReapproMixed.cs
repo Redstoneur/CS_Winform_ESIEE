@@ -62,10 +62,6 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
-        private void Form5_Load(object sender, EventArgs e)
-        {
-        }
-
         //principal
 
         //bouton stock
@@ -211,21 +207,11 @@ namespace CS_Winform_ESIEE.Vue
             UpdatePanier();
         }
 
-        //textbox quantité
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         //bouton menu about
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-        }
-
-        //bouton menu edit
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
         }
 
         //bouton menu exit
@@ -234,8 +220,6 @@ namespace CS_Winform_ESIEE.Vue
             MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
-
-        //sous-interface panier
 
         //bouton annuler
         private void button6_Click(object sender, EventArgs e)
@@ -251,11 +235,6 @@ namespace CS_Winform_ESIEE.Vue
             label3.Visible = checkBox1.Checked;
         }
 
-        //listbox 
-        private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         //bouton valider
         private void button5_Click(object sender, EventArgs e)
         {
@@ -264,8 +243,6 @@ namespace CS_Winform_ESIEE.Vue
             panier.Vider();
             UpdatePanier();
         }
-
-        //sous-interface liste commande
 
         //bouton annuler
         private void button4_Click(object sender, EventArgs e)
@@ -313,26 +290,10 @@ namespace CS_Winform_ESIEE.Vue
             label3.Visible = checkBox1.Checked;
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-        }
-
         private void button7_Click(object sender, EventArgs e)
         {
             UpdateCommandesList();
             groupBox2.Visible = true;
-        }
-
-        private void PanierList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -349,10 +310,6 @@ namespace CS_Winform_ESIEE.Vue
             GestionQuantite.Visible = false;
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private void button11_Click(object sender, EventArgs e)
         {
             int articleId = (int)Quantites.Tag;
@@ -365,14 +322,6 @@ namespace CS_Winform_ESIEE.Vue
         private void BoutonExit(object sender, EventArgs e)
         {
             GestionQuantite.Visible = false;
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
         }
 
         private void PanierList_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -634,14 +583,6 @@ namespace CS_Winform_ESIEE.Vue
                     validerEtat.Enabled = false;
                 }
             }
-        }
-
-        private void ArticlesCommande_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label15_Click(object sender, EventArgs e)
-        {
         }
     }
 }
