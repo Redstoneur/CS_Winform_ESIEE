@@ -170,6 +170,7 @@ namespace CS_Winform_ESIEE.Vue
             ArticlesCommande.Columns.Add("Promotion", 65);
             ArticlesCommande.Columns.Add("Total", 65);
 
+            List<ListViewItem> items = new List<ListViewItem>();
             foreach (LigneCommande ligneCommande in lignesCommandes)
             {
                 Article article = articleController.GetArticleById(ligneCommande.IdArticle);
@@ -180,8 +181,10 @@ namespace CS_Winform_ESIEE.Vue
                 item.SubItems.Add(ligneCommande.Promotion.ToString() +
                                   TypePromoExtensions.from_string(ligneCommande.TypePromotion).get_symbol());
                 item.SubItems.Add(ligneCommande.PrixTotal.ToString());
-                ArticlesCommande.Items.Add(item);
+                items.Add(item);
             }
+
+            ArticlesCommande.Items.AddRange(items.ToArray());
 
             TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
 
@@ -198,7 +201,8 @@ namespace CS_Winform_ESIEE.Vue
             ArticlesCommande.Enabled = true;
             validerEtat.Enabled = false;
 
-            EtatCommandeSelect.Enabled = commande.Etat != EtatCommande.Livree.to_string() && commande.Etat != EtatCommande.Annulee.to_string();
+            EtatCommandeSelect.Enabled = commande.Etat != EtatCommande.Livree.to_string() &&
+                                         commande.Etat != EtatCommande.Annulee.to_string();
         }
 
         /// <summary>
