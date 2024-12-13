@@ -1,0 +1,57 @@
+﻿name: Build and Upload to Release
+
+on:
+  release:
+    types: [ created, published ]
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+
+    steps:
+      # Étape 1 : Vérification du code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Remplacement des variables de connexion
+      - name: Update database connection variables
+        run: |
+          $path = "CS_Winform_ESIEE/Data/DatabaseConnector.cs"
+          $content = Get-Content $path
+          $content = $content -replace '@server";', '${{ secrets.DATABASE_HOST }}";'
+          $content = $content -replace '@database";', '${{ secrets.DATABASE_NAME }}";'
+          $content = $content -replace '@user";', '${{ secrets.DATABASE_USER }}";'
+          $content = $content -replace '@password";', '${{ secrets.DATABASE_PASSWORD }}";'
+          Set-Content -Path $path -Value $content
+
+      # Étape 3 : Installation de MSBuild
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      # Étape 4 : Installation de NuGet
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.1.0
+
+      # Étape 5 : Restauration des dépendances
+      - name: Restore dependencies
+        run: nuget restore CS_Winform_ESIEE.sln
+
+      # Étape 6 : Compilation du projet
+      - name: Build solution
+        run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishSingleFile=true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishDir=CS_Winform_ESIEE/bin/Release/
+
+      # Étape 7 : Archivage de l'exécutable
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: CS_Winform_ESIEE
+          path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
+
+      # Étape 8 : Uploader l'exécutable dans la release
+      - name: Upload executable to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
+          asset_name: CS_Winform_ESIEE.exe
+          asset_content_type: application/octet-stream
