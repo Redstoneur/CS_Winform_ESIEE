@@ -15,18 +15,21 @@ using DotNetEnv;
 
 namespace CS_Winform_ESIEE
 {
+    /// <summary>
+    /// Form for managing stock in the application.
+    /// </summary>
     public partial class GestionStock : Form
     {
         private JsonEditorController jsonEditorController = new JsonEditorController();
-
         private ArticleController articleController;
-        private List<Article> articles; // Stocke les articles récupérés
-
+        private List<Article> articles; // Stores the retrieved articles
         private CategorieController categorieController;
-        private List<Categorie> categories;
+        private List<Categorie> categories; // Stores the retrieved categories
+        private Article selectedArticle; // Currently selected article
 
-        private Article selectedArticle; // Article actuellement sélectionné
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GestionStock"/> class.
+        /// </summary>
         public GestionStock()
         {
             InitializeComponent();
@@ -34,19 +37,22 @@ namespace CS_Winform_ESIEE
             categorieController = new CategorieController();
         }
 
+        /// <summary>
+        /// Loads categories into the ListBox.
+        /// </summary>
         private void ChargerCategories()
         {
             try
             {
-                // Récupérer toutes les catégories
+                // Retrieve all categories
                 categories = categorieController.GetAllCategories();
 
-                // Charger les noms des catégories dans la ListBox
-                Categories.Items.Clear(); // Supposons que le ListBox s'appelle "Categories"
+                // Load category names into the ListBox
+                Categories.Items.Clear(); // Assuming the ListBox is named "Categories"
                 foreach (var categorie in categories)
                 {
                     Categories.Items.Add(categorie.Nom);
-                    CategorieSelect.Items.Add(categorie.Nom); // Ajoute uniquement les noms
+                    CategorieSelect.Items.Add(categorie.Nom); // Adds only the names
                 }
             }
             catch (Exception ex)
@@ -56,18 +62,21 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Loads articles into the ListBox.
+        /// </summary>
         public void LoadArticle()
         {
             try
             {
-                // Récupérer tous les articles
+                // Retrieve all active articles
                 articles = articleController.GetAllArticlesEstActive();
 
-                // Charger les noms des articles dans la ListBox
+                // Load article names into the ListBox
                 Articles.Items.Clear();
                 foreach (var article in articles)
                 {
-                    Articles.Items.Add(article.Nom); // Ajoute uniquement les noms
+                    Articles.Items.Add(article.Nom); // Adds only the names
                 }
             }
             catch (Exception ex)
@@ -77,6 +86,9 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for form load event.
+        /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadArticle();
@@ -86,13 +98,14 @@ namespace CS_Winform_ESIEE
             TypePromotionBox.Enabled = false;
         }
 
-        // Bouton de passage en mode réapprovisionnement
+        /// <summary>
+        /// Event handler for switching to restocking mode.
+        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
             ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
             ViewController.gestionreappromixed.StartPosition = FormStartPosition.Manual;
             ViewController.gestionreappromixed.FormClosing += delegate
-
             {
                 try
                 {
@@ -107,7 +120,9 @@ namespace CS_Winform_ESIEE
             if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Hide();
         }
 
-        // Bouton d'application/suppression de la remise
+        /// <summary>
+        /// Event handler for applying/removing promotion.
+        /// </summary>
         private void button4_Click(object sender, EventArgs e)
         {
             if (selectedArticle != null)
@@ -118,7 +133,7 @@ namespace CS_Winform_ESIEE
                     {
                         if (decimal.TryParse(textBox5.Text, out decimal promotionValue))
                         {
-                            selectedArticle.Promotion = (int)promotionValue; // Met à jour la promotion
+                            selectedArticle.Promotion = (int)promotionValue; // Updates the promotion
                             int value = Convert.ToInt16(promotionValue);
                             articleController.UpdatePromotion(selectedArticle, value,
                                 TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem));
@@ -164,23 +179,25 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        // Liste d'articles
+        /// <summary>
+        /// Event handler for article selection change.
+        /// </summary>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
+            if (Articles.SelectedIndex >= 0) // Checks if an item is selected
             {
                 textBox5.Enabled = true;
                 try
                 {
-                    // Récupérer l'article correspondant
+                    // Retrieve the corresponding article
                     selectedArticle = articles[Articles.SelectedIndex];
 
-                    // Afficher les informations dans les champs texte
-                    textBox1.Text = selectedArticle.Nom; // Affiche le nom
-                    textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Affiche le nom
-                    textBox2.Text = selectedArticle.Quantite.ToString(); // Affiche la quantité
-                    textBox5.Text = selectedArticle.Promotion.ToString(); // affiche la remise
-                    DelArticleName.Text = selectedArticle.Nom.ToString(); // affiche larticle a supprimer
+                    // Display information in text fields
+                    textBox1.Text = selectedArticle.Nom; // Displays the name
+                    textBox3.Text = selectedArticle.PrixUnitaire.ToString(); // Displays the unit price
+                    textBox2.Text = selectedArticle.Quantite.ToString(); // Displays the quantity
+                    textBox5.Text = selectedArticle.Promotion.ToString(); // Displays the promotion
+                    DelArticleName.Text = selectedArticle.Nom.ToString(); // Displays the article to be deleted
 
                     if (selectedArticle.Promotion > 0)
                         button4.Text = "Supprimer";
@@ -205,13 +222,17 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        // Barre de Navigation File -> Exit
+        /// <summary>
+        /// Event handler for File -> Exit menu item.
+        /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        // Bouton modifier l'article
+        /// <summary>
+        /// Event handler for modifying an article.
+        /// </summary>
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = true;
@@ -220,52 +241,62 @@ namespace CS_Winform_ESIEE
             ModifQuantite.Text = selectedArticle.Quantite.ToString();
         }
 
+        /// <summary>
+        /// Event handler for About menu item.
+        /// </summary>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show(@"Application de gestion de stock pour ESIEE Paris", @"A propos", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        //Bouton ajouter un article
+        /// <summary>
+        /// Event handler for adding an article.
+        /// </summary>
         private void button6_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = true;
         }
 
-        // Bouton supprimer un article
+        /// <summary>
+        /// Event handler for deleting an article.
+        /// </summary>
         private void button7_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
         }
 
+        /// <summary>
+        /// Event handler for category selection change.
+        /// </summary>
         private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             try
             {
-                // Vérifie si une catégorie est sélectionnée
+                // Checks if a category is selected
                 if (Categories.SelectedIndex >= 0)
                 {
-                    // Récupère la catégorie à partir de son index
+                    // Retrieve the category by its index
                     Categorie selectedCategoryByIndex = categories[Categories.SelectedIndex];
 
                     if (selectedCategoryByIndex != null)
                     {
-                        // Filtrer les articles pour afficher uniquement ceux qui ont le même IdCategorie que la catégorie sélectionnée
+                        // Filter articles to display only those with the same IdCategorie as the selected category
                         var filteredArticles = articleController.GetAllArticlesEstActive()
                             .Where(article => article.IdCategorie == selectedCategoryByIndex.IdCategorie)
                             .ToList();
 
-                        // Mettre à jour la liste sous-jacente et la ListBox des articles
-                        articles = filteredArticles; // Mettez à jour la liste sous-jacente
+                        // Update the underlying list and the ListBox of articles
+                        articles = filteredArticles; // Update the underlying list
                         Articles.Items.Clear();
                         foreach (var article in articles)
                         {
-                            Articles.Items.Add(article.Nom); // Ajoute uniquement le nom de l'article
+                            Articles.Items.Add(article.Nom); // Adds only the article name
                         }
 
-                        // Effacer la sélection actuelle dans la ListBox
+                        // Clear the current selection in the ListBox
                         Articles.ClearSelected();
-                        // Réinitialiser les champs d'affichage des détails d'article
+                        // Reset the article detail display fields
                         selectedArticle = null;
                         textBox1.Text = "";
                         textBox2.Text = "";
@@ -277,7 +308,7 @@ namespace CS_Winform_ESIEE
                     }
                     else
                     {
-                        // Si la catégorie n'est pas trouvée, afficher un message ou réinitialiser la liste des articles
+                        // If the category is not found, display a message or reset the article list
                         MessageBox.Show("Catégorie non trouvée.", "Erreur", MessageBoxButtons.OK,
                             MessageBoxIcon.Warning);
                     }
@@ -290,26 +321,41 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for canceling the add article operation.
+        /// </summary>
         private void button2_Click_1(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for canceling the delete article operation.
+        /// </summary>
         private void button9_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for canceling the modify article operation.
+        /// </summary>
         private void button10_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for canceling the add article operation.
+        /// </summary>
         private void Annuler_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for validating the modification of an article.
+        /// </summary>
         private void ValiderModif_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = false;
@@ -323,12 +369,11 @@ namespace CS_Winform_ESIEE
                     return;
                 }
 
-                // Récupération des données modifiées depuis l'interface utilisateur
+                // Retrieve modified data from the user interface
                 var data = new Dictionary<string, object>();
 
                 if (!string.IsNullOrWhiteSpace(ModifNom.Text))
                     data["Nom"] = ModifNom.Text;
-
 
                 if (decimal.TryParse(ModifPrix.Text, out decimal prixUnitaire))
                     data["PrixUnitaire"] = prixUnitaire;
@@ -336,7 +381,7 @@ namespace CS_Winform_ESIEE
                 if (int.TryParse(ModifQuantite.Text, out int quantite))
                     data["Quantite"] = quantite;
 
-                // Vérification si des données ont été fournies pour la mise à jour
+                // Check if any data has been provided for the update
                 if (data.Count == 0)
                 {
                     MessageBox.Show("Aucune modification détectée.", "Information", MessageBoxButtons.OK,
@@ -344,14 +389,14 @@ namespace CS_Winform_ESIEE
                     return;
                 }
 
-                // Mise à jour de l'article via le contrôleur
+                // Update the article via the controller
                 articleController.UpdateArticle(selectedArticle, data);
 
-                // Confirmation de la mise à jour
+                // Confirm the update
                 MessageBox.Show("L'article a été mis à jour avec succès !", "Succès", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                // Rechargez les articles pour mettre à jour l'interface
+                // Reload articles to update the interface
                 LoadArticle();
             }
             catch (Exception ex)
@@ -361,11 +406,17 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for canceling the delete article operation.
+        /// </summary>
         private void AnnulerSuppr_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for confirming the deletion of an article.
+        /// </summary>
         private void ConfirmerSuppr_Click(object sender, EventArgs e)
         {
             try
@@ -380,17 +431,23 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for canceling the modify article operation.
+        /// </summary>
         private void ModifAnnuler_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = false;
         }
 
+        /// <summary>
+        /// Event handler for validating the addition of an article.
+        /// </summary>
         private void Valider_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
             try
             {
-                // Récupération des données entrées par l'utilisateur
+                // Retrieve data entered by the user
                 string nom = AddNomArticle.Text;
                 if (string.IsNullOrWhiteSpace(nom))
                 {
@@ -413,8 +470,7 @@ namespace CS_Winform_ESIEE
                     return;
                 }
 
-
-                // Vérification et récupération de la catégorie sélectionnée
+                // Check and retrieve the selected category
                 if (CategorieSelect.SelectedIndex < 0)
                 {
                     MessageBox.Show("Veuillez sélectionner une catégorie.", "Erreur", MessageBoxButtons.OK,
@@ -425,7 +481,7 @@ namespace CS_Winform_ESIEE
                 var selectedCategory = categories[CategorieSelect.SelectedIndex];
                 int idCategorie = selectedCategory.IdCategorie;
 
-                // Appel au contrôleur pour ajouter l'article
+                // Call the controller to add the article
                 articleController.AjouterArticle(
                     idCategorie: idCategorie,
                     nom: nom,
@@ -436,7 +492,7 @@ namespace CS_Winform_ESIEE
                 MessageBox.Show("L'article a été ajouté avec succès !", "Succès", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                // Rechargez les articles pour mettre à jour l'interface
+                // Reload articles to update the interface
                 LoadArticle();
                 groupBox2.Visible = false;
             }
@@ -447,6 +503,9 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for exporting data to a JSON file.
+        /// </summary>
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -456,7 +515,7 @@ namespace CS_Winform_ESIEE
             {
                 string fileName = saveFileDialog.FileName;
 
-                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                // If the file is not a JSON file, display an error message and exit
                 if (!fileName.EndsWith(".json"))
                 {
                     MessageBox.Show(
@@ -466,10 +525,10 @@ namespace CS_Winform_ESIEE
                     return;
                 }
 
-                // Importer les données depuis le fichier JSON
+                // Import data from the JSON file
                 OperationResult result = jsonEditorController.CreerJson(fileName);
 
-                // Afficher le résultat de l'opération
+                // Display the result of the operation
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -481,6 +540,9 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for importing data from a JSON file.
+        /// </summary>
         private void jSONToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -490,7 +552,7 @@ namespace CS_Winform_ESIEE
             {
                 string fileName = openFileDialog.FileName;
 
-                // Si le fichier n'est pas un fichier JSON, afficher un message d'erreur et quitter
+                // If the file is not a JSON file, display an error message and exit
                 if (!fileName.EndsWith(".json"))
                 {
                     MessageBox.Show(
@@ -500,15 +562,15 @@ namespace CS_Winform_ESIEE
                     return;
                 }
 
-                // Importer les données depuis le fichier JSON
+                // Import data from the JSON file
                 OperationResult result = jsonEditorController.MettreAJourBaseDeDonnees(fileName);
 
-                // Afficher le résultat de l'opération
+                // Display the result of the operation
                 if (result.Success)
                 {
                     MessageBox.Show(result.Message, @"Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Rechargez les articles pour mettre à jour l'interface
+                    // Reload categories and articles to update the interface
                     ChargerCategories();
                     LoadArticle();
                 }
@@ -519,11 +581,17 @@ namespace CS_Winform_ESIEE
             }
         }
 
+        /// <summary>
+        /// Event handler for File -> Exit menu item.
+        /// </summary>
         private void exitToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// Event handler for the promotion type selection change.
+        /// </summary>
         private void TypePromotionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             label1.Text = TypePromoExtensions.from_string((string)TypePromotionBox.SelectedItem).get_symbol();
