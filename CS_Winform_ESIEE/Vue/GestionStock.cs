@@ -35,8 +35,8 @@ namespace CS_Winform_ESIEE
         }
 
         /**
- * Méthode pour charger les catégories dans la ListBox Categories
- */
+         * Méthode pour charger les catégories dans la ListBox Categories
+         */
         private void ChargerCategories()
         {
             try
@@ -90,10 +90,6 @@ namespace CS_Winform_ESIEE
             TypePromotionBox.Enabled = false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
         /**
          * Bouton de passage en mode réapprovisionnement
          */
@@ -116,18 +112,6 @@ namespace CS_Winform_ESIEE
             if (ViewController.gestionreappromixed.Enabled) ViewController.gestionreappromixed.Show();
             if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Hide();
         }
-
-        /**
-         * Champ de text du nom de l'article
-         */
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
-
 
         /**
          * Bouton d'application/suppression de la remise
@@ -189,34 +173,6 @@ namespace CS_Winform_ESIEE
         }
 
         /**
-         * Label "Articles"
-         */
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Label prix
-         */
-        private void label4_Click(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Groupe de détails d'articles
-         */
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Boutton d'historique
-         */
-        private void button5_Click(object sender, EventArgs e)
-        {
-        }
-
-        /**
          * Liste d'articles
          */
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -259,49 +215,12 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        private void gfsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         /**
          * Barre de Navigation File -> Exit
          */
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-
-        /**
-         * Liste de catégories
-         */
-        private void Categories_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Champ de text de la remise
-         */
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Champ de text de la quantité
-         */
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        /**
-         * Label Quantités
-         */
-        private void label5_Click(object sender, EventArgs e)
-        {
         }
 
         /**
@@ -336,16 +255,6 @@ namespace CS_Winform_ESIEE
         private void button7_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
-        }
-
-        /**
-         * Textbox Remise
-         */
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-            if (selectedArticle != null)
-            {
-            }
         }
 
         private void Categories_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -400,52 +309,14 @@ namespace CS_Winform_ESIEE
             }
         }
 
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
         private void button2_Click_1(object sender, EventArgs e)
         {
             groupBox2.Visible = false;
         }
 
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-        }
-
         private void button9_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = false;
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void Quantite_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void ModifNom_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void ModifPrix_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void groupBox4_Enter(object sender, EventArgs e)
-        {
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -527,7 +398,6 @@ namespace CS_Winform_ESIEE
                 throw;
             }
         }
-
 
         private void ModifAnnuler_Click(object sender, EventArgs e)
         {
