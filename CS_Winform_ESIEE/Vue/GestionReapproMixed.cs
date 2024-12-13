@@ -62,6 +62,113 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        private void UpdatePanier()
+        {
+            PanierList.Items.Clear();
+            PanierList.Columns.Clear();
+
+            PanierList.Columns.Add("Nom", 100);
+            PanierList.Columns.Add("Prix", 55);
+            PanierList.Columns.Add("Quantité", 60);
+            if (!checkBox1.Checked)
+                PanierList.Columns.Add("Promotion", 65);
+
+            foreach (Article article in panier.GetArticles())
+            {
+                ListViewItem item = new ListViewItem(article.Nom);
+                item.Tag = article.IdArticle;
+                if (checkBox1.Checked)
+                    item.SubItems.Add(article.PrixTotal.ToString());
+                else
+                    item.SubItems.Add(article.PrixUnitaire.ToString());
+                item.SubItems.Add(article.Quantite.ToString());
+                if (!checkBox1.Checked)
+                    item.SubItems.Add(article.Promotion.ToString() +
+                                      TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
+                PanierList.Items.Add(item);
+            }
+
+            textBox2.Text = panier.GetTotal().ToString();
+
+            if (panier.GetArticles().Count == 0)
+                button5.Enabled = false;
+            else
+                button5.Enabled = true;
+        }
+
+        private void UpdateCommandesList()
+        {
+            List<Commande> commandes = CommandeController.GetAllCommandes();
+
+            ListCommande.Items.Clear();
+
+            foreach (Commande commande in commandes)
+            {
+                ListCommande.Items.Add("#" + commande.IdCommande.ToString());
+            }
+
+            ArticlesCommande.Enabled = false;
+            TotalCommande.Enabled = false;
+            EtatCommandeSelect.Enabled = false;
+            validerEtat.Enabled = false;
+        }
+
+        private void UpdateCommandePrint(int commandeId)
+        {
+            List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
+
+            ArticlesCommande.Items.Clear();
+            ArticlesCommande.Columns.Clear();
+
+            ArticlesCommande.Columns.Add("Nom", 100);
+            ArticlesCommande.Columns.Add("Prix Unitaire", 55);
+            ArticlesCommande.Columns.Add("Quantité", 60);
+            ArticlesCommande.Columns.Add("Promotion", 65);
+            ArticlesCommande.Columns.Add("Total", 65);
+
+            foreach (LigneCommande ligneCommande in lignesCommandes)
+            {
+                Article article = articleController.GetArticleById(ligneCommande.IdArticle);
+                ListViewItem item = new ListViewItem(article.Nom);
+                item.Tag = article.IdArticle;
+                item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
+                item.SubItems.Add(ligneCommande.Quantite.ToString());
+                item.SubItems.Add(ligneCommande.Promotion.ToString() +
+                                  TypePromoExtensions.from_string(ligneCommande.TypePromotion).get_symbol());
+                item.SubItems.Add(ligneCommande.PrixTotal.ToString());
+                ArticlesCommande.Items.Add(item);
+            }
+
+            TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
+
+            Commande commande = CommandeController.GetCommandeById(commandeId);
+
+            EtatCommandeSelect.Items.Clear();
+            EtatCommandeSelect.Items.Add(EtatCommande.Commande.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Envoyee.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Livree.to_string());
+            EtatCommandeSelect.Items.Add(EtatCommande.Annulee.to_string());
+            EtatCommandeSelect.SelectedItem = EtatCommandeExtensions.from_string(commande.Etat).to_string();
+            EtatCommandeSelect.Tag = commande.IdCommande;
+
+            ArticlesCommande.Enabled = true;
+            validerEtat.Enabled = false;
+
+            if (commande.Etat == EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
+            {
+                EtatCommandeSelect.Enabled = false;
+            }
+            else
+            {
+                EtatCommandeSelect.Enabled = true;
+            }
+        }
+
+        private int GetCommandeIdWithCommandeListItem(string commandeId)
+        {
+            return int.Parse(commandeId.Substring(1));
+        }
+
         //principal
 
         //bouton stock
@@ -342,113 +449,6 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
-        private void UpdatePanier()
-        {
-            PanierList.Items.Clear();
-            PanierList.Columns.Clear();
-
-            PanierList.Columns.Add("Nom", 100);
-            PanierList.Columns.Add("Prix", 55);
-            PanierList.Columns.Add("Quantité", 60);
-            if (!checkBox1.Checked)
-                PanierList.Columns.Add("Promotion", 65);
-
-            foreach (Article article in panier.GetArticles())
-            {
-                ListViewItem item = new ListViewItem(article.Nom);
-                item.Tag = article.IdArticle;
-                if (checkBox1.Checked)
-                    item.SubItems.Add(article.PrixTotal.ToString());
-                else
-                    item.SubItems.Add(article.PrixUnitaire.ToString());
-                item.SubItems.Add(article.Quantite.ToString());
-                if (!checkBox1.Checked)
-                    item.SubItems.Add(article.Promotion.ToString() +
-                                      TypePromoExtensions.from_string(article.TypePromotion).get_symbol());
-                PanierList.Items.Add(item);
-            }
-
-            textBox2.Text = panier.GetTotal().ToString();
-
-            if (panier.GetArticles().Count == 0)
-                button5.Enabled = false;
-            else
-                button5.Enabled = true;
-        }
-
-        private void UpdateCommandesList()
-        {
-            List<Commande> commandes = CommandeController.GetAllCommandes();
-
-            ListCommande.Items.Clear();
-
-            foreach (Commande commande in commandes)
-            {
-                ListCommande.Items.Add("#" + commande.IdCommande.ToString());
-            }
-
-            ArticlesCommande.Enabled = false;
-            TotalCommande.Enabled = false;
-            EtatCommandeSelect.Enabled = false;
-            validerEtat.Enabled = false;
-        }
-
-        private void UpdateCommandePrint(int commandeId)
-        {
-            List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
-
-            ArticlesCommande.Items.Clear();
-            ArticlesCommande.Columns.Clear();
-
-            ArticlesCommande.Columns.Add("Nom", 100);
-            ArticlesCommande.Columns.Add("Prix Unitaire", 55);
-            ArticlesCommande.Columns.Add("Quantité", 60);
-            ArticlesCommande.Columns.Add("Promotion", 65);
-            ArticlesCommande.Columns.Add("Total", 65);
-
-            foreach (LigneCommande ligneCommande in lignesCommandes)
-            {
-                Article article = articleController.GetArticleById(ligneCommande.IdArticle);
-                ListViewItem item = new ListViewItem(article.Nom);
-                item.Tag = article.IdArticle;
-                item.SubItems.Add(ligneCommande.PrixUnitaire.ToString());
-                item.SubItems.Add(ligneCommande.Quantite.ToString());
-                item.SubItems.Add(ligneCommande.Promotion.ToString() +
-                                  TypePromoExtensions.from_string(ligneCommande.TypePromotion).get_symbol());
-                item.SubItems.Add(ligneCommande.PrixTotal.ToString());
-                ArticlesCommande.Items.Add(item);
-            }
-
-            TotalCommande.Text = lignesCommandes.Sum(lc => lc.PrixTotal).ToString();
-
-            Commande commande = CommandeController.GetCommandeById(commandeId);
-
-            EtatCommandeSelect.Items.Clear();
-            EtatCommandeSelect.Items.Add(EtatCommande.Commande.to_string());
-            EtatCommandeSelect.Items.Add(EtatCommande.Envoyee.to_string());
-            EtatCommandeSelect.Items.Add(EtatCommande.Livree.to_string());
-            EtatCommandeSelect.Items.Add(EtatCommande.Annulee.to_string());
-            EtatCommandeSelect.SelectedItem = EtatCommandeExtensions.from_string(commande.Etat).to_string();
-            EtatCommandeSelect.Tag = commande.IdCommande;
-
-            ArticlesCommande.Enabled = true;
-            validerEtat.Enabled = false;
-
-            if (commande.Etat == EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
-            {
-                EtatCommandeSelect.Enabled = false;
-            }
-            else
-            {
-                EtatCommandeSelect.Enabled = true;
-            }
-        }
-
-        private int GetCommandeIdWithCommandeListItem(string commandeId)
-        {
-            return int.Parse(commandeId.Substring(1));
-        }
-
         private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -467,7 +467,7 @@ namespace CS_Winform_ESIEE.Vue
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 // Importer les données depuis le fichier JSON
                 OperationResult result = jsonEditorController.CreerJson(fileName);
 
