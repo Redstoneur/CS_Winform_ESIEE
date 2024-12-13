@@ -20,12 +20,35 @@ namespace CS_Winform_ESIEE
     /// </summary>
     public partial class GestionStock : Form
     {
+        /// <summary>
+        /// Contrôleur pour la gestion des fichiers JSON.
+        /// </summary>
         private JsonEditorController jsonEditorController = new JsonEditorController();
+        
+        /// <summary>
+        /// Contrôleur pour la gestion des articles.
+        /// </summary>
         private ArticleController articleController;
-        private List<Article> articles; // Stocke les articles récupérés
+        
+        /// <summary>
+        /// Contrôleur pour la gestion des catégories.
+        /// </summary>
         private CategorieController categorieController;
-        private List<Categorie> categories; // Stocke les catégories récupérées
-        private Article selectedArticle; // Article actuellement sélectionné
+        
+        /// <summary>
+        /// Liste des articles récupérés. (Stocke les articles récupérés)
+        /// </summary>
+        private List<Article> articles;
+        
+        /// <summary>
+        /// Liste des catégories récupérées. (Stocke les catégories récupérées)
+        /// </summary>
+        private List<Categorie> categories;
+        
+        /// <summary>
+        /// Article actuellement sélectionné. (Stocke l'article actuellement sélectionné)
+        /// </summary>
+        private Article selectedArticle;
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe <see cref="GestionStock"/>.
