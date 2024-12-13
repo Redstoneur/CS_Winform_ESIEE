@@ -34,9 +34,6 @@ namespace CS_Winform_ESIEE
             categorieController = new CategorieController();
         }
 
-        /**
-         * Méthode pour charger les catégories dans la ListBox Categories
-         */
         private void ChargerCategories()
         {
             try
@@ -59,7 +56,7 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        public void loadArticle()
+        public void LoadArticle()
         {
             try
             {
@@ -80,19 +77,16 @@ namespace CS_Winform_ESIEE
             }
         }
 
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            loadArticle();
+            LoadArticle();
             ChargerCategories();
             button3.Enabled = false;
             button4.Enabled = false;
             TypePromotionBox.Enabled = false;
         }
 
-        /**
-         * Bouton de passage en mode réapprovisionnement
-         */
+        // Bouton de passage en mode réapprovisionnement
         private void button1_Click(object sender, EventArgs e)
         {
             ViewController.gestionreappromixed.Location = ViewController.gestionstock.Location;
@@ -113,9 +107,7 @@ namespace CS_Winform_ESIEE
             if (ViewController.gestionstock.Enabled) ViewController.gestionstock.Hide();
         }
 
-        /**
-         * Bouton d'application/suppression de la remise
-         */
+        // Bouton d'application/suppression de la remise
         private void button4_Click(object sender, EventArgs e)
         {
             if (selectedArticle != null)
@@ -172,9 +164,7 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        /**
-         * Liste d'articles
-         */
+        // Liste d'articles
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Articles.SelectedIndex >= 0) // Vérifie qu'un élément est sélectionné
@@ -215,17 +205,13 @@ namespace CS_Winform_ESIEE
             }
         }
 
-        /**
-         * Barre de Navigation File -> Exit
-         */
+        // Barre de Navigation File -> Exit
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        /**
-         * Bouton modifier l'article
-         */
+        // Bouton modifier l'article
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox4.Visible = true;
@@ -240,18 +226,13 @@ namespace CS_Winform_ESIEE
                 MessageBoxIcon.Information);
         }
 
-        /**
-         * Bouton ajouter un article
-         */
+        //Bouton ajouter un article
         private void button6_Click(object sender, EventArgs e)
         {
             groupBox2.Visible = true;
         }
 
-
-        /**
-         * Bouton supprimer un article
-         */
+        // Bouton supprimer un article
         private void button7_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
@@ -371,7 +352,7 @@ namespace CS_Winform_ESIEE
                     MessageBoxIcon.Information);
 
                 // Rechargez les articles pour mettre à jour l'interface
-                loadArticle();
+                LoadArticle();
             }
             catch (Exception ex)
             {
@@ -391,7 +372,7 @@ namespace CS_Winform_ESIEE
             {
                 articleController.SupprimerArticle(selectedArticle);
                 groupBox3.Visible = false;
-                loadArticle();
+                LoadArticle();
             }
             catch (System.Exception)
             {
@@ -456,7 +437,7 @@ namespace CS_Winform_ESIEE
                     MessageBoxIcon.Information);
 
                 // Rechargez les articles pour mettre à jour l'interface
-                loadArticle();
+                LoadArticle();
                 groupBox2.Visible = false;
             }
             catch (Exception ex)
@@ -529,7 +510,7 @@ namespace CS_Winform_ESIEE
 
                     // Rechargez les articles pour mettre à jour l'interface
                     ChargerCategories();
-                    loadArticle();
+                    LoadArticle();
                 }
                 else
                 {
