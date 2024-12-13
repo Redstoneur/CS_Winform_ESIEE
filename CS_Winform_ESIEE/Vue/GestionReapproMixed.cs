@@ -14,22 +14,24 @@ using Button = System.Windows.Forms.Button;
 
 namespace CS_Winform_ESIEE.Vue
 {
+    /// <summary>
+    /// Form class for managing stock and orders in the application.
+    /// </summary>
     public partial class GestionReapproMixed : Form
     {
         private JsonEditorController jsonEditorController = new JsonEditorController();
-
         private CommandeController CommandeController = new CommandeController();
         private LigneCommandeController LigneCommandeController = new LigneCommandeController();
-
         private ArticleController articleController;
-        private List<Article> articles; // Stocke les articles récupérés
-
+        private List<Article> articles; // Stores the retrieved articles
         private CategorieController categorieController;
         private PanierController panierController;
         private List<Categorie> categories;
         Panier panier = new Panier();
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GestionReapproMixed"/> class.
+        /// </summary>
         public GestionReapproMixed()
         {
             InitializeComponent();
@@ -38,21 +40,21 @@ namespace CS_Winform_ESIEE.Vue
             panierController = new PanierController();
         }
 
-        /**
-        * Méthode pour charger les catégories dans la ListBox Categories
-        */
+        /// <summary>
+        /// Loads the categories into the ListBox.
+        /// </summary>
         private void ChargerCategories()
         {
             try
             {
-                // Récupérer toutes les catégories
+                // Retrieve all categories
                 categories = categorieController.GetAllCategories();
 
-                // Charger les noms des catégories dans la ListBox
-                Categories.Items.Clear(); // Supposons que le ListBox s'appelle "Categories"
+                // Load category names into the ListBox
+                Categories.Items.Clear();
                 foreach (var categorie in categories)
                 {
-                    Categories.Items.Add(categorie.Nom); // Ajoute uniquement les noms
+                    Categories.Items.Add(categorie.Nom); // Adds only the names
                 }
             }
             catch (Exception ex)
@@ -62,6 +64,9 @@ namespace CS_Winform_ESIEE.Vue
             }
         }
 
+        /// <summary>
+        /// Updates the shopping cart (panier) display.
+        /// </summary>
         private void UpdatePanier()
         {
             PanierList.Items.Clear();
@@ -90,12 +95,12 @@ namespace CS_Winform_ESIEE.Vue
 
             textBox2.Text = panier.GetTotal().ToString();
 
-            if (panier.GetArticles().Count == 0)
-                button5.Enabled = false;
-            else
-                button5.Enabled = true;
+            button5.Enabled = panier.GetArticles().Count != 0;
         }
 
+        /// <summary>
+        /// Updates the list of orders (commandes).
+        /// </summary>
         private void UpdateCommandesList()
         {
             List<Commande> commandes = CommandeController.GetAllCommandes();
@@ -113,6 +118,10 @@ namespace CS_Winform_ESIEE.Vue
             validerEtat.Enabled = false;
         }
 
+        /// <summary>
+        /// Updates the display of a specific order.
+        /// </summary>
+        /// <param name="commandeId">The ID of the order to display.</param>
         private void UpdateCommandePrint(int commandeId)
         {
             List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
@@ -154,16 +163,14 @@ namespace CS_Winform_ESIEE.Vue
             ArticlesCommande.Enabled = true;
             validerEtat.Enabled = false;
 
-            if (commande.Etat == EtatCommande.Livree.to_string() || commande.Etat == EtatCommande.Annulee.to_string())
-            {
-                EtatCommandeSelect.Enabled = false;
-            }
-            else
-            {
-                EtatCommandeSelect.Enabled = true;
-            }
+            EtatCommandeSelect.Enabled = commande.Etat != EtatCommande.Livree.to_string() && commande.Etat != EtatCommande.Annulee.to_string();
         }
 
+        /// <summary>
+        /// Extracts the order ID from the selected item in the order list.
+        /// </summary>
+        /// <param name="commandeId">The selected item string.</param>
+        /// <returns>The extracted order ID.</returns>
         private int GetCommandeIdWithCommandeListItem(string commandeId)
         {
             return int.Parse(commandeId.Substring(1));
