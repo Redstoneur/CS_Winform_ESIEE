@@ -15,7 +15,7 @@ using Button = System.Windows.Forms.Button;
 namespace CS_Winform_ESIEE.Vue
 {
     /// <summary>
-    /// Form class for managing stock and orders in the application.
+    /// Classe de formulaire pour la gestion des stocks et des commandes dans l'application.
     /// </summary>
     public partial class GestionReapproMixed : Form
     {
@@ -27,10 +27,10 @@ namespace CS_Winform_ESIEE.Vue
         private CategorieController categorieController;
         private PanierController panierController;
         private List<Categorie> categories;
-        Panier panier = new Panier();
+        private Panier panier = new Panier();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GestionReapproMixed"/> class.
+        /// Initialise une nouvelle instance de la classe <see cref="GestionReapproMixed"/>.
         /// </summary>
         public GestionReapproMixed()
         {
@@ -41,7 +41,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /// <summary>
-        /// Loads the categories into the ListBox.
+        /// Charge les catégories dans la ListBox.
         /// </summary>
         private void ChargerCategories()
         {
@@ -65,7 +65,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /// <summary>
-        /// Updates the shopping cart (panier) display.
+        /// Met à jour l'affichage du panier.
         /// </summary>
         private void UpdatePanier()
         {
@@ -99,7 +99,7 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /// <summary>
-        /// Updates the list of orders (commandes).
+        /// Met à jour la liste des commandes.
         /// </summary>
         private void UpdateCommandesList()
         {
@@ -119,9 +119,9 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /// <summary>
-        /// Updates the display of a specific order.
+        /// Met à jour l'affichage d'une commande spécifique.
         /// </summary>
-        /// <param name="commandeId">The ID of the order to display.</param>
+        /// <param name="commandeId">L'ID de la commande à afficher.</param>
         private void UpdateCommandePrint(int commandeId)
         {
             List<LigneCommande> lignesCommandes = LigneCommandeController.GetLigneCommandesByCommandeId(commandeId);
@@ -167,10 +167,10 @@ namespace CS_Winform_ESIEE.Vue
         }
 
         /// <summary>
-        /// Extracts the order ID from the selected item in the order list.
+        /// Extrait l'ID de la commande à partir de l'élément sélectionné dans la liste des commandes.
         /// </summary>
-        /// <param name="commandeId">The selected item string.</param>
-        /// <returns>The extracted order ID.</returns>
+        /// <param name="commandeId">La chaîne de caractères de l'élément sélectionné.</param>
+        /// <returns>L'ID de la commande extrait.</returns>
         private int GetCommandeIdWithCommandeListItem(string commandeId)
         {
             return int.Parse(commandeId.Substring(1));
