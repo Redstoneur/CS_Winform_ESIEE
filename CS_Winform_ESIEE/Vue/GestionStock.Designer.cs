@@ -132,7 +132,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Details article";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // label7
             // 
@@ -163,7 +162,6 @@
             this.label5.Size = new System.Drawing.Size(59, 15);
             this.label5.TabIndex = 11;
             this.label5.Text = "Quantités";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
@@ -174,7 +172,6 @@
             this.label4.Size = new System.Drawing.Size(28, 15);
             this.label4.TabIndex = 10;
             this.label4.Text = "Prix";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -194,7 +191,6 @@
             this.label2.Size = new System.Drawing.Size(40, 15);
             this.label2.TabIndex = 8;
             this.label2.Text = "Article";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -205,7 +201,6 @@
             this.label1.Size = new System.Drawing.Size(23, 20);
             this.label1.TabIndex = 7;
             this.label1.Text = "%";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBox5
             // 
@@ -214,7 +209,6 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(32, 20);
             this.textBox5.TabIndex = 6;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // button4
             // 
@@ -243,7 +237,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(54, 20);
             this.textBox3.TabIndex = 2;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox2
             // 
@@ -252,7 +245,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(68, 20);
             this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox1
             // 
@@ -261,7 +253,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(176, 20);
             this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button1
             // 
@@ -282,7 +273,6 @@
             this.button5.TabIndex = 5;
             this.button5.Text = "Historique de stock";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -407,7 +397,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ajouter";
             this.groupBox2.Visible = false;
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // Annuler
             // 
@@ -450,7 +439,6 @@
             this.CategorieSelect.Name = "CategorieSelect";
             this.CategorieSelect.Size = new System.Drawing.Size(121, 21);
             this.CategorieSelect.TabIndex = 7;
-            this.CategorieSelect.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label11
             // 
@@ -507,7 +495,6 @@
             this.AddPrixArticle.Name = "AddPrixArticle";
             this.AddPrixArticle.Size = new System.Drawing.Size(117, 20);
             this.AddPrixArticle.TabIndex = 1;
-            this.AddPrixArticle.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // AddNomArticle
             // 
@@ -533,7 +520,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Supprimer";
             this.groupBox3.Visible = false;
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // button9
             // 
@@ -555,7 +541,6 @@
             this.DelArticleName.Size = new System.Drawing.Size(13, 13);
             this.DelArticleName.TabIndex = 3;
             this.DelArticleName.Text = "0";
-            this.DelArticleName.Click += new System.EventHandler(this.label13_Click);
             // 
             // label12
             // 
@@ -611,7 +596,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Modifier";
             this.groupBox4.Visible = false;
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // ModifAnnuler
             // 
@@ -672,7 +656,6 @@
             this.ModifQuantite.Name = "ModifQuantite";
             this.ModifQuantite.Size = new System.Drawing.Size(68, 20);
             this.ModifQuantite.TabIndex = 16;
-            this.ModifQuantite.TextChanged += new System.EventHandler(this.Quantite_TextChanged);
             // 
             // ModifPrix
             // 
@@ -681,7 +664,6 @@
             this.ModifPrix.Name = "ModifPrix";
             this.ModifPrix.Size = new System.Drawing.Size(68, 20);
             this.ModifPrix.TabIndex = 15;
-            this.ModifPrix.TextChanged += new System.EventHandler(this.ModifPrix_TextChanged);
             // 
             // ModifNom
             // 
@@ -690,7 +672,6 @@
             this.ModifNom.Name = "ModifNom";
             this.ModifNom.Size = new System.Drawing.Size(68, 20);
             this.ModifNom.TabIndex = 14;
-            this.ModifNom.TextChanged += new System.EventHandler(this.ModifNom_TextChanged);
             // 
             // label14
             // 

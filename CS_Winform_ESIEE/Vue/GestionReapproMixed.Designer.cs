@@ -152,7 +152,6 @@ namespace CS_Winform_ESIEE.Vue
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(0, 15);
             this.label15.TabIndex = 12;
-            this.label15.Click += new System.EventHandler(this.label15_Click);
             // 
             // label14
             // 
@@ -255,7 +254,6 @@ namespace CS_Winform_ESIEE.Vue
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(60, 20);
             this.textBox1.TabIndex = 2;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -371,7 +369,6 @@ namespace CS_Winform_ESIEE.Vue
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Commandes";
             this.groupBox2.Visible = false;
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // validerEtat
             // 
@@ -437,7 +434,6 @@ namespace CS_Winform_ESIEE.Vue
             this.ArticlesCommande.TabIndex = 7;
             this.ArticlesCommande.UseCompatibleStateImageBehavior = false;
             this.ArticlesCommande.View = System.Windows.Forms.View.Details;
-            this.ArticlesCommande.SelectedIndexChanged += new System.EventHandler(this.ArticlesCommande_SelectedIndexChanged);
             // 
             // ListCommande
             // 
@@ -474,7 +470,6 @@ namespace CS_Winform_ESIEE.Vue
             this.GestionQuantite.TabStop = false;
             this.GestionQuantite.Text = "Quantites";
             this.GestionQuantite.Visible = false;
-            this.GestionQuantite.Enter += new System.EventHandler(this.groupBox4_Enter);
             // 
             // supprPanier
             // 
@@ -495,7 +490,6 @@ namespace CS_Winform_ESIEE.Vue
             this.NomArticleSuppr.TabIndex = 8;
             this.NomArticleSuppr.Text = "label1";
             this.NomArticleSuppr.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.NomArticleSuppr.Click += new System.EventHandler(this.label1_Click);
             // 
             // AnnulerQuantite
             // 
@@ -534,7 +528,6 @@ namespace CS_Winform_ESIEE.Vue
             this.Quantites.Name = "Quantites";
             this.Quantites.Size = new System.Drawing.Size(54, 20);
             this.Quantites.TabIndex = 1;
-            this.Quantites.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // groupBox3
             // 
@@ -616,7 +609,6 @@ namespace CS_Winform_ESIEE.Vue
             this.textBox2.Size = new System.Drawing.Size(98, 20);
             this.textBox2.TabIndex = 7;
             this.textBox2.Text = "0";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label5
             // 
@@ -626,7 +618,6 @@ namespace CS_Winform_ESIEE.Vue
             this.label5.Size = new System.Drawing.Size(13, 13);
             this.label5.TabIndex = 6;
             this.label5.Text = "€";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // button5
             // 
