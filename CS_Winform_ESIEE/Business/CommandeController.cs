@@ -73,7 +73,20 @@ namespace CS_Winform_ESIEE.Business
             }
             else if (etat == EtatCommande.Livree)
             {
-                query += "UPDATE COMMANDE SET DateLivraison = @Date, Etat = @Etat WHERE IdCommande = @IdCommande";
+                if (commande.DateEnvoi == null)
+                {
+                    query +=
+                        "UPDATE COMMANDE SET DateEnvoi = @Date, DateLivraison = @Date, Etat = @Etat WHERE IdCommande = @IdCommande";
+                }
+                else
+                {
+                    query += "UPDATE COMMANDE SET DateLivraison = @Date, Etat = @Etat WHERE IdCommande = @IdCommande";
+                }
+            }
+            else if (etat == EtatCommande.Annulee)
+            {
+                query +=
+                    "UPDATE COMMANDE SET Etat = @Etat, Date = @Date, DateEnvoi = NULL, DateLivraison = NULL WHERE IdCommande = @IdCommande";
             }
             else
             {
