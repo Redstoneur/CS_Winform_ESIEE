@@ -40,42 +40,27 @@ jobs:
       - name: Build solution
         run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishSingleFile=true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishDir=CS_Winform_ESIEE/bin/Release/
 
-      # Étape 7 : Archivage de l'exécutable
-      - name: Upload executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: CS_Winform_ESIEE
-          path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
-
-      # Étape 8 : Uploader l'exécutable dans la release
+      # Étape 7 : Téléchargement de l'exécutable dans la release
       - name: Upload executable to release
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
-          asset_name: CS_Winform_ESIEE.exe
-          asset_content_type: application/octet-stream
-      
-      # Étape 9 : Suppression du dossier Release
+          files: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Étape 8 : Suppression du dossier Release
       - name: Remove Release folder
         run: Remove-Item -Path CS_Winform_ESIEE/bin/Release -Recurse -Force
-      
-      # Étape 10 : Recompilation du projet en multi-fichier
+
+      # Étape 9 : Recompilation en mode multi-fichier
       - name: Build solution in multi-file
         run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishDir=CS_Winform_ESIEE/bin/Release/
-      
-      # Étape 11 : Archivage de l'exécutable
-      - name: Upload executable in multi-file
-        uses: actions/upload-artifact@v4
+
+      # Étape 10 : Téléchargement des fichiers multi-fichiers dans la release
+      - name: Upload multi-file to release
+        uses: softprops/action-gh-release@v1
         with:
-          name: CS_Winform_ESIEE_MultiFile
-          path: CS_Winform_ESIEE/bin/Release/
-      
-      # Étape 12 : Uploader l'exécutable dans la release
-      - name: Upload executable in multi-file to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: CS_Winform_ESIEE/bin/Release/
-          asset_name: CS_Winform_ESIEE_MultiFile
-          asset_content_type: application/octet-stream
+          files: |
+            CS_Winform_ESIEE/bin/Release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
