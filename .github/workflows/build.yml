@@ -54,3 +54,18 @@ jobs:
         with:
           name: CS_Winform_ESIEE
           path: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE.exe
+          
+      # Étape 8 : Suppression du dossier Release
+      - name: Remove Release folder
+        run: Remove-Item -Path CS_Winform_ESIEE/bin/Release -Recurse -Force
+      
+      # Étape 9 : Recompilation du projet en multi-fichier
+      - name: Build solution in multi-file
+        run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishDir=CS_Winform_ESIEE/bin/Release/
+      
+      # Étape 10 : Archivage de l'exécutable
+      - name: Upload executable in multi-file
+        uses: actions/upload-artifact@v4
+        with:
+          name: CS_Winform_ESIEE_MultiFile
+          path: CS_Winform_ESIEE/bin/Release/
