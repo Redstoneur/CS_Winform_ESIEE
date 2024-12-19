@@ -269,16 +269,20 @@ namespace CS_Winform_ESIEE.Vue
 
                     if (selectedCategory != null)
                     {
+                        // Récupérer tous les articles
+                        articles = articleController.GetAllArticles();
+                        
                         // Filtrer les articles pour afficher uniquement ceux qui ont le même IdCategorie que la catégorie sélectionnée
                         List<Article> filteredArticles = articles
                             .Where(article => article.IdCategorie == selectedCategory.IdCategorie).ToList();
+                        
+                        articles = filteredArticles;
 
                         // Mettre à jour la ListBox des articles
                         Articles.Items.Clear();
                         foreach (var article in filteredArticles)
                         {
                             Articles.Items.Add(article.Nom); // Ajoute uniquement le nom de l'article
-                            Console.WriteLine("filtered" + filteredArticles);
                         }
                     }
                     else
