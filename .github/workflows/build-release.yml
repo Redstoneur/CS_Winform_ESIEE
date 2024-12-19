@@ -56,11 +56,14 @@ jobs:
       - name: Build solution in multi-file
         run: msbuild CS_Winform_ESIEE.sln /p:Configuration=Release /p:Platform="Any CPU" /p:PublishDir=CS_Winform_ESIEE/bin/Release/
 
-      # Étape 10 : Téléchargement des fichiers multi-fichiers dans la release
-      - name: Upload multi-file to release
+      # Étape 10 : Création d'un fichier .zip des fichiers multi-fichiers
+      - name: Create .zip of multi-file
+        run: Compress-Archive -Path CS_Winform_ESIEE/bin/Release/* -DestinationPath CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE_MultiFile.zip
+      
+      # Étape 11 : Téléchargement du fichier .zip dans la release
+      - name: Upload .zip to release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            CS_Winform_ESIEE/bin/Release/*
+          files: CS_Winform_ESIEE/bin/Release/CS_Winform_ESIEE_MultiFile.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
